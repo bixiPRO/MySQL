@@ -1,0 +1,219 @@
+Bixiang Zhu
+1r ASIX
+InstitutMVM
+					DESCRIPCIÓ I LIMIT 5
+					
+-	He creat la taula vivenda on id_vivenda es la primary key, com que el numero de dormitori i banys variaba he posat int, habia 2 columnes m2 que estaba en la taula houses.csv tant de girona com barcelona i com que es quedaven sense utilitzar he utilitzat per assignar la superficie de la vivenda i la superficie de la terrasa que va bé ja que per cada vivenda a lo millor no tenen terrassa i poguem posar un NULL per aixó li he posat en sup_terrasa un varchar. En any de construcció pasaba lo mateix que no hem deixaba posar NULL i quedava molt malament ja que quedava 0000, he posat com a varchar amb modificacions dins del fitxer insert i ho he arreglat. l'estat he posat com a varchar tambe per fer modificacions i que es vegi millor i descripció que l'enunciat demanaba el maxim de 140 caracters.
+
+mysql:[root:HABITATGE]> desc vivenda;
++-------------------+-----------------+------+-----+---------+-------+
+| Field             | Type            | Null | Key | Default | Extra |
++-------------------+-----------------+------+-----+---------+-------+
+| id_vivenda        | int             | NO   | PRI | NULL    |       |
+| num_dormitori     | int             | YES  |     | NULL    |       |
+| num_banys         | int             | YES  |     | NULL    |       |
+| sup_vivenda       | int             | YES  |     | NULL    |       |
+| sup_terrasa       | varchar(5)      | YES  |     | NULL    |       |
+| any_construccio   | varchar(4)      | YES  |     | NULL    |       |
+| estat             | varchar(100)    | YES  |     | NULL    |       |
+| preu_venda        | int             | YES  |     | NULL    |       |
+| disponible_llogar | enum('SI','NO') | YES  |     | NULL    |       |
+| descripcio        | varchar(140)    | YES  |     | NULL    |       |
+| data_actualitzada | date            | YES  |     | NULL    |       |
++-------------------+-----------------+------+-----+---------+-------+
+11 rows in set (0,00 sec)
+
+-	Aqui es poden veure els 5 registres i la id_vivenda s'ordena automaticament, he posat que l'estat sigui només 'Nova','Reformada, 'Cal reformar' o 'NULL' i en la columna disponible_llogar randomitzar per posar si o no
+
+mysql:[root:HABITATGE]> select * from vivenda limit 5;
++------------+---------------+-----------+-------------+-------------+-----------------+-------+------------+-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
+| id_vivenda | num_dormitori | num_banys | sup_vivenda | sup_terrasa | any_construccio | estat | preu_venda | disponible_llogar | descripcio                                                                                                                                      | data_actualitzada |
++------------+---------------+-----------+-------------+-------------+-----------------+-------+------------+-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
+|     310988 |             2 |         1 |         118 | 100         | NULL            | Nova  |     170000 | NO                | vistas a la montaña y situado a 5 minutos de las pistas de esquí. precio negociable, distribución:, terraza descubierta de 18 m2, la casa di    | 2019-04-15        |
+|     321374 |             4 |         3 |         660 | NULL        | NULL            | Nova  |     300000 | NO                | casa de 600 metros planta baja local comercial, 2º planta almacén, 3º planta vivienda de unos 130 metros, garaje en sótano.                     | 2019-04-15        |
+|     334861 |             4 |         2 |         480 | NULL        | NULL            | NULL  |     475000 | SI                |                                                                                                                                                 | 2019-04-12        |
+|     338235 |             3 |         1 |          80 | NULL        | NULL            | Nova  |     190000 | SI                | se vende o alquila 550? todo el piso esta recién reformado las paredes del baño es de porcelanico el espejo incrustado a la pared plato de d    | 2019-04-15        |
+|     338583 |             2 |         2 |          71 | NULL        | NULL            | Nova  |     152000 | NO                | De particular a particular (abstenerse agencias), magnífico apartamento de 71 m2 completamente amueblado, con bomba de calor y con electrodo    | 2019-04-15        |
++------------+---------------+-----------+-------------+-------------+-----------------+-------+------------+-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+-------------------+
+
+-	En la taula casa he posat la id_vivenda com a primary key que referencia a la taula vivenda ja que una vivenda pot ser pis o casa i ho tenim que separar-ho, en el tipus he fet un enum dels tipus de casa que hi ha en el .csv, les plantes he posat varchar ja que habien text i no numeros, per l'ultim tant les columnes superficie de garatge i jardi he posat un numero decimal aleatori ja que en .csv no hi havien aquestes dades incorporades.
+
+mysql:[root:HABITATGE]> desc casa;
++-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+-----+---------+-------+
+| Field       | Type                                                                                                                                                                                                             | Null | Key | Default | Extra |
++-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+-----+---------+-------+
+| id_vivenda  | int                                                                                                                                                                                                              | NO   | PRI | NULL    |       |
+| tipus       | enum(' Casa de pueblo',' Casa o chalet independiente',' Chalet adosado',' Finca rústica',' Torre',' Chalet pareado',' Casa o chalet','Casa rural',' Castillo',' Masía',' Casa terrera',' Caserón',' Palacio')    | YES  |     | NULL    |       |
+| plantes     | varchar(100)                                                                                                                                                                                                     | YES  |     | NULL    |       |
+| sup_garatge | decimal(10,2)                                                                                                                                                                                                    | YES  |     | NULL    |       |
+| sup_jardi   | decimal(10,2)                                                                                                                                                                                                    | YES  |     | NULL    |       |
++-------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+-----+---------+-------+
+5 rows in set (0,00 sec)
+
+
+mysql:[root:HABITATGE]> select * from casa limit 5;
++------------+------------------------------+-----------+-------------+-----------+
+| id_vivenda | tipus                        | plantes   | sup_garatge | sup_jardi |
++------------+------------------------------+-----------+-------------+-----------+
+|     321374 |  Casa o chalet independiente | 3 plantas |        1.60 |      1.72 |
+|     334861 |  Casa o chalet independiente |           |        3.79 |      3.79 |
+|     418376 |  Casa o chalet independiente | 4 plantas |        3.27 |      8.05 |
+|     419312 |  Casa o chalet independiente | 2 plantas |        4.93 |      0.67 |
+|     440849 |  Chalet adosado              |           |        8.54 |      0.72 |
++------------+------------------------------+-----------+-------------+-----------+
+5 rows in set (0,00 sec)
+
+-	En la taula pis es igual que la taula casa pero eliminant alguns valors que en un pis no requereix per exemple la superfice de garatge i jardi.
+
+mysql:[root:HABITATGE]> desc pis;
++------------+--------------------------------------------------+------+-----+---------+-------+
+| Field      | Type                                             | Null | Key | Default | Extra |
++------------+--------------------------------------------------+------+-----+---------+-------+
+| id_vivenda | int                                              | NO   | PRI | NULL    |       |
+| tipus      | enum('Piso','Ático','Dúplex','Estudio','Loft')   | YES  |     | NULL    |       |
+| plantes    | varchar(100)                                     | YES  |     | NULL    |       |
++------------+--------------------------------------------------+------+-----+---------+-------+
+3 rows in set (0,00 sec)
+
+mysql:[root:HABITATGE]> select * from pis limit 5;
++------------+---------+---------------------+
+| id_vivenda | tipus   | plantes             |
++------------+---------+---------------------+
+|     310988 | Piso    | bajo exterior       |
+|     338235 | Piso    | planta 1ª exterior  |
+|     338583 | Piso    | planta 3ª exterior  |
+|     361079 | Dúplex  | planta 3ª exterior  |
+|     363258 | Estudio | planta 3ª exterior  |
++------------+---------+---------------------+
+
+
+-	En la taula energia que feia servir per un futur he inserit valors aleatoris tots menys el id_vivenda que fa referencia i primary key de la taula vivenda. El certificat habia de ser una lletra de A fins G, he buscat informacio, en consum energetic li he posat com a decimal del gast en KWh i en la emissio el percentatge. Amb aixó cert que posia qualificar-lo en certificat peró com que qualificar-lo feia calculs matematics complerts que no he entés he deixat que pogues les dades aleatoritzades.  
+
+mysql:[root:HABITATGE]> desc energia;
++-------------------------------+-----------------------------------+------+-----+---------+-------+
+| Field                         | Type                              | Null | Key | Default | Extra |
++-------------------------------+-----------------------------------+------+-----+---------+-------+
+| id_vivenda                    | int                               | NO   | PRI | NULL    |       |
+| certificat_electric           | enum('A','B','C','D','E','F','G') | YES  |     | NULL    |       |
+| consum_energetic_KWh          | decimal(10,2)                     | YES  |     | NULL    |       |
+| emissio_energetic_percentatge | int                               | YES  |     | NULL    |       |
++-------------------------------+-----------------------------------+------+-----+---------+-------+
+4 rows in set (0,00 sec)
+
+mysql:[root:HABITATGE]> select * from energia limit 5;
++------------+---------------------+----------------------+-------------------------------+
+| id_vivenda | certificat_electric | consum_energetic_KWh | emissio_energetic_percentatge |
++------------+---------------------+----------------------+-------------------------------+
+|     310988 | E                   |                 2.70 |                            74 |
+|     321374 | E                   |                 8.73 |                            15 |
+|     334861 | C                   |                 1.52 |                            30 |
+|     338235 | D                   |                 0.29 |                            25 |
+|     338583 | E                   |                 1.85 |                            16 |
++------------+---------------------+----------------------+-------------------------------+
+5 rows in set (0,00 sec)
+
+-	En la taula caracteristiques addicionals estan algunes caracteristiques de la vivenda on en el .csv estan en 0 i 1, he cambiat el 1 per si i 0 en no. Hi han 2 columnes que son excloses com calefacció i parquins ja que son texts i he posat com a varchar.
+
+mysql:[root:HABITATGE]> desc caracteristiques_addicionals;
++------------------+-----------------+------+-----+---------+-------+
+| Field            | Type            | Null | Key | Default | Extra |
++------------------+-----------------+------+-----+---------+-------+
+| id_vivenda       | int             | NO   | PRI | NULL    |       |
+| aire_condicionat | enum('SI','NO') | YES  |     | NULL    |       |
+| ascensor         | enum('SI','NO') | YES  |     | NULL    |       |
+| calefacció       | varchar(255)    | YES  |     | NULL    |       |
+| mobles           | enum('SI','NO') | YES  |     | NULL    |       |
+| parquing         | varchar(255)    | YES  |     | NULL    |       |
+| piscina          | enum('SI','NO') | YES  |     | NULL    |       |
+| traster          | enum('SI','NO') | YES  |     | NULL    |       |
+| xemeneia         | enum('SI','NO') | YES  |     | NULL    |       |
++------------------+-----------------+------+-----+---------+-------+
+9 rows in set (0,00 sec)
+
+mysql:[root:HABITATGE]> select * from caracteristiques_addicionals limit 5;
++------------+------------------+----------+-------------+--------+---------------------------------------+---------+---------+----------+
+| id_vivenda | aire_condicionat | ascensor | calefacció  | mobles | parquing                              | piscina | traster | xemeneia |
++------------+------------------+----------+-------------+--------+---------------------------------------+---------+---------+----------+
+|     310988 | NO               | NO       |             | NO     |                                       | NO      | SI      | NO       |
+|     321374 | NO               | NO       |             | NO     | plaza de garaje incluida en el precio | NO      | SI      | NO       |
+|     334861 | NO               | NO       |             | NO     |                                       | NO      | NO      | NO       |
+|     338235 | SI               | NO       |             | SI     |                                       | NO      | NO      | NO       |
+|     338583 | SI               | SI       |             | SI     | plaza de garaje incluida en el precio | SI      | NO      | NO       |
++------------+------------------+----------+-------------+--------+---------------------------------------+---------+---------+----------+
+5 rows in set (0,00 sec)
+
+-	En la taula provincia he posat la id que sigui PRIMARY KEY, el seu nom en catala i el nom oficial més la id de comunitat autonoma i el seu nom, li he posat junts perque l'enunciat no demana, he intentat relacionar-lo com a separat i no ho he aconseguit.
+
+mysql:[root:HABITATGE]> desc provincia;
++-----------------------+--------------+------+-----+---------+-------+
+| Field                 | Type         | Null | Key | Default | Extra |
++-----------------------+--------------+------+-----+---------+-------+
+| id_provincia          | int          | NO   | PRI | NULL    |       |
+| nom_catala            | varchar(100) | YES  |     | NULL    |       |
+| nom_oficial           | varchar(100) | YES  |     | NULL    |       |
+| id_comunitat_autonoma | int          | YES  |     | NULL    |       |
+| nom_ccaa              | varchar(255) | YES  |     | NULL    |       |
++-----------------------+--------------+------+-----+---------+-------+
+5 rows in set (0,00 sec)
+
+mysql:[root:HABITATGE]> select * from provincia limit 5;
++--------------+------------+------------------+-----------------------+----------------------+
+| id_provincia | nom_catala | nom_oficial      | id_comunitat_autonoma | nom_ccaa             |
++--------------+------------+------------------+-----------------------+----------------------+
+|            1 | Àlaba      | Araba/Álava      |                    16 | País Basc            |
+|            2 | Albacete   | Albacete         |                     8 | Castella - la Manxa  |
+|            3 | Alacant    | Alacant/Alicante |                    10 | Comunitat Valenciana |
+|            4 | Almeria    | Almería          |                     1 | Andalusia            |
+|            5 | Àvila      | Ávila            |                     7 | Castella i Lleó      |
++--------------+------------+------------------+-----------------------+----------------------+
+5 rows in set (0,00 sec)
+
+-	La taula comarca he posat el id com a primary key, el nom de la provincia i la id de provincia ja que una comarca pot tenir més d'una provincia.
+
+mysql:[root:HABITATGE]> desc comarca;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| id_comarca   | int          | NO   | PRI | NULL    |       |
+| id_provincia | int          | YES  | MUL | NULL    |       |
+| nom_comarca  | varchar(100) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+3 rows in set (0,00 sec)
+
+mysql:[root:HABITATGE]> select * from comarca limit 5;
++------------+--------------+--------------+
+| id_comarca | id_provincia | nom_comarca  |
++------------+--------------+--------------+
+|          0 |            1 | NULL         |
+|          1 |           43 | Alt Camp     |
+|          2 |           17 | Alt Empordà  |
+|          3 |            8 | Alt Penedès  |
+|          4 |           25 | Alt Urgell   |
++------------+--------------+--------------+
+5 rows in set (0,00 sec)
+
+-	En la taula vivenda_municipi serveix per relacionar les taula vivenda amb municipi i he posat la id_vivenda com a primary key. He pogut relacionar perque en el .csv de girona i barcelona estaba apuntat el nom del municipi, he creat una taula temporal per poder relacionar el nom de municipi del .csv girona i barcelona amb el nom de municipi del .csv municipi, i així extreure la id de municipi i la id de vivenda.
+
+mysql:[root:HABITATGE]> desc vivenda_municipi;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| id_vivenda  | int  | NO   | PRI | NULL    |       |
+| id_municipi | int  | YES  | MUL | NULL    |       |
++-------------+------+------+-----+---------+-------+
+2 rows in set (0,00 sec)
+
+mysql:[root:HABITATGE]> select * from vivenda_municipi limit 5;
++------------+-------------+
+| id_vivenda | id_municipi |
++------------+-------------+
+|     405989 |         137 |
+|    2055072 |         137 |
+|   26972079 |         137 |
+|   27486807 |         137 |
+|   34196527 |         137 |
++------------+-------------+
+5 rows in set (0,00 sec)
+
+
+

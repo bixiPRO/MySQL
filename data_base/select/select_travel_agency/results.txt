@@ -1,0 +1,194 @@
+Bixiang Zhu
+1r ASIX
+InstitutMVM
+
+Agència de viatges
+
+L'agència ven paquets de viatge que com a mínim inclouran el vol, on el preu per persona d'aquest serà l'inclos com preu a la taula Viatges. El vol pot tenir escales amb la qual cosa, es converteix en dos o més vols però amb el mateix preu de viatge.
+
+També es pot comprar una estada en un o mes hotels amb habitacions individuals i/o dobles dels que tindrem cada preu d'habitació per separat.
+
+Es demana el següent:
+
+
+1. Visualitza la informació dels clients (NIF, nom i adreça) junt a l’origen i destí del viatge que fa cadascú.
+
+
+mysql> SELECT cl.NIF, cl.Nom, cl.Adreça, v.Origen, v.Desti FROM Clients cl JOIN Reserves_Viatges rv ON(cl.NIF=rv.NIF_Client) JOIN Viatges v ON(rv.Codi_Viatge=v.Codi);
++-----------+------------------------+---------------------+-----------+--------------+
+| NIF       | Nom                    | Adreça              | Origen    | Desti        |
++-----------+------------------------+---------------------+-----------+--------------+
+| 31456577H | Lourdes Oliver Peris   | Gran vía, 34        | Barcelona | Buenos Aires |
+| 34715214L | Carlos Pérez Ruiz      | Magallanes, 21      | Madrid    | Buenos Aires |
+| 34797754P | Sergio Pérez Navas     | Blasco Ibáñez, 65   | Barcelona | Nueva York   |
+| 34797754P | Sergio Pérez Navas     | Blasco Ibáñez, 65   | Sabadell  | Los Angeles  |
+| 35684125C | Alfonso Prats Montolla | Séneca, 23          | Barcelona | Tokyo        |
+| 35876444H | Jaime Juan Sornes      | Balmes, 21          | Barcelona | Calcuta      |
+| 42356871J | Carlos Prats Ruiz      | Ercilla, 8          | Sabadell  | Los Angeles  |
+| 42358910T | Antonio García Pérez   | Astilleros, 3       | Barcelona | Heathrow     |
+| 42545744K | Luis Rodríguez Más     | Juan de Mena, 11    | Barcelona | Lima         |
+| 42578941A | Jose Navarro Lard      | Río Segura, 14      | Sabadell  | Los Angeles  |
+| 42578941A | Jose Navarro Lard      | Río Segura, 14      | Girona    | Nueva York   |
+| 45874525N | Elisa Úbeda Sansón     | Valencia, 4         | Madrid    | Barcelona    |
++-----------+------------------------+---------------------+-----------+--------------+
+12 rows in set (0,00 sec)
+
+
+2. Visualitza els noms dels clients que han reservat únicament una habitació doble.
+
+
+mysql> SELECT Nom FROM Clients JOIN Reserves_Hotels rh ON(NIF=rh.NIF_Client) WHERE rh.N_Habs_Dob = 1 AND rh.N_Habs_Ind = 0;
++------------------------+
+| Nom                    |
++------------------------+
+| Sergio Pérez Navas     |
+| Sergio Pérez Navas     |
+| Alfonso Prats Montolla |
+| Jose Navarro Lard      |
++------------------------+
+4 rows in set (0,00 sec)
+
+
+3. Visualitza tota la informació dels clients que viatjaran en algun dels vols organitzats per Iberia durant el mes de Març de 2017 (Nif, Nom client, adreça, telèfon i codi de viatge). Ordena el resultat alfabèticament pel nom.
+
+
+mysql> SELECT cl.NIF, cl.Nom, cl.Adreça, cl.Telefon, vv.Codi_Viatge FROM Clients cl JOIN Reserves_Viatges rv ON(cl.NIF=rv.NIF_Client) JOIN Vols_Viatges vv ON(rv.Codi_Viatge=vv.Codi_Viatge) JOIN Vols v ON(vv.Codi_Vol=v.Codi) WHERE v.Companyia= "Iberia" AND v.Data_Sortida LIKE "2017-03-%" ORDER BY cl.Nom;
++-----------+----------------------+---------------------+-----------+-------------+
+| NIF       | Nom                  | Adreça              | Telefon   | Codi_Viatge |
++-----------+----------------------+---------------------+-----------+-------------+
+| 42356871J | Carlos Prats Ruiz    | Ercilla, 8          | 934552545 |           6 |
+| 45874525N | Elisa Úbeda Sansón   | Valencia, 4         | 912354562 |          12 |
+| 42578941A | Jose Navarro Lard    | Río Segura, 14      | 934154114 |          11 |
+| 42578941A | Jose Navarro Lard    | Río Segura, 14      | 934154114 |           6 |
+| 34797754P | Sergio Pérez Navas   | Blasco Ibáñez, 65   | 937845451 |           6 |
++-----------+----------------------+---------------------+-----------+-------------+
+5 rows in set (0,00 sec)
+
+
+4. Visualitza els viatges amb ofertes d’hotels de cinc estrelles (Codi del Viatge, Origen, Desti, Nom del Hotel, Preu i Categoria). Ordena el resultat per preu de més barat a més car.
+
+
+mysql> SELECT v.Codi AS Codi_Viatges, v.Origen, v.Desti, h.Nom AS Nom_Hotel, v.Preu, h.Categoria FROM Viatges v JOIN Ofertes_Hotels oh ON(v.Codi=oh.Codi_Viatge) JOIN Hotels h ON(oh.Codi_Hotel=h.Codi) WHERE h.Categoria = 5 ORDER BY v.Preu ASC;
++--------------+-----------+------------+-----------------------+------+-----------+
+| Codi_Viatges | Origen    | Desti      | Nom_Hotel             | Preu | Categoria |
++--------------+-----------+------------+-----------------------+------+-----------+
+|           12 | Madrid    | Barcelona  | Hotel Colon           |  250 |         5 |
+|            9 | Barcelona | Lima       | Hotel Rialto          | 1500 |         5 |
+|           11 | Girona    | Nueva York | The Roger Smith Hotel | 1875 |         5 |
+|            7 | Barcelona | Heathrow   | Drury Lane Moat Hotel | 1900 |         5 |
+|            1 | Barcelona | Nueva York | Bedford Hotel         | 2000 |         5 |
+|            3 | Barcelona | Tokyo      | Hotel Tandil          | 3000 |         5 |
++--------------+-----------+------------+-----------------------+------+-----------+
+6 rows in set (0,00 sec)
+
+
+5. Visualitza el nom i la ciutat del client junt a la ciutat d’origen dels vols que agafin, indicant també els seus codis de viatge i de vol i ordenat per codi de viatge ascendent.
+
+
+mysql> SELECT cl.Nom, cl.Ciutat, v.Origen, vv.Codi_Viatge, vv.Codi_Vol FROM Clients cl JOIN Reserves_Viatges rv ON(cl.NIF=rv.NIF_Client) JOIN Vols_Viatges vv ON(rv.Codi_Viatge=vv.Codi_Viatge) JOIN Vols v ON(vv.Codi_Vol=v.Codi) ORDER BY vv.Codi_Viatge ASC;
++------------------------+-----------+----------+-------------+----------+
+| Nom                    | Ciutat    | Origen   | Codi_Viatge | Codi_Vol |
++------------------------+-----------+----------+-------------+----------+
+| Sergio Pérez Navas     | Barcelona | El Prat  |           1 |        7 |
+| Lourdes Oliver Peris   | Barcelona | El Prat  |           2 |       10 |
+| Alfonso Prats Montolla | Barcelona | El Prat  |           3 |       14 |
+| Carlos Pérez Ruiz      | Utiel     | Barajas  |           4 |       17 |
+| Jaime Juan Sornes      | Barcelona | El Prat  |           5 |       27 |
+| Sergio Pérez Navas     | Barcelona | Sabadell |           6 |       44 |
+| Carlos Prats Ruiz      | Barcelona | Sabadell |           6 |       44 |
+| Jose Navarro Lard      | Barcelona | Sabadell |           6 |       44 |
+| Antonio García Pérez   | Barcelona | El Prat  |           7 |       23 |
+| Luis Rodríguez Más     | Barcelona | El Prat  |           9 |       16 |
+| Jose Navarro Lard      | Barcelona | Girona   |          11 |       42 |
+| Elisa Úbeda Sansón     | Madrid    | Barajas  |          12 |       36 |
++------------------------+-----------+----------+-------------+----------+
+12 rows in set (0,00 sec)
+
+
+6. Visualitza el NIF, el nom del client i el preu gastat en cadascun dels viatges que ha fet, tenint en compte el nombre de places reservades. Anomena a aquest últim atribut de sortida Preu_Total. Ordena el resultat per NIF de  forma descendent.
+
+
+mysql> SELECT cl.NIF, cl.Nom, v.Preu*rv.N_Places AS Preu_Total FROM Clients cl JOIN Reserves_Viatges rv ON(cl.NIF=rv.NIF_Client) JOIN Viatges v ON(rv.Codi_Viatge=v.Codi) ORDER BY cl.NIF DESC;
++-----------+------------------------+------------+
+| NIF       | Nom                    | Preu_Total |
++-----------+------------------------+------------+
+| 45874525N | Elisa Úbeda Sansón     |        500 |
+| 42578941A | Jose Navarro Lard      |       2500 |
+| 42578941A | Jose Navarro Lard      |       1875 |
+| 42545744K | Luis Rodríguez Más     |       3000 |
+| 42358910T | Antonio García Pérez   |       3800 |
+| 42356871J | Carlos Prats Ruiz      |       7500 |
+| 35876444H | Jaime Juan Sornes      |       2800 |
+| 35684125C | Alfonso Prats Montolla |       6000 |
+| 34797754P | Sergio Pérez Navas     |       4000 |
+| 34797754P | Sergio Pérez Navas     |       5000 |
+| 34715214L | Carlos Pérez Ruiz      |       1650 |
+| 31456577H | Lourdes Oliver Peris   |       5250 |
++-----------+------------------------+------------+
+12 rows in set (0,11 sec)
+
+
+7. Visualitza el nom dels clients i el nom dels hotels a on estan allotjats. 
+
+
+mysql> SELECT cl.Nom, h.Nom AS Nom_Hotel FROM Clients cl JOIN Reserves_Hotels rh ON(cl.NIF=rh.NIF_Client) JOIN Ofertes_Hotels oh ON(rh.Codi_Viatge=oh.Codi_Viatge) JOIN Hotels h ON(oh.Codi_Hotel=h.Codi);
++------------------------+-----------------------+
+| Nom                    | Nom_Hotel             |
++------------------------+-----------------------+
+| Sergio Pérez Navas     | Bedford Hotel         |
+| Antonio García Pérez   | Drury Lane Moat Hotel |
+| Lourdes Oliver Peris   | Hotel Agua Marina     |
+| Elisa Úbeda Sansón     | Hotel Colon           |
+| Carlos Pérez Ruiz      | Hotel Paraiso         |
+| Luis Rodríguez Más     | Hotel Rialto          |
+| Sergio Pérez Navas     | Hotel Star            |
+| Carlos Prats Ruiz      | Hotel Star            |
+| Alfonso Prats Montolla | Hotel Tandil          |
+| Jaime Juan Sornes      | La casa de Adobe      |
+| Jose Navarro Lard      | The Roger Smith Hotel |
++------------------------+-----------------------+
+11 rows in set (0,00 sec)
+
+
+8. Visualitza l'origen i destí dels viatges el codi de vol i de viatge i les ciutats on fan escala, els vols amb data de sortida entre 22/02/2017 i 24/02/2017 ambdós incloses.
+
+mysql> SELECT v.Codi AS Codi_Viatge, v.Origen, v.Desti, vo.Codi, a.Ciutat, vo.Data_Sortida FROM Viatges v JOIN Vols_Viatges vv ON(v.Codi=vv.Codi_Viatge) JOIN Vols vo ON(vv.Codi_Vol=vo.Codi) JOIN Escales e ON(vo.Codi=e.Codi_Vol) JOIN Aeroports a ON(e.Aeroport=a.Nom) HAVING vo.Data_Sortida BETWEEN '2017/02/22'
++-------------+-----------+-----------+------+------------+---------------------+
+| Codi_Viatge | Origen    | Desti     | Codi | Ciutat     | Data_Sortida        |
++-------------+-----------+-----------+------+------------+---------------------+
+|           7 | Barcelona | Heathrow  |   23 | Pekin      | 2017-02-23 14:00:00 |
+|          13 | Barcelona | Roma      |   23 | Pekin      | 2017-02-23 14:00:00 |
+|          14 | Madrid    | Barcelona |   22 | Nueva York | 2017-02-22 13:00:00 |
++-------------+-----------+-----------+------+------------+---------------------+
+3 rows in set, 14 warnings (0,38 sec)
+
+
+9. Visualitza els noms de les destinacions, hotels i la categoria, que s’utilitzaran en els viatges amb destinació Buenos Aires o Barcelona. Ordena el resultat per ciutat de forma descendent.
+
+
+mysql> SELECT v.Desti, h.Nom, h.Categoria FROM Viatges v JOIN Ofertes_Hotels oh ON(v.Codi=oh.Codi_Viatge) JOIN Hotels h ON(oh.Codi_Hotel=h.Codi) WHERE v.Desti IN('Buenos Aires', 'Barcelona') ORDER BY v.Desti DESC;
++--------------+-------------------+-----------+
+| Desti        | Nom               | Categoria |
++--------------+-------------------+-----------+
+| Buenos Aires | Hotel Agua Marina |         3 |
+| Buenos Aires | Hotel Paraiso     |         3 |
+| Barcelona    | Hotel Colon       |         5 |
++--------------+-------------------+-----------+
+3 rows in set (0,00 sec)
+
+
+10. Visualitza els noms dels clients (mostrant Nom Client), els noms dels hotels (mostrant Nom Hotel) i la ciutat del hotel, d'aquells clients que han reservat únicament una habitació doble.
+
+
+mysql> SELECT cl.Nom AS "Nom Client", h.Nom AS "Nom Hotel", h.Ciutat FROM Clients cl JOIN Reserves_Hotels rh ON(cl.NIF=rh.NIF_Client) JOIN Ofertes_Hotels oh ON(rh.Codi_Viatge=oh.Codi_Viatge) JOIN Hotels h ON(oh.Codi_Hotel=h.Codi) WHERE rh.N_Habs_Dob = 1 AND rh.N_Habs_Ind = 0;
++------------------------+-----------------------+-------------+
+| Nom Client             | Nom Hotel             | Ciutat      |
++------------------------+-----------------------+-------------+
+| Sergio Pérez Navas     | Bedford Hotel         | Nueva York  |
+| Sergio Pérez Navas     | Hotel Star            | Los Angeles |
+| Alfonso Prats Montolla | Hotel Tandil          | Tokyo       |
+| Jose Navarro Lard      | The Roger Smith Hotel | Nueva York  |
++------------------------+-----------------------+-------------+
+4 rows in set (0,39 sec)
+
+

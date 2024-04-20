@@ -1,0 +1,62 @@
+usuari@debian12:~$ bash -x copia_inc.sh 
++ ORIGEN=/var/lib/mysql
++ DESTI=/home/usuari/segur_inc_mysql
+++ date +%Y%m%d
++ DATA=20240112
++ sudo rsync -av --link-dest=/home/usuari/segur_inc_mysql/20240112 --exclude=lost+found /var/lib/mysql /home/usuari/segur_inc_mysql/20240112
+sending incremental file list
+mysql/
+mysql/#ib_16384_0.dblwr
+mysql/ibdata1
+mysql/ibtmp1
+mysql/mysql.ibd
+mysql/undo_001
+mysql/undo_002
+mysql/#innodb_redo/
+mysql/#innodb_redo/#ib_redo13
+mysql/#innodb_redo/#ib_redo14_tmp
+mysql/#innodb_redo/#ib_redo15_tmp
+mysql/#innodb_redo/#ib_redo16_tmp
+mysql/#innodb_redo/#ib_redo17_tmp
+mysql/#innodb_redo/#ib_redo18_tmp
+mysql/#innodb_redo/#ib_redo19_tmp
+mysql/#innodb_redo/#ib_redo20_tmp
+mysql/#innodb_redo/#ib_redo21_tmp
+mysql/#innodb_redo/#ib_redo22_tmp
+mysql/#innodb_redo/#ib_redo23_tmp
+mysql/#innodb_redo/#ib_redo24_tmp
+mysql/#innodb_redo/#ib_redo25_tmp
+mysql/#innodb_redo/#ib_redo26_tmp
+mysql/#innodb_redo/#ib_redo27_tmp
+mysql/#innodb_redo/#ib_redo28_tmp
+mysql/#innodb_redo/#ib_redo29_tmp
+mysql/#innodb_redo/#ib_redo30_tmp
+mysql/#innodb_redo/#ib_redo31_tmp
+mysql/#innodb_redo/#ib_redo32_tmp
+mysql/#innodb_redo/#ib_redo33_tmp
+mysql/#innodb_redo/#ib_redo34_tmp
+mysql/#innodb_redo/#ib_redo35_tmp
+mysql/#innodb_redo/#ib_redo36_tmp
+mysql/#innodb_redo/#ib_redo37_tmp
+mysql/#innodb_redo/#ib_redo38_tmp
+mysql/#innodb_redo/#ib_redo39_tmp
+mysql/#innodb_redo/#ib_redo40_tmp
+mysql/#innodb_redo/#ib_redo41_tmp
+mysql/#innodb_redo/#ib_redo42_tmp
+mysql/#innodb_redo/#ib_redo43_tmp
+mysql/#innodb_redo/#ib_redo44_tmp
+mysql/#innodb_temp/
+mysql/#innodb_temp/temp_1.ibt
+mysql/#innodb_temp/temp_10.ibt
+mysql/#innodb_temp/temp_2.ibt
+mysql/#innodb_temp/temp_3.ibt
+mysql/#innodb_temp/temp_4.ibt
+mysql/#innodb_temp/temp_5.ibt
+mysql/#innodb_temp/temp_6.ibt
+mysql/#innodb_temp/temp_7.ibt
+mysql/#innodb_temp/temp_8.ibt
+mysql/#innodb_temp/temp_9.ibt
+
+sent 196.107.213 bytes  received 959 bytes  23.071.549,65 bytes/sec
+total size is 209.867.034  speedup is 1,07
+

@@ -1,0 +1,90 @@
+*************************** 1. row ***************************
+             File: mysql-bin.000086
+         Position: 1965
+     Binlog_Do_DB: aula
+ Binlog_Ignore_DB: 
+Executed_Gtid_Set: 
+*************************** 1. row ***************************
+Variable_name: server_uuid
+        Value: 0138954a-5e12-11ee-bd28-08002737b1eb
+*************************** 1. row ***************************
+     Id: 13
+   User: root
+   Host: localhost
+     db: aula
+Command: Sleep
+   Time: 19
+  State: 
+   Info: NULL
+*************************** 2. row ***************************
+     Id: 25
+   User: system user
+   Host: connecting host
+     db: NULL
+Command: Connect
+   Time: 2748
+  State: Connecting to source
+   Info: NULL
+*************************** 3. row ***************************
+     Id: 26
+   User: system user
+   Host: 
+     db: NULL
+Command: Query
+   Time: 2748
+  State: Replica has read all relay log; waiting for more updates
+   Info: NULL
+*************************** 4. row ***************************
+     Id: 27
+   User: system user
+   Host: 
+     db: NULL
+Command: Connect
+   Time: 2748
+  State: Waiting for an event from Coordinator
+   Info: NULL
+*************************** 5. row ***************************
+     Id: 28
+   User: system user
+   Host: 
+     db: NULL
+Command: Connect
+   Time: 2748
+  State: Waiting for an event from Coordinator
+   Info: NULL
+*************************** 6. row ***************************
+     Id: 29
+   User: system user
+   Host: 
+     db: NULL
+Command: Connect
+   Time: 2748
+  State: Waiting for an event from Coordinator
+   Info: NULL
+*************************** 7. row ***************************
+     Id: 30
+   User: system user
+   Host: 
+     db: NULL
+Command: Connect
+   Time: 2748
+  State: Waiting for an event from Coordinator
+   Info: NULL
+*************************** 8. row ***************************
+     Id: 32
+   User: usreply
+   Host: 192.168.1.55:38390
+     db: NULL
+Command: Binlog Dump
+   Time: 337
+  State: Source has sent all binlog to replica; waiting for more updates
+   Info: NULL
+*************************** 9. row ***************************
+     Id: 33
+   User: root
+   Host: localhost
+     db: NULL
+Command: Query
+   Time: 0
+  State: init
+   Info: SHOW FULL PROCESSLIST

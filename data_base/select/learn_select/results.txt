@@ -1,0 +1,203 @@
+Bixiang Zhu
+1r ASIX
+InstitutMVM
+
+1) Llisteu totes les oficines amb els seus objectius i vendes reals.
+
+mysql:[root:vendes]> select * from oficines;
++---------+-------------+-------+------+----------+--------+
+| oficina | ciutat      | regio | dir  | objectiu | vendes |
++---------+-------------+-------+------+----------+--------+
+|      11 | New York    | Est   |  106 |   575000 | 692637 |
+|      12 | Chicago     | Est   |  104 |   800000 | 735042 |
+|      13 | Atlanta     | Est   |  105 |   350000 | 367911 |
+|      21 | Los Angeles | Oest  |  108 |   725000 | 835915 |
+|      22 | Denver      | Oest  |  108 |   300000 | 186042 |
++---------+-------------+-------+------+----------+--------+
+5 rows in set (0,00 sec)
+
+mysql:[root:vendes]> select oficines.objectiu, oficines.vendes from oficines;
++----------+--------+
+| objectiu | vendes |
++----------+--------+
+|   575000 | 692637 |
+|   800000 | 735042 |
+|   350000 | 367911 |
+|   725000 | 835915 |
+|   300000 | 186042 |
++----------+--------+
+5 rows in set (0,00 sec)
+
+
+2) Projecta el nom de les societats del clients amb l'idioma assignat, ordenant el resultat per idioma i de forma descendent.
+
+mysql:[root:vendes]> select clients.societat, clients.idioma from clients order by idioma desc;
++-------------------+----------+
+| societat          | idioma   |
++-------------------+----------+
+| Carter & Sons     | Rus      |
+| Three-Way Lines   | Frances  |
+| Fred Lewis Corp.  | Frances  |
+| Solomon Inc       | Frances  |
+| Zetacorp          | Italia   |
+| Smithson Corp     | Italia   |
+| Orion Corp        | Italia   |
+| Ian & Schmidt     | Angles   |
+| Peter Brothers    | Angles   |
+| QMA Assoc         | Angles   |
+| Rico Enterprises  | Angles   |
+| J.P. Sinclair     | Angles   |
+| Jones Mfg         | Angles   |
+| Acme Mfg          | Angles   |
+| First Corp        | Angles   |
+| Holm & Landis     | Catala   |
+| AAA Investments   | Catala   |
+| Midwest Systems   | Castella |
+| Ace International | Castella |
+| JCP Inc           | Alemany  |
+| Chen Associates   | Alemany  |
++-------------------+----------+
+21 rows in set (0,00 sec)
+
+
+3) Selecciona el número de la comanda (num_comanda) i el descompte (dte), de les comandes que es van crear entre el 15 de desembre de 1989 i el 20 de gener de 1990. 
+
+mysql:[root:vendes]> select comandes.num_comanda, comandes.dte, comandes.data_comanda from comandes where data_comanda between '1989-12-15' and '1990-01-20';
++-------------+------+--------------+
+| num_comanda | dte  | data_comanda |
++-------------+------+--------------+
+|      112963 |    0 | 1989-12-17   |
+|      112983 |    0 | 1989-12-27   |
+|      112987 |    5 | 1989-12-31   |
+|      112989 |    5 | 1990-01-03   |
+|      113013 |    0 | 1990-01-14   |
+|      113024 |    0 | 1990-01-20   |
++-------------+------+--------------+
+6 rows in set (0,00 sec)
+
+
+4) Llisteu la ciutat de les oficines de la regió 'Est' amb els seus objectius i vendes, ordenades de major a menor vendes.
+
+mysql:[root:vendes]> select oficines.ciutat, oficines.objectiu, oficines.vendes, oficines.regio from oficines where regio = 'Est';
++----------+----------+--------+-------+
+| ciutat   | objectiu | vendes | regio |
++----------+----------+--------+-------+
+| New York |   575000 | 692637 | Est   |
+| Chicago  |   800000 | 735042 | Est   |
+| Atlanta  |   350000 | 367911 | Est   |
++----------+----------+--------+-------+
+3 rows in set (0,00 sec)
+
+
+5) Llista els noms, oficines i dates de contracte de tots els venedors, ordenats a partir del contracte més antic.
+
+mysql:[root:vendes]> select venedors.nom, venedors.oficina_ven, venedors.contracte from venedors order by
+contracte asc;
++---------------+-------------+------------+
+| nom           | oficina_ven | contracte  |
++---------------+-------------+------------+
+| Dan Roberts   |          12 | 1986-10-20 |
+| Sue Smith     |          21 | 1986-12-10 |
+| Paul Cruz     |          12 | 1987-03-01 |
+| Bob Smith     |          12 | 1987-05-19 |
+| Sam Clark     |          11 | 1988-06-14 |
+| Larry Fitch   |          21 | 1989-12-10 |
+| Tom Snyder    |        NULL | 1990-01-13 |
+| Bill Adams    |          13 | 1998-02-12 |
+| Mary Jones    |          11 | 2000-10-12 |
+| Nancy Angelli |          22 | 2005-11-14 |
++---------------+-------------+------------+
+10 rows in set (0,00 sec)
+
+
+6) Quin és el nom, quota i les vendes dels empleats que el seu nom o cognom incorpora la lletra 'y' ordenat alfabèticament a partir de la primera columna de projecció de la consulta.
+
+mysql:[root:vendes]> select venedors.nom, venedors.quota, venedors.vendes from venedors where nom like '%y%';
++---------------+--------+--------+
+| nom           | quota  | vendes |
++---------------+--------+--------+
+| Nancy Angelli | 300000 | 186042 |
+| Larry Fitch   | 350000 | 361865 |
+| Mary Jones    | 300000 | 392725 |
+| Tom Snyder    |   NULL |  79451 |
++---------------+--------+--------+
+4 rows in set (0,00 sec)
+
+
+7) Llisteu el nom i data de contracte de qualsevol venendor amb vendes superiors a 490000€
+
+mysql:[root:vendes]> select venedors.nom, venedors.contracte, venedors.vendes from venedors where vendes > 490000;
+Empty set (0,00 sec)
+
+
+8) Llisteu els venedors, les seves quotes i els seus directors, ordenats a partir de la menor quota on aquesta no podrà ser NULL i a més tots els venedors han de tenir un director assignat.
+
+mysql:[root:vendes]> select venedors.nom, venedors.quota, venedors.director from venedors where quota and director !='NULL' order by quota asc;
++---------------+--------+----------+
+| nom           | quota  | director |
++---------------+--------+----------+
+| Bob Smith     | 200000 |      106 |
+| Paul Cruz     | 275000 |      104 |
+| Dan Roberts   | 300000 |      104 |
+| Nancy Angelli | 300000 |      108 |
+| Mary Jones    | 300000 |      106 |
+| Sue Smith     | 350000 |      108 |
+| Bill Adams    | 350000 |      104 |
+| Larry Fitch   | 350000 |      106 |
++---------------+--------+----------+
+8 rows in set, 1 warning (0,00 sec)
+
+9) Llisteu tots els productes amb la seva descripció i el valor del estoc aal.
+
+(Per exemple si d'un producte determinat tenim 3 unitats i el preu unitari es de 100, ha de mostrar 300)
+
+mysql:[root:vendes]> select productes.descripcio, productes.stock, precio*stock as 'Preu Stock Actual' from productes;
++--------------------+-------+-------------------+
+| descripcio         | stock | Preu Stock Actual |
++--------------------+-------+-------------------+
+| Articulo Tipo 1    |   271 |          14905.00 |
+| Articulo Tipo 2    |   166 |          12616.00 |
+| Articulo Tipo 3    |   200 |          21400.00 |
+| Articulo Tipo 4    |   136 |          15912.00 |
+| Ajustador          |    29 |            725.00 |
+| Desmontador        |    24 |          66000.00 |
+| Montador           |    28 |          70000.00 |
+| Tirador            |     0 |              0.00 |
+| Reten              |    78 |          17550.00 |
+| Placa              |     0 |              0.00 |
+| Cubierta           |   115 |          17020.00 |
+| Bancada Motor      |     5 |           1215.00 |
+| Abrazadera 300-lb  |    28 |          27300.00 |
+| Abrazadera 500-lb  |     5 |           7125.00 |
+| Abrazadera 900-lb  |     9 |          16875.00 |
+| Soporte Abrazadera |   223 |          12042.00 |
+| Perno Abrazadera   |    24 |           6000.00 |
+| Reten Abrazadera   |    32 |          15200.00 |
+| Reductor           |    38 |          13490.00 |
+| Reductor           |   203 |          27202.00 |
+| Reductor           |    37 |           4329.00 |
+| Pasador Bisagra    |    14 |           4900.00 |
+| Bisagra Izqda.     |    12 |          54000.00 |
+| Bisagra Dcha.      |    12 |          54000.00 |
+| Union  Trinquete   |   200 |          15800.00 |
++--------------------+-------+-------------------+
+25 rows in set (0,00 sec)
+
+10) Per cada venedor mostra el seu nom, la seva quota (que ha de ser un valor numèric), les seves vendes i la nova quota que tindria si s'augmentés en el 3% de les vendes anuals d'aquell venedor. Ordena de més a menys quota.
+
+mysql:[root:vendes]> select venedors.nom, venedors.quota, venedors.vendes, (vendes*3/100)+quota as 'Nova Quota' from venedors where quota !='NULL' order by quota desc;
++---------------+--------+--------+-------------+
+| nom           | quota  | vendes | Nova Quota  |
++---------------+--------+--------+-------------+
+| Sue Smith     | 350000 | 474050 | 364221.5000 |
+| Bill Adams    | 350000 | 367911 | 361037.3300 |
+| Larry Fitch   | 350000 | 361865 | 360855.9500 |
+| Dan Roberts   | 300000 | 307925 | 309237.7500 |
+| Nancy Angelli | 300000 | 186042 | 305581.2600 |
+| Mary Jones    | 300000 | 392725 | 311781.7500 |
+| Paul Cruz     | 275000 | 289330 | 283679.9000 |
+| Sam Clark     | 275000 | 299967 | 283999.0100 |
+| Bob Smith     | 200000 | 142594 | 204277.8200 |
++---------------+--------+--------+-------------+
+9 rows in set, 1 warning (0,00 sec)
+

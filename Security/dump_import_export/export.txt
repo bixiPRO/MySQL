@@ -1,0 +1,7 @@
+EXPORTACIÓ TABLA DE DADES:
+
+mysqldump -u root -p --no-create-info --no-create-db movies > ~/Escritorio/movies/movies-dades-dump.sql
+
+EXPORTRACIÓ ESTRUCTURA DE LES TAULES:
+
+mysqldump -u root -p --no-data --skip-triggers --no-create-db --skip-opt movies > ~/Escritorio/movies/movies-taules-dump.sql

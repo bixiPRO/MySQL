@@ -1,0 +1,330 @@
+Bixiang Zhu
+1r ASIX
+InstitutMVM
+								UNITAULA
+							
+1- Selecciona totes les vivendes on estigui disponible per llogar, estigui Reformada i que l'any de construccio sigui despres de l'any 1950. Mostra el id, l'any de construució, l'estat, si esta disponible o no i el seu preu de venda
+
+mysql:[root:HABITATGE]> select id_vivenda, any_construccio, estat, preu_venda, disponible_llogar from vivenda where disponible_llogar='SI' and estat='Reformada' and any_construccio > 1950;
++------------+-----------------+-----------+------------+-------------------+
+| id_vivenda | any_construccio | estat     | preu_venda | disponible_llogar |
++------------+-----------------+-----------+------------+-------------------+
+|   35093413 | 2016            | Reformada |     460000 | SI                |
+|   38362461 | 1998            | Reformada |     111600 | SI                |
+|   38375091 | 2006            | Reformada |     101500 | SI                |
+|   81168737 | 1960            | Reformada |     120000 | SI                |
+|   83271038 | 1978            | Reformada |     217000 | SI                |
+|   84160625 | 1965            | Reformada |     110000 | SI                |
+|   84681710 | 1975            | Reformada |      65000 | SI                |
+|   84722441 | 1979            | Reformada |     140000 | SI                |
+|   84925364 | 1968            | Reformada |      80000 | SI                |
++------------+-----------------+-----------+------------+-------------------+
+9 rows in set, 24 warnings (0,00 sec)
+
+
+2- Selecciona tota la informacio i la id de vivenda on certificat electric sigui A, el seu consum sigui major de 8KWh i la seva emmisio sigui major del 80 percent.
+
+mysql:[root:HABITATGE]> select * from energia where certificat_electric='A' and emissio_energetic_percentatge > 80 and consum_energetic_KWh>8;
++------------+---------------------+----------------------+-------------------------------+
+| id_vivenda | certificat_electric | consum_energetic_KWh | emissio_energetic_percentatge |
++------------+---------------------+----------------------+-------------------------------+
+|     405989 | A                   |                 8.29 |                            86 |
+|   29353868 | A                   |                 9.16 |                            93 |
+|   32742938 | A                   |                 8.47 |                            90 |
+|   35715628 | A                   |                 8.23 |                            94 |
+|   36188651 | A                   |                 9.77 |                            99 |
+|   39762976 | A                   |                 8.66 |                            81 |
+|   40373127 | A                   |                 9.31 |                            86 |
+|   81619823 | A                   |                 8.25 |                            88 |
+|   83015919 | A                   |                 9.84 |                            87 |
+|   83016184 | A                   |                 9.92 |                            97 |
+|   84182101 | A                   |                 8.66 |                            96 |
+|   84209974 | A                   |                 9.54 |                            82 |
++------------+---------------------+----------------------+-------------------------------+
+12 rows in set (0,01 sec)
+
+3- Mostra en nom de la comarca on la id de provincia sigui 8 
+
+mysql:[root:HABITATGE]> select * from comarca where id_provincia='8';
++------------+--------------+--------------------+
+| id_comarca | id_provincia | nom_comarca        |
++------------+--------------+--------------------+
+|          3 |            8 | Alt Penedès        |
+|          6 |            8 | Anoia              |
+|          7 |            8 | Bages              |
+|         11 |            8 | Baix Llobregat     |
+|         13 |            8 | Barcelonès         |
+|         14 |            8 | Berguedà           |
+|         17 |            8 | Garraf             |
+|         21 |            8 | Maresme            |
+|         24 |            8 | Osona              |
+|         34 |            8 | Selva              |
+|         40 |            8 | Vallès Occidental  |
+|         41 |            8 | Vallès Oriental    |
+|         42 |            8 | Moianès            |
++------------+--------------+--------------------+
+13 rows in set (0,00 sec)
+
+4- Mostra'm les caracteristiques de les vivendes on tingui aire condicionat, piscina, parking i calefacció
+
+mysql:[root:HABITATGE]> select * from caracteristiques_addicionals where aire_condicionat = 'SI' and piscina ='SI' and parquing !='' and calefacció!='';
++------------+------------------+----------+-----------------------------------------------+--------+--------------------------------------------+---------+---------+----------+
+| id_vivenda | aire_condicionat | ascensor | calefacció                                    | mobles | parquing                                   | piscina | traster | xemeneia |
++------------+------------------+----------+-----------------------------------------------+--------+--------------------------------------------+---------+---------+----------+
+|    1927840 | SI               | NO       | calefacción individual: gas propano/butano    | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   36827204 | SI               | NO       | calefacción central: gasoil                   | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   81434406 | SI               | SI       | calefacción individual: gas natural           | SI     | plaza de garaje por 12.000 eur adicionales | SI      | NO      | NO       |
+|   81922431 | SI               | SI       | calefacción central                           | NO     | plaza de garaje incluida en el precio      | SI      | NO      | NO       |
+|   82165025 | SI               | NO       | calefacción central                           | SI     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   82243732 | SI               | NO       | calefacción central: gas                      | SI     | plaza de garaje incluida en el precio      | SI      | NO      | NO       |
+|   82350577 | SI               | SI       | calefacción individual                        | NO     | plaza de garaje incluida en el precio      | SI      | NO      | NO       |
+|   82648059 | SI               | SI       | calefacción individual: eléctrica             | SI     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   82668665 | SI               | NO       | calefacción individual: bomba de frío/calor   | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   82848818 | SI               | SI       | calefacción individual: eléctrica             | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   82881831 | SI               | SI       | calefacción individual: bomba de frío/calor   | NO     | plaza de garaje incluida en el precio      | SI      | NO      | NO       |
+|   83039601 | SI               | SI       | calefacción individual: bomba de frío/calor   | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   83109497 | SI               | NO       | calefacción individual: gas natural           | NO     | plaza de garaje incluida en el precio      | SI      | NO      | NO       |
+|   83408470 | SI               | NO       | calefacción individual: eléctrica             | SI     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   83590353 | SI               | SI       | calefacción central                           | NO     | plaza de garaje incluida en el precio      | SI      | NO      | NO       |
+|   83740167 | SI               | NO       | calefacción individual                        | SI     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   83873543 | SI               | NO       | calefacción central                           | SI     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84231384 | SI               | NO       | calefacción individual: eléctrica             | SI     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84232919 | SI               | SI       | calefacción individual: eléctrica             | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84394587 | SI               | NO       | calefacción central                           | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84396111 | SI               | NO       | calefacción central                           | SI     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84421238 | SI               | NO       | calefacción central: gasoil                   | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84441697 | SI               | NO       | calefacción central: gas                      | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84460464 | SI               | SI       | calefacción individual: bomba de frío/calor   | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84582429 | SI               | SI       | calefacción individual: eléctrica             | SI     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84648005 | SI               | SI       | calefacción individual: bomba de frío/calor   | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84724784 | SI               | NO       | calefacción central                           | SI     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84760071 | SI               | NO       | calefacción central                           | SI     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84768960 | SI               | NO       | calefacción central: gasoil                   | NO     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
+|   84837724 | SI               | SI       | calefacción individual: eléctrica             | SI     | plaza de garaje incluida en el precio      | SI      | NO      | NO       |
+|   84853521 | SI               | NO       | calefacción individual: bomba de frío/calor   | SI     | plaza de garaje incluida en el precio      | SI      | NO      | NO       |
+|   85073788 | SI               | NO       | calefacción central: gasoil                   | SI     | plaza de garaje incluida en el precio      | SI      | SI      | NO       |
++------------+------------------+----------+-----------------------------------------------+--------+--------------------------------------------+---------+---------+----------+
+32 rows in set (0,00 sec)
+
+
+								MULTITAULA
+								
+5 - Mostra'm el nom de provincies on la quantitat de vivendes estan disponible per alquilar
+
+mysql:[root:HABITATGE]> SELECT p.nom_oficial AS nom_provincia, COUNT(*) AS quantitat_disponible_per_alquilar
+    -> FROM vivenda v
+    -> JOIN vivenda_municipi vm ON v.id_vivenda = vm.id_vivenda
+    -> JOIN municipi m ON vm.id_municipi = m.id_municipi
+    -> JOIN provincia p ON m.id_provincia = p.id_provincia
+    -> WHERE v.disponible_llogar = 'SI'
+    -> GROUP BY p.nom_oficial;
++---------------+-----------------------------------+
+| nom_provincia | quantitat_disponible_per_alquilar |
++---------------+-----------------------------------+
+| Barcelona     |                               420 |
+| Girona        |                               829 |
++---------------+-----------------------------------+
+2 rows in set (0,00 sec)
+
+6 - Mostra'm la vivenda amb la seva ubicació de comarca on el nom de municipi sigui Ripoll i limita a 20 registres
+
+mysql:[root:HABITATGE]> SELECT v.id_vivenda, v.num_dormitori, v.num_banys, v.sup_vivenda, v.preu_venda, m.nom_municipi, c.nom_comarca
+    -> FROM vivenda v
+    -> JOIN vivenda_municipi vm ON v.id_vivenda = vm.id_vivenda
+    -> JOIN municipi m ON vm.id_municipi = m.id_municipi
+    -> JOIN comarca c ON m.id_provincia = c.id_provincia
+    -> where nom_municipi='Ripoll' limit 20;
++------------+---------------+-----------+-------------+------------+--------------+-----------------+
+| id_vivenda | num_dormitori | num_banys | sup_vivenda | preu_venda | nom_municipi | nom_comarca     |
++------------+---------------+-----------+-------------+------------+--------------+-----------------+
+|    1060034 |             3 |         1 |         107 |     111000 | Ripoll       | Alt Empordà     |
+|    1060034 |             3 |         1 |         107 |     111000 | Ripoll       | Baix Empordà    |
+|    1060034 |             3 |         1 |         107 |     111000 | Ripoll       | Cerdanya        |
+|    1060034 |             3 |         1 |         107 |     111000 | Ripoll       | Garrotxa        |
+|    1060034 |             3 |         1 |         107 |     111000 | Ripoll       | Gironès         |
+|    1060034 |             3 |         1 |         107 |     111000 | Ripoll       | Pla de l'Estany |
+|    1060034 |             3 |         1 |         107 |     111000 | Ripoll       | Ripollès        |
+|    1724152 |             3 |         3 |         194 |     250000 | Ripoll       | Alt Empordà     |
+|    1724152 |             3 |         3 |         194 |     250000 | Ripoll       | Baix Empordà    |
+|    1724152 |             3 |         3 |         194 |     250000 | Ripoll       | Cerdanya        |
+|    1724152 |             3 |         3 |         194 |     250000 | Ripoll       | Garrotxa        |
+|    1724152 |             3 |         3 |         194 |     250000 | Ripoll       | Gironès         |
+|    1724152 |             3 |         3 |         194 |     250000 | Ripoll       | Pla de l'Estany |
+|    1724152 |             3 |         3 |         194 |     250000 | Ripoll       | Ripollès        |
+|    1752965 |             3 |         1 |          90 |      85000 | Ripoll       | Alt Empordà     |
+|    1752965 |             3 |         1 |          90 |      85000 | Ripoll       | Baix Empordà    |
+|    1752965 |             3 |         1 |          90 |      85000 | Ripoll       | Cerdanya        |
+|    1752965 |             3 |         1 |          90 |      85000 | Ripoll       | Garrotxa        |
+|    1752965 |             3 |         1 |          90 |      85000 | Ripoll       | Gironès         |
+|    1752965 |             3 |         1 |          90 |      85000 | Ripoll       | Pla de l'Estany |
++------------+---------------+-----------+-------------+------------+--------------+-----------------+
+20 rows in set (0,00 sec)
+
+7 - Mostra'm la informacio detalla de vivendes junt amb l'ubicació que ha de ser Gelida i la seva certificacio electric ha de ser B
+
+mysql:[root:HABITATGE]> SELECT v.id_vivenda, v.num_dormitori, v.num_banys, v.sup_vivenda, v.preu_venda, m.nom_municipi, p.nom_oficial, e.certificat_electric
+    -> FROM vivenda v
+    -> JOIN vivenda_municipi vm ON v.id_vivenda = vm.id_vivenda
+    -> JOIN municipi m ON vm.id_municipi = m.id_municipi
+    -> JOIN provincia p ON m.id_provincia = p.id_provincia
+    -> JOIN energia e ON v.id_vivenda = e.id_vivenda
+    -> WHERE m.nom_municipi='Gelida' and e.certificat_electric='B';
++------------+---------------+-----------+-------------+------------+--------------+-------------+---------------------+
+| id_vivenda | num_dormitori | num_banys | sup_vivenda | preu_venda | nom_municipi | nom_oficial | certificat_electric |
++------------+---------------+-----------+-------------+------------+--------------+-------------+---------------------+
+|   26868088 |             2 |         1 |          82 |     105000 | Gelida       | Barcelona   | B                   |
+|   31833729 |             5 |         4 |         300 |     500000 | Gelida       | Barcelona   | B                   |
+|   34510552 |             3 |         3 |         330 |     390000 | Gelida       | Barcelona   | B                   |
+|   37331126 |             4 |         1 |          90 |     100000 | Gelida       | Barcelona   | B                   |
+|   39771727 |            11 |         8 |          80 |    5000000 | Gelida       | Barcelona   | B                   |
+|   81733578 |             3 |         1 |          90 |      99000 | Gelida       | Barcelona   | B                   |
+|   82348866 |             1 |         1 |        2223 |     111100 | Gelida       | Barcelona   | B                   |
+|   82609023 |             5 |         2 |         592 |     234000 | Gelida       | Barcelona   | B                   |
+|   82686743 |             4 |         2 |         101 |     131100 | Gelida       | Barcelona   | B                   |
++------------+---------------+-----------+-------------+------------+--------------+-------------+---------------------+
+9 rows in set (0,00 sec)
+
+							SUBCONSULTA
+							
+8- Consulta de subconsulta per obtenir la quantitat de vivendes amb piscina per província
+
+mysql:[root:HABITATGE]> SELECT p.nom_oficial, 
+    ->     (SELECT COUNT(*) 
+    ->      FROM vivenda v 
+    ->      JOIN caracteristiques_addicionals ca ON v.id_vivenda = ca.id_vivenda 
+    ->      JOIN vivenda_municipi vm ON v.id_vivenda = vm.id_vivenda 
+    ->      JOIN municipi m ON vm.id_municipi = m.id_municipi 
+    ->      WHERE ca.piscina = 'SI' 
+    ->      AND m.id_provincia = p.id_provincia) AS quantitat_vivendes_amb_piscina
+    -> FROM provincia p;
++------------------------+--------------------------------+
+| nom_oficial            | quantitat_vivendes_amb_piscina |
++------------------------+--------------------------------+
+| Araba/Álava            |                              0 |
+| Albacete               |                              0 |
+| Alacant/Alicante       |                              0 |
+| Almería                |                              0 |
+| Ávila                  |                              0 |
+| Badajoz                |                              0 |
+| Illes Balears          |                              0 |
+| Barcelona              |                            107 |
+| Burgos                 |                              0 |
+| Cáceres                |                              0 |
+| Cádiz                  |                              0 |
+| Castelló/Castellón     |                              0 |
+| Ciudad Real            |                              0 |
+| Córdoba                |                              0 |
+| Coruña, A              |                              0 |
+| Cuenca                 |                              0 |
+| Girona                 |                            497 |
+| Granada                |                              0 |
+| Guadalajara            |                              0 |
+| Gipuzkoa               |                              0 |
+| Huelva                 |                              0 |
+| Huesca                 |                              0 |
+| Jaén                   |                              0 |
+| León                   |                              0 |
+| Lleida                 |                              0 |
+| Rioja, La              |                              0 |
+| Lugo                   |                              0 |
+| Madrid                 |                              0 |
+| Málaga                 |                              0 |
+| Murcia                 |                              0 |
+| Navarra                |                              0 |
+| Ourense                |                              0 |
+| Asturias               |                              0 |
+| Palencia               |                              0 |
+| Palmas, Las            |                              0 |
+| Pontevedra             |                              0 |
+| Salamanca              |                              0 |
+| Santa Cruz de Tenerife |                              0 |
+| Cantabria              |                              0 |
+| Segovia                |                              0 |
+| Sevilla                |                              0 |
+| Soria                  |                              0 |
+| Tarragona              |                              0 |
+| Teruel                 |                              0 |
+| Toledo                 |                              0 |
+| València/Valencia      |                              0 |
+| Valladolid             |                              0 |
+| Bizkaia                |                              0 |
+| Zamora                 |                              0 |
+| Zaragoza               |                              0 |
+| Ceuta                  |                              0 |
+| Melilla                |                              0 |
+| No consta              |                              0 |
+| Altres/Diversos        |                              0 |
++------------------------+--------------------------------+
+54 rows in set (0,05 sec)
+
+9- Consulta de subconsulta per obtenir el preu mitjà dels dúplex per província
+
+mysql:[root:HABITATGE]> SELECT p.nom_oficial AS provincia, 
+    ->     (SELECT AVG(v.preu_venda) 
+    ->      FROM vivenda v 
+    ->      JOIN pis pi ON v.id_vivenda = pi.id_vivenda 
+    ->      JOIN vivenda_municipi vm ON v.id_vivenda = vm.id_vivenda 
+    ->      JOIN municipi m ON vm.id_municipi = m.id_municipi 
+    ->      WHERE pi.tipus = 'Dúplex' 
+    ->      AND m.id_provincia = p.id_provincia) AS preu_mitg_duplex
+    -> FROM provincia p;
++------------------------+------------------+
+| provincia              | preu_mitg_duplex |
++------------------------+------------------+
+| Araba/Álava            |             NULL |
+| Albacete               |             NULL |
+| Alacant/Alicante       |             NULL |
+| Almería                |             NULL |
+| Ávila                  |             NULL |
+| Badajoz                |             NULL |
+| Illes Balears          |             NULL |
+| Barcelona              |      179610.8696 |
+| Burgos                 |             NULL |
+| Cáceres                |             NULL |
+| Cádiz                  |             NULL |
+| Castelló/Castellón     |             NULL |
+| Ciudad Real            |             NULL |
+| Córdoba                |             NULL |
+| Coruña, A              |             NULL |
+| Cuenca                 |             NULL |
+| Girona                 |      204827.0833 |
+| Granada                |             NULL |
+| Guadalajara            |             NULL |
+| Gipuzkoa               |             NULL |
+| Huelva                 |             NULL |
+| Huesca                 |             NULL |
+| Jaén                   |             NULL |
+| León                   |             NULL |
+| Lleida                 |             NULL |
+| Rioja, La              |             NULL |
+| Lugo                   |             NULL |
+| Madrid                 |             NULL |
+| Málaga                 |             NULL |
+| Murcia                 |             NULL |
+| Navarra                |             NULL |
+| Ourense                |             NULL |
+| Asturias               |             NULL |
+| Palencia               |             NULL |
+| Palmas, Las            |             NULL |
+| Pontevedra             |             NULL |
+| Salamanca              |             NULL |
+| Santa Cruz de Tenerife |             NULL |
+| Cantabria              |             NULL |
+| Segovia                |             NULL |
+| Sevilla                |             NULL |
+| Soria                  |             NULL |
+| Tarragona              |             NULL |
+| Teruel                 |             NULL |
+| Toledo                 |             NULL |
+| València/Valencia      |             NULL |
+| Valladolid             |             NULL |
+| Bizkaia                |             NULL |
+| Zamora                 |             NULL |
+| Zaragoza               |             NULL |
+| Ceuta                  |             NULL |
+| Melilla                |             NULL |
+| No consta              |             NULL |
+| Altres/Diversos        |             NULL |
++------------------------+------------------+
+54 rows in set (0,01 sec)
+				

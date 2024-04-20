@@ -1,0 +1,341 @@
+
+En una empresa multinacional, es vol crear una BBDD per gestionar les diferents reunions que fa cadascuna de les persones de l'empresa.
+
+L'empresa consta de diverses filials repartides en diferents països del món que interactuen entre elles de formes diferents: com venen o compran productes, assessorant, transportant mercaderies, etc..
+
+Cadascun dels contactes que es crearan en aquesta BBDD que denominarem `agenda` podrà fer reunions o cursos amb un altre contacte en una data i hora determinada, amb una durada en hores (valors enters) i un camp `estat` que indicarà si la reunió està: 
+Pendent, Realitzada o No realitzada. Només es podrà crear una reunió si existeix un relació creada entre dos contactes.
+
+De cada contacte volem saber: El seu número de mòbil, que utilitzarem com a clau primària, el nom, el primer i el segon cognom, la data de naixement i el seu correu electrònic.
+
+Entre els diferents contactes, podem establir un únic tipus de vincle, que podrà ser: 
+
+Comercial (Compra-venda de productes)
+Departament (Treballen al mateix departament)
+Transport (relació amb enviament de mercaderies)
+Assessorament (De formació) 
+Altres (Relació genèrica o encara no definida)
+
+Però en un futur podriem afegir de noves.
+
+Crea la BBDD `agenda` per tenir constància dels contactes i les seves reunions.
+
+Les taules que com a mínim haurem de fer servir són:
+
+contacte
+tipusvincle
+relacio
+reunions
+
+Si fas servir d'altres, hauràs de justificar el per què.
+
+
+A partir de la BBDD agenda, es demana.
+
+1.- (30%) BBDD i estructura de les taules.
+
+He creat 4 taules en la base de dades de agenda:
+
+	la taula contacte contindra: numero_telefon(PK), nom, cognom1, cognom2, data_naixament i correu_electronic(no podra tenir la mateixa(unique))
+	
+	la taula relacio només serveix per relacionar altres taules i que contindra: id de la relació(PK i sera autoincrement), id_contacte1(que referenciara el numero de telefon de la taula contacte), id_contacte2(també es relacionara amb el numero de telefon de la taula contacte) i  id_tipus_vincle(FK a la taula tipusvincle)
+	
+	la taula reunions contindra: id de reunio(PK i sera auto_increment), id de contacte1(FK que tindra relacio amb telefon de la taula contacte), id de contacte2(FK que tindra relacio amb telefon de la taula contacte), data de reunio(amb datatime), durada de la reunio, durada de reunio(que tindra que estar entre 1 i 8 que he fet amb un check i between entre 1 i 8),tipus_reunio(que nomes podra ser presencial o telematic i ho fet amb ENUM('Presencial', 'Telemàtica')), estat(que ha de estar entre el 1 i 3, ho he fet també amb un check i between), descripcio(aqui depenent del numero del estat pot ser pendent, realitzada o no realitzada i no he entes lo que tenim que fer amb GENERATED ALWAYS que no se utilitzar, he copiat el case del arxiu de classroom) i data registre( he utilitzat el CURRENT_TIMESTAMP per posar la data)
+	
+	la taula tipusvincle contindra: el id(PK) i nom_tipus(que qui posara el tipus de vicle), he posat aquesta taula en el primer lloc per poder relacionar bé la meva base de dades.
+	
+
+2.- (10%) Crea 100 registres nous a la taula `contacte` a partir d'un arxiu.csv.
+Per obtenir les dades, pots fer servir dades obertes que es troben en bancs de dades com: https://data.world
+Generar-les a partir de webs com www.generatedata.com 
+O bé obtenirles a partir d'algun sistema d'intel·ligència artificial (hauràs d'indicar la font)
+
+
+L'arxiu tindrà un número de mòbil de contacte que començarà per 6 amb longitud 9.
+
+La data de naixement serà de tipus AnyMesDia i estarà compresa entre l'1 de gener de 1940 i el 31 de desembre de 2002.
+
+L'arxiu .csv haurà d'estar separat per tabulacions
+
+Fes captures de la web abans de l'exportació i mostra captura dels 15 primers registres o línies obtingudes en cada arxiu.
+
+	He utilitzat la pagina web generatedata.com per crear l'arxiu.csv, les captures estan en el classroom en format .png que s'anomenen dades1.png i email.png, per separar l'arxiu.csv he descaregat l'arxiu creat per la pagina i he importat per exel (per defecte la pagina ho dona separat per comes), després l'he exportat posant la opció separar per tabulacions. He fet captures de les primeres 15 registres tant en la pagina web com utilitzant load data i he entragat imatges anomenat generador_data.png a classroom.
+
+Aqui introduire el load data que he fet amb les 15 registres introduits:
+
+mysql:[root:agenda]> load data local infile '~/Escritorio/mysql/arxius_de_dades.csv' into table contacte;
+Query OK, 101 rows affected, 2 warnings (0,15 sec)
+Records: 101  Deleted: 0  Skipped: 0  Warnings: 2
+
+mysql:[root:agenda]> select * from contacte limit 15;
++----------------+-----------+------------+----------+----------------+-------------------------------+
+| numero_telefon | nom       | cognom1    | cognom2  | data_naixament | correu_electronic             |
++----------------+-----------+------------+----------+----------------+-------------------------------+
+| 601822816      | Rogan     | Mclaughlin | Ross     | 1997-12-27     | r.mclaughlin721@bcn.com       |
+| 602243415      | Kelsie    | Wilkinson  | Pollard  | 1953-07-06     | kwilkinson@gencat.edu         |
+| 604283806      | Catherine | Keller     | Cole     | 1951-09-09     | catherinekeller@gencat.com    |
+| 604301528      | Joan      | Cooper     | Hodge    | 1949-08-14     | joan-cooper7760@institut.edu  |
+| 607164652      | Yvonne    | Jenkins    | Potts    | 1954-10-19     | yvonne_jenkins2906@gencat.cat |
+| 609452732      | Laith     | Garza      | Buck     | 1943-06-08     | garza-laith3915@educacio.edu  |
+| 611214128      | Yoshio    | Graham     | Albert   | 1977-04-15     | graham.yoshio@institut.cat    |
+| 611447758      | Dean      | Gay        | Gonzales | 1987-09-22     | deangay@google.com            |
+| 611692135      | Sydney    | Abbott     | Reeves   | 1956-12-19     | sydneyabbott5037@bcn.edu      |
+| 612175489      | Latifah   | Conner     | Clayton  | 1974-07-24     | conner.latifah@educacio.com   |
+| 612749328      | Macaulay  | Best       | Gaines   | 1987-01-20     | best.macaulay@institut.cat    |
+| 614258565      | Elaine    | Hays       | Lloyd    | 1959-08-06     | e-hays1343@govern.com         |
+| 616648557      | Cheyenne  | Potter     | Padilla  | 1949-03-13     | potter_cheyenne@google.eu     |
+| 616831363      | Lenore    | Fowler     | Douglas  | 1959-12-07     | lfowler@institut.edu          |
+| 618178425      | Joel      | Jordan     | Rose     | 1943-05-12     | joel_jordan@gencat.cat        |
++----------------+-----------+------------+----------+----------------+-------------------------------+
+15 rows in set (0,00 sec)
+
+
+3.- (10%) INSERT, INSERT IGNORE, REPLACE .. tots tres serveixen per inserir regisres en una taula. Explica que fa específicament cadascún i fes un exemple pràctic a la taula `tipusvincle`.
+	
+	INSERT: serveix per inserir dades en una taula especifica i pots modificar les dades.
+	
+mysql:[root:agenda]> INSERT INTO tipusvincle (id,nom_tipus) VALUES (2,'Transport');
+Query OK, 1 row affected (0,16 sec)
+
+mysql:[root:agenda]> select * from tipusvincle;
++----+-----------+
+| id | nom_tipus |
++----+-----------+
+|  2 | Transport |
++----+-----------+
+1 row in set (0,00 sec)
+
+	INSERT IGNORE: serveix per ignorar els errors i continua amb la inserció
+	
+mysql:[root:agenda]> INSERT IGNORE INTO tipusvincle (id,nom_tipus) VALUES (2,'Comercial');
+Query OK, 0 rows affected, 1 warning (0,00 sec)
+
+mysql:[root:agenda]> INSERT IGNORE INTO tipusvincle (id,nom_tipus) VALUES (1,'Comercial');
+Query OK, 1 row affected (0,00 sec)
+
+mysql:[root:agenda]> select * from tipusvincle;
++----+-----------+
+| id | nom_tipus |
++----+-----------+
+|  1 | Comercial |
+|  2 | Transport |
++----+-----------+
+2 rows in set (0,00 sec)
+
+	REPLACE: serveix per eliminar la fila i inserir una de nova
+
+mysql:[root:agenda]> select * from tipusvincle;
++----+-----------+
+| id | nom_tipus |
++----+-----------+
+|  1 | Comercial |
+|  2 | Transport |
++----+-----------+
+2 rows in set (0,00 sec)
+
+
+mysql:[root:agenda]> REPLACE INTO tipusvincle (id,nom_tipus) VALUES (1,'Assessorament');
+Query OK, 2 rows affected (0,11 sec)
+
+mysql:[root:agenda]> select * from tipusvincle;
++----+---------------+
+| id | nom_tipus     |
++----+---------------+
+|  1 | Assessorament |
+|  2 | Transport     |
++----+---------------+
+2 rows in set (0,00 sec)
+
+
+	Com que en l'arxiu agenda_data.sql hem de introduir la carrega de dades, modificació o insercció de dades he posat dins també la part del insert.
+	
+	
+
+	
+4.- (10%) Agafa l'arxiu.csv de l'exercici 2 i carrègal en un full de càlcul (Google sheet o LibreOffice calc, preferentment). 
+
+Entra a la pàgina de l'ajuntament de Barcelona d'OpenData següent:
+
+https://opendata-ajuntament.barcelona.cat/data/es/dataset/carrecs-electes-comissionats-i-gerents
+
+a) Extreu un parell de centenars de registres en format .csv i elimina noms duplicats, quedat només amb els camps: nom, cognom1 i cognom2 i ordenals per cognom2.
+
+Substitueix els tres camps obtinguts d'OpenData pels corresponents del teu arxiu.csv extret de www.generatedata.com i renombra'l com agenda.contacte.csv
+
+Ara només et queda modificar els correus electrònics per a que siguin més realistes.
+
+	He utilitzat el llibre office per la importacio de dades, he eliminat les columnes menys el nom, cognom1 i cognom2, després he utilitzat el filtre perque el cognom2 sigui de forma ascendent, he utilitzat el filtre perque no es repeteixin i per el final he eliminat linies, amb tot aixó he creat un nou exel i he pegat els 121 registres dels 200 que tenia. He fet captures i els he anomenat sense_duplicats.png i cognom_ascendent.png
+		
+	
+b) Busca la fòrmula per concatenar l'inicial del nom amb '.' i amb el primer cognom seguit del símbol '@' i un domini aleatori entre els 7 següents.
+
+bcn.cat / educacio.edu / govern.cat /institut.edu /gencat.cat / educacio.eu / educacio.com
+
+Indica com ho has fet
+
+El resultat serà un nou arxiu agenda.contacte.csv i separat per tabulacions amb les dades modificades dels 100 contactes i mantenint la capçalera.
+
+	Per fer-ho he utilitzat la seguent comanda en el exel de drive ja que en llibre offcie no funciona, he tingut que pasar la informació a exel de drive, després exportar com a csv, el problema es que ho separa amb comes i he tingut que importar el .csv al llibreoffice i tornar a exportar a .csv separant amb tabulacions:
+	
+	=LOWER(LEFT(B2;1) & "." & C2 & "@" & 				CHOOSE(RANDBETWEEN(1;7);"bcn.cat";"educacio.edu";"govern.cat";"institut.edu";"gencat.cat";"educacio.eu";"educacio.com"))  
+	
+	Aquest comanda el que fa es posar tot en minuscula i agafar de la segona columna la primera lletra, afegir un punt, posar la 3r columna, afegir '@' i aleatoriament posa un domini que estigui dins de choose
+	
+5.- (10%) Insereix l'arxiu agenda.contacte.csv dins la taula contacte fent servir LOAD DATA i indica també quina comanda faries servir utilitzant: mysqlimport
+
+Quina ordre has fet servir i quina és la resposta del servidor, tenint en compte que farem servir -v 
+
+Fes un select que mostri els cinc primers registres junt als cinc últims de la taula contacte on l'ordenació es faci amb el camp `data_naix`.
+
+(Select * From contacte order by data_naix asc limit 5) UNION (Select * From contacte order by data_naix desc limit 5);
+
+mysql:[root:agenda]> LOAD DATA LOCAL INFILE '~/Escritorio/mysql/agenda-contacte.csv' INTO TABLE contacte;
+Query OK, 100 rows affected (0,15 sec)
+Records: 100  Deleted: 0  Skipped: 0  Warnings: 0
+
+mysql:[root:agenda]> (Select * From contacte order by data_naixament asc limit 5) UNION (Select * From contacte order by data_naixament desc limit 5);
++----------------+----------------+----------+------------+----------------+-------------------------+
+| numero_telefon | nom            | cognom1  | cognom2    | data_naixament | correu_electronic       |
++----------------+----------------+----------+------------+----------------+-------------------------+
+| 630858271      | Bàrbara        | Pons     | Giner      | 1940-07-20     | b.pons@educacio.com     |
+| 644418518      | Carolina       | López    | García     | 1940-10-27     | c.lópez@educacio.com    |
+| 665619696      | Antonio        | Muñoz    | Juncosa    | 1941-11-11     | a.muñoz@educacio.eu     |
+| 638947648      | Alba           | Calpe    | Navarro    | 1942-12-15     | a.calpe@bcn.cat         |
+| 618178425      | Adrià          | Ventura  | Ramos      | 1943-05-12     | a.ventura@educacio.com  |
+| 651658826      | David          | Langa    | Corbalán   | 2001-12-22     | d.langa@educacio.edu    |
+| 663742452      | Elisa          | Miralles | Rodríguez  | 2001-08-11     | e.miralles@gencat.cat   |
+| 659650642      | Diana Carolina | Martino  | Astrada    | 2001-07-02     | d.martino@institut.edu  |
+| 638763049      | Alejandro      | Muñoz    | Mateos     | 2001-05-29     | a.muñoz@educacio.edu    |
+| 660636747      | Alberto        | Álvarez  | Pérez      | 1999-10-20     | a.álvarez@educacio.edu  |
++----------------+----------------+----------+------------+----------------+-------------------------+
+10 rows in set (0,25 sec)
+
+
+	Faria sevir la comanda mysqlimport -u root -p -v -L --lines-terminated-by='\t' --ignore-lines=1 --verbose --columns='numero_telefon, nom, cognom1, cognom2, data_naixament, correu_electronic' agenda '~/Escritorio/mysql/contacte.csv'. Abans de posar aquesta comanda hem sortia error perque no tenia permisos per donar els permisos he tingut que anar a la carpeta i mirar si el fitxer era de usuari:usuari i sino fer un chmod usuari:usuari
+	
+usuari@debian12:~/Escritorio/mysql$ ls -l agenda-contacte.csv 
+-rw-r--r-- 1 usuari usuari 6632 feb 20 10:01 agenda-contacte.csv
+
+	Per sort esta en usuari i  lo seguent que he fet ha sigut duplicar l'arxiu amb un altre nom:
+
+usuari@debian12:~/Escritorio/mysql$ ln -s ~/Escritorio/mysql/agenda-contacte.csv contacte.csv
+	
+	Després ja hauria de poder funcionar inserint el paramere del mysqlimport
+
+usuari@debian12:~$ mysqlimport -u root -p -v -L --lines-terminated-by='\t' --verbose --columns='numero_telefon, nom, cognom1, cognom2, data_naixament, correu_electronic' agenda '~/Escritorio/mysql/contacte.csv'
+Connecting to localhost
+Enter password: 
+Selecting database agenda
+Loading data from LOCAL file: ~/Escritorio/mysql/contacte.csv into contacte
+agenda.contacte: Records: 100  Deleted: 0  Skipped: 0  Warnings: 0
+Disconnecting from localhost
+
+mysql:[root:agenda]> (Select * From contacte order by data_naixament asc limit 5) UNION (Select * From contacte order by data_naixament desc limit 5);
++----------------+----------------+----------+------------+----------------+-------------------------+
+| numero_telefon | nom            | cognom1  | cognom2    | data_naixament | correu_electronic       |
++----------------+----------------+----------+------------+----------------+-------------------------+
+| 630858271      | Bàrbara        | Pons     | Giner      | 1940-07-20     | b.pons@educacio.com     |
+| 644418518      | Carolina       | López    | García     | 1940-10-27     | c.lópez@educacio.com    |
+| 665619696      | Antonio        | Muñoz    | Juncosa    | 1941-11-11     | a.muñoz@educacio.eu     |
+| 638947648      | Alba           | Calpe    | Navarro    | 1942-12-15     | a.calpe@bcn.cat         |
+| 618178425      | Adrià          | Ventura  | Ramos      | 1943-05-12     | a.ventura@educacio.com  |
+| 651658826      | David          | Langa    | Corbalán   | 2001-12-22     | d.langa@educacio.edu    |
+| 663742452      | Elisa          | Miralles | Rodríguez  | 2001-08-11     | e.miralles@gencat.cat   |
+| 659650642      | Diana Carolina | Martino  | Astrada    | 2001-07-02     | d.martino@institut.edu  |
+| 638763049      | Alejandro      | Muñoz    | Mateos     | 2001-05-29     | a.muñoz@educacio.edu    |
+| 660636747      | Alberto        | Álvarez  | Pérez      | 1999-10-20     | a.álvarez@educacio.edu  |
++----------------+----------------+----------+------------+----------------+-------------------------+
+10 rows in set (0,02 sec)
+
+	
+6.- (30%)  Genera 100 inserts aleatoris en la taula reunions, on es compleixi què:
+
+Omplirem dades aleatories en reunions, un cop afegits les dades en contacte.
+
+
+La data de la reunió pot ser 2 mesos abans o després de la data i hora actual amb un interval de 8 hores sobre l'hora del sistema. 
+
+La durada pot ser entre 1 i 8 hores.
+
+I el tipus potser 'Presencial' o 'Telemàtica'
+
+Si la data de reunió és anterior (menor) que la data actual, vol dir que ja ha passat i per tant, el valor d'estat podria ser '0' NO o '1' SI realitzat.
+
+Si la data de reunió és posterior a la data actual, el valor d'estat només podrà ser 0.
+
+
+*** Podem fer servir un camp descripció (en la taula reunions, després d'estat, on indicar realment el que ha passat.
+El camp `descripcio` haurà de contenir la clàusula GENERATED ALWAYS AS ... consulta informació al respecte, pots trobar-la als apunts o en: https://dev.mysql.com/doc/refman/8.0/en/create-table-generated-columns.html 
+
+Escriurem 'Realitzat' quan la data de la reunió sigui anterior a l'actual i el valor d'estat sigui = 1
+
+Escriurem 'No realitzat' quan la data de la reunió sigui anterior a l'actual i el valor d'estat sigui = 0
+
+Escriurem 'Pendent' quan la data de la reunió sigui posterior a l'actual. En aquest cas el valor d'estat només hauria de ser 0
+
+
+Per obtenir un valor aleatori podem fer servir rand()
+
+Per exemple, per obtenir un número mòbil aleatori de la taula contacte:
+
+Select mobil From contacte order by rand() limit 1;
++-----------+
+| mobil     |
++-----------+
+| 643153695 |
++-----------+
+1 row in set (0.00 sec)
+
+	Primerament insertem els valors que volem introduir en la taula reunions:
+	
+INSERT INTO reunions (id_contacte1, id_contacte2, tipus_reunio, estat, data_reunio, durada_reunio)
+	
+	Després lo que he fet ha sigut un select per poder introduir numeros de telefon de la taula contacte i anomenarlo com la variable
+	
+SELECT 
+    c1.numero_telefon AS id_contacte1,
+    c2.numero_telefon AS id_contacte2 FROM contacte c1 CROSS JOIN contacte c2;
+    
+    	En la id tipus de reunio de la taula reunio, com que només pot ser presencial o telematica randomitzat perque estem creant nosaltres els valors de la taula amb el select utilitzarem una condició per fer el rand():
+
+SELECT 
+    c1.numero_telefon AS id_contacte1,
+    c2.numero_telefon AS id_contacte2 FROM contacte c1 CROSS JOIN contacte c2,
+    IF(RAND() < 0.5, 'Presencial', 'Telemàtica') AS tipus_reunio,
+    FROM 
+    contacte c1
+    CROSS JOIN contacte c2;
+    
+    En la id de l'estat que esta relacionat amb el descripció de la agenda-create.sql, habien posat que depenent de l'estat es posaba una descripció o una altra amb el case pues en l'estat només tenim que randomitzar per escullir el numero de 1 fins 3. Tenir en compte que el rand() només esta per el decimal en aquest cas tenim que assignar rangs perque sigui de valors creats. En l'enunciat posa que hauria d'estar entre 0 i 1 si la data de la reunio sigui anterior o posteriorment a la actual, pero com que la data actual es 2024 i la data de reunio com maxim esta en 2022 pues sempre sera anterior. Pos lo que he fet ha sigut que el valor sigui entre 1 i 3 i depenent del valor sigui d'una descripcio o una altra per no cambiar el .sql creat.
+    
+SELECT 
+    c1.numero_telefon AS id_contacte1,
+    c2.numero_telefon AS id_contacte2,
+    IF(RAND() < 0.5, 'Presencial', 'Telemàtica') AS tipus_reunio,
+    CASE 
+        WHEN RAND() < 0.3 THEN 1 -- Pendent
+        WHEN RAND() BETWEEN 0.3 AND 0.7 THEN 2 -- Realitzada
+        ELSE 3 -- No realitzada
+    END AS estat
+FROM 
+    contacte c1
+    CROSS JOIN contacte c2;
+    
+	En la data de reunio he posat un rand d'entre les dates '2022-12-31' i '2022-01-01', he copiat de la funcio del classroom ja que estaba fet. El unic defecte es que la hora no es randomitza i sempre es queda amb 0
+	
+DATE_ADD('2022-01-01', INTERVAL FLOOR(RAND() * DATEDIFF('2022-12-31', '2022-01-01')) DAY) AS data_reunio
+
+	En la durada de la reunio he posat un altre rand entre 1 i 8 hores.
+	
+FLOOR(RAND() * 8) + 1 AS durada_reunio
+
+	L'he randomitzat l'ordre i he posat que el registre creat sigui de 100 registres i no més:
+
+ORDER BY RAND()
+LIMIT 100
+
+	He insertat el insert i el select en l'arxiu agenda-data.sql que esta en classroom
+	
+    
+    
+    

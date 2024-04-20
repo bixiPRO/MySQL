@@ -1,0 +1,606 @@
+BBDD vendesK21
+Bixiang Zhu
+1r ASIX
+
+*** Consultes ***
+
+
+1.- Quina és la comanda i el seu valor (sense aplicar ni IVA ni descompte) que té el mínim import total de comanda.
+
+
+mysql> SELECT num_comanda, SUM(quantitat * preu) as import_total FROM detall GROUP BY num_comanda HAVING import_total>0 ORDER BY import_total ASC limit 1;
++-------------+--------------+
+| num_comanda | import_total |
++-------------+--------------+
+|      113083 |       150.00 |
++-------------+--------------+
+1 row in set (0,00 sec)
+
+
+2.- A quina Societat i a quin nom de venedor, pertany la comanda de major import. Projecta també el número de comanda.
+
+
+mysql> SELECT c.societat, v.nom, co.num_comanda FROM comandes co JOIN clients c ON(co.clie=c.num_clie) JOIN
+venedors v ON (co.ven=v.num_ven) JOIN detall d ON(co.num_comanda=d.num_comanda) GROUP BY co.num_comanda ORDER BY SUM(d.quantitat*d.preu) DESC limit 1;
++-----------------+-------------+-------------+
+| societat        | nom         | num_comanda |
++-----------------+-------------+-------------+
+| Midwest Systems | Larry Fitch |      113101 |
++-----------------+-------------+-------------+
+1 row in set (0,00 sec)
+
+
+3.- Quina és la comanda i el número de productes que s'han comprat, en la comanda que més productes diferents ha comprat.
+
+
+mysql> SELECT d.num_comanda, COUNT(DISTINCT p.id_producte) AS numero_productes FROM detall d JOIN productes p ON(d.producte=p.id_producte) GROUP BY d.num_comanda ORDER BY numero_productes DESC limit 1;
++-------------+------------------+
+| num_comanda | numero_productes |
++-------------+------------------+
+|      113100 |                7 |
++-------------+------------------+
+1 row in set (0,21 sec)
+
+
+4.- Quina és la comanda/es, el fabricant i la quantitat de productes comprats, ordenats de menys a més, de les comandes que tenen més de 3 productes del fabricant 'bio'.
+
+
+mysql> SELECT num_comanda, fab, quantitat FROM detall WHERE fab='bio' and quantitat>3 ORDER BY quantitat ASC;
++-------------+-----+-----------+
+| num_comanda | fab | quantitat |
++-------------+-----+-----------+
+|      113074 | bio |         4 |
+|      113099 | bio |         4 |
+|      113070 | bio |         5 |
+|      113099 | bio |         6 |
+|      113099 | bio |         7 |
+|      113072 | bio |         8 |
+|      113077 | bio |         8 |
+|      113081 | bio |         8 |
+|      113087 | bio |         9 |
+|      113077 | bio |        10 |
+|      113074 | bio |        10 |
+|      113198 | bio |        10 |
+|      113235 | bio |        11 |
+|      113071 | bio |        12 |
+|      113070 | bio |        15 |
+|      113076 | bio |        16 |
+|      113078 | bio |        18 |
+|      113154 | bio |        21 |
+|      113134 | bio |        24 |
+|      113070 | bio |        25 |
+|      113227 | bio |        25 |
+|      113113 | bio |        27 |
+|      113109 | bio |        28 |
+|      113198 | bio |        29 |
+|      113144 | bio |        32 |
+|      113075 | bio |        40 |
+|      113141 | bio |        43 |
+|      113223 | bio |        47 |
+|      113201 | bio |        47 |
+|      113075 | bio |        50 |
+|      113237 | bio |        50 |
+|      113222 | bio |        51 |
+|      113209 | bio |        55 |
+|      113119 | bio |        57 |
+|      113203 | bio |        78 |
+|      113126 | bio |        84 |
+|      113111 | bio |        86 |
+|      113151 | bio |       103 |
+|      113199 | bio |       116 |
+|      113121 | bio |       120 |
+|      113175 | bio |       121 |
+|      113135 | bio |       146 |
+|      113128 | bio |       149 |
+|      113184 | bio |       151 |
+|      113187 | bio |       154 |
+|      113177 | bio |       156 |
+|      113161 | bio |       165 |
+|      113194 | bio |       180 |
+|      113185 | bio |       185 |
+|      113128 | bio |       195 |
+|      113135 | bio |       213 |
+|      113220 | bio |       215 |
+|      113223 | bio |       231 |
+|      113230 | bio |       236 |
+|      113133 | bio |       247 |
+|      113103 | bio |       247 |
+|      113179 | bio |       254 |
+|      113195 | bio |       258 |
+|      113236 | bio |       272 |
+|      113127 | bio |       276 |
+|      113156 | bio |       278 |
+|      113209 | bio |       305 |
+|      113188 | bio |       315 |
+|      113133 | bio |       323 |
+|      113213 | bio |       324 |
+|      113213 | bio |       325 |
+|      113150 | bio |       325 |
+|      113130 | bio |       343 |
+|      113205 | bio |       358 |
+|      113211 | bio |       362 |
+|      113139 | bio |       369 |
+|      113225 | bio |       371 |
+|      113162 | bio |       373 |
+|      113167 | bio |       385 |
+|      113126 | bio |       414 |
+|      113190 | bio |       419 |
+|      113203 | bio |       439 |
+|      113102 | bio |       456 |
+|      113225 | bio |       474 |
+|      113181 | bio |       481 |
+|      113221 | bio |       487 |
+|      113187 | bio |       506 |
+|      113146 | bio |       541 |
+|      113144 | bio |       546 |
+|      113168 | bio |       559 |
+|      113207 | bio |       575 |
+|      113217 | bio |       578 |
+|      113224 | bio |       584 |
+|      113218 | bio |       601 |
+|      113148 | bio |       607 |
+|      113195 | bio |       623 |
+|      113189 | bio |       625 |
+|      113227 | bio |       634 |
+|      113113 | bio |       704 |
+|      113206 | bio |       746 |
+|      113120 | bio |       753 |
+|      113209 | bio |       771 |
+|      113202 | bio |       788 |
+|      113230 | bio |       831 |
+|      113149 | bio |       848 |
+|      113185 | bio |       880 |
+|      113102 | bio |       889 |
+|      113225 | bio |       908 |
+|      113105 | bio |       927 |
+|      113171 | bio |       950 |
+|      113175 | bio |       981 |
+|      113150 | bio |      1015 |
+|      113109 | bio |      1060 |
+|      113237 | bio |      1077 |
+|      113145 | bio |      1087 |
+|      113213 | bio |      1087 |
+|      113236 | bio |      1105 |
+|      113162 | bio |      1134 |
+|      113104 | bio |      1155 |
+|      113236 | bio |      1161 |
+|      113239 | bio |      1226 |
+|      113133 | bio |      1253 |
+|      113127 | bio |      1290 |
+|      113216 | bio |      1299 |
+|      113117 | bio |      1299 |
+|      113148 | bio |      1350 |
+|      113172 | bio |      1406 |
+|      113160 | bio |      1493 |
+|      113101 | bio |      1497 |
+|      113100 | bio |      1527 |
+|      113169 | bio |      1554 |
+|      113196 | bio |      1579 |
+|      113236 | bio |      1586 |
+|      113224 | bio |      1637 |
+|      113126 | bio |      1756 |
+|      113134 | bio |      1811 |
+|      113233 | bio |      1900 |
+|      113222 | bio |      2134 |
+|      113190 | bio |      2225 |
+|      113108 | bio |      2369 |
++-------------+-----+-----------+
+135 rows in set (0,00 sec)
+
+
+5.- Quines són les comandes, nom de venedor, societat i quantitat dels diferents productes de cada línia de detall, en les que el número dels diferents productes adquirits és major que 6 i no els ha venut ni Bill Adams, ni Dan Roberts ni tampoc la Nancy Angelli.
+
+
+mysql> SELECT co.num_comanda, v.nom, c.societat, d.quantitat FROM comandes co JOIN venedors v ON(co.ven=v.num_ven) JOIN clients c ON(co.clie=c.num_clie) JOIN detall d ON(co.num_comanda=d.num_comanda) WHERE v.nom NOT
+IN ('Bill Adams', 'Dan Roberts', 'Nancy Angelli') AND d.quantitat>6 GROUP BY co.num_comanda, v.nom, c.societ
+at, d.quantitat;
++-------------+-------------+-------------------+-----------+
+| num_comanda | nom         | societat          | quantitat |
++-------------+-------------+-------------------+-----------+
+|      112993 | Sue Smith   | Fred Lewis Corp.  |        24 |
+|      113074 | Sue Smith   | Orion Corp        |        10 |
+|      113079 | Sue Smith   | Fred Lewis Corp.  |        10 |
+|      113090 | Sue Smith   | Rico Enterprises  |        42 |
+|      113090 | Sue Smith   | Rico Enterprises  |        14 |
+|      113097 | Sue Smith   | Fred Lewis Corp.  |        20 |
+|      113097 | Sue Smith   | Fred Lewis Corp.  |        12 |
+|      113115 | Sue Smith   | Ace International |        37 |
+|      113115 | Sue Smith   | Ace International |        12 |
+|      113155 | Sue Smith   | Orion Corp        |       280 |
+|      113162 | Sue Smith   | Pfizer-Biontech   |       190 |
+|      113162 | Sue Smith   | Pfizer-Biontech   |        27 |
+|      113162 | Sue Smith   | Pfizer-Biontech   |       373 |
+|      113162 | Sue Smith   | Pfizer-Biontech   |      1134 |
+|      113162 | Sue Smith   | Pfizer-Biontech   |        26 |
+|      113162 | Sue Smith   | Pfizer-Biontech   |        38 |
+|      113163 | Sue Smith   | First Corp        |        72 |
+|      113163 | Sue Smith   | First Corp        |       221 |
+|      113163 | Sue Smith   | First Corp        |        13 |
+|      113163 | Sue Smith   | First Corp        |       341 |
+|      113163 | Sue Smith   | First Corp        |        19 |
+|      113163 | Sue Smith   | First Corp        |       239 |
+|      113166 | Sue Smith   | Fred Lewis Corp.  |        36 |
+|      113166 | Sue Smith   | Fred Lewis Corp.  |       183 |
+|      113168 | Sue Smith   | Fred Lewis Corp.  |        54 |
+|      113168 | Sue Smith   | Fred Lewis Corp.  |       122 |
+|      113168 | Sue Smith   | Fred Lewis Corp.  |       559 |
+|      113168 | Sue Smith   | Fred Lewis Corp.  |        11 |
+|      113168 | Sue Smith   | Fred Lewis Corp.  |       259 |
+|      113168 | Sue Smith   | Fred Lewis Corp.  |       371 |
+|      113169 | Sue Smith   | Fred Lewis Corp.  |        44 |
+|      113169 | Sue Smith   | Fred Lewis Corp.  |      1554 |
+|      113169 | Sue Smith   | Fred Lewis Corp.  |        31 |
+|      113169 | Sue Smith   | Fred Lewis Corp.  |       320 |
+|      113169 | Sue Smith   | Fred Lewis Corp.  |         8 |
+|      113172 | Sue Smith   | Pfizer-Biontech   |       184 |
+|      113172 | Sue Smith   | Pfizer-Biontech   |      1406 |
+|      113180 | Sue Smith   | First Corp        |       269 |
+|      113221 | Sue Smith   | Peter Brothers    |       487 |
+|      113221 | Sue Smith   | Peter Brothers    |        13 |
+|      113221 | Sue Smith   | Peter Brothers    |        15 |
+|      113222 | Sue Smith   | Fred Lewis Corp.  |       155 |
+|      113222 | Sue Smith   | Fred Lewis Corp.  |      2134 |
+|      113222 | Sue Smith   | Fred Lewis Corp.  |        51 |
+|      113222 | Sue Smith   | Fred Lewis Corp.  |       356 |
+|      113228 | Sue Smith   | Holm & Landis     |        25 |
+|      113228 | Sue Smith   | Holm & Landis     |       279 |
+|      113233 | Sue Smith   | Zetacorp          |      1900 |
+|      113234 | Sue Smith   | Rico Enterprises  |         8 |
+|      112975 | Paul Cruz   | JCP Inc           |        10 |
+|      113057 | Paul Cruz   | JCP Inc           |        24 |
+|      113108 | Paul Cruz   | Peter Brothers    |         7 |
+|      113108 | Paul Cruz   | Peter Brothers    |      2369 |
+|      113108 | Paul Cruz   | Peter Brothers    |        27 |
+|      113108 | Paul Cruz   | Peter Brothers    |        10 |
+|      113109 | Paul Cruz   | Zetacorp          |       111 |
+|      113109 | Paul Cruz   | Zetacorp          |        53 |
+|      113109 | Paul Cruz   | Zetacorp          |      1060 |
+|      113109 | Paul Cruz   | Zetacorp          |        28 |
+|      113116 | Paul Cruz   | J.P. Sinclair     |        68 |
+|      113125 | Paul Cruz   | Orion Corp        |        39 |
+|      113145 | Paul Cruz   | Peter Brothers    |      1087 |
+|      113151 | Paul Cruz   | JCP Inc           |        52 |
+|      113151 | Paul Cruz   | JCP Inc           |       103 |
+|      113151 | Paul Cruz   | JCP Inc           |        48 |
+|      113151 | Paul Cruz   | JCP Inc           |        19 |
+|      113165 | Paul Cruz   | Midwest Systems   |        23 |
+|      113188 | Paul Cruz   | First Corp        |       315 |
+|      113205 | Paul Cruz   | Orion Corp        |       438 |
+|      113205 | Paul Cruz   | Orion Corp        |       358 |
+|      113205 | Paul Cruz   | Orion Corp        |        43 |
+|      113205 | Paul Cruz   | Orion Corp        |       100 |
+|      113213 | Paul Cruz   | Peter Brothers    |       325 |
+|      113213 | Paul Cruz   | Peter Brothers    |       324 |
+|      113213 | Paul Cruz   | Peter Brothers    |      1087 |
+|      113213 | Paul Cruz   | Peter Brothers    |         9 |
+|      113238 | Paul Cruz   | Solomon Inc       |       147 |
+|      113110 | Bob Smith   | Ace International |       229 |
+|      113110 | Bob Smith   | Ace International |        15 |
+|      113110 | Bob Smith   | Ace International |        19 |
+|      113130 | Bob Smith   | Orion Corp        |       188 |
+|      113130 | Bob Smith   | Orion Corp        |        18 |
+|      113130 | Bob Smith   | Orion Corp        |       343 |
+|      113130 | Bob Smith   | Orion Corp        |       335 |
+|      113130 | Bob Smith   | Orion Corp        |        17 |
+|      113146 | Bob Smith   | Rico Enterprises  |       143 |
+|      113146 | Bob Smith   | Rico Enterprises  |        31 |
+|      113146 | Bob Smith   | Rico Enterprises  |       197 |
+|      113146 | Bob Smith   | Rico Enterprises  |       541 |
+|      113146 | Bob Smith   | Rico Enterprises  |       225 |
+|      113170 | Bob Smith   | Orion Corp        |        40 |
+|      113170 | Bob Smith   | Orion Corp        |        21 |
+|      113175 | Bob Smith   | Fred Lewis Corp.  |        57 |
+|      113175 | Bob Smith   | Fred Lewis Corp.  |       981 |
+|      113175 | Bob Smith   | Fred Lewis Corp.  |       121 |
+|      113175 | Bob Smith   | Fred Lewis Corp.  |        11 |
+|      113175 | Bob Smith   | Fred Lewis Corp.  |        82 |
+|      113185 | Bob Smith   | Rico Enterprises  |        30 |
+|      113185 | Bob Smith   | Rico Enterprises  |       880 |
+|      113185 | Bob Smith   | Rico Enterprises  |       185 |
+|      113185 | Bob Smith   | Rico Enterprises  |       196 |
+|      113185 | Bob Smith   | Rico Enterprises  |        29 |
+|      113185 | Bob Smith   | Rico Enterprises  |        17 |
+|      113192 | Bob Smith   | Carter & Sons     |       192 |
+|      113192 | Bob Smith   | Carter & Sons     |        93 |
+|      113192 | Bob Smith   | Carter & Sons     |        43 |
+|      113204 | Bob Smith   | First Corp        |       155 |
+|      113204 | Bob Smith   | First Corp        |         7 |
+|      113204 | Bob Smith   | First Corp        |        15 |
+|      113204 | Bob Smith   | First Corp        |        14 |
+|      113204 | Bob Smith   | First Corp        |        66 |
+|      113206 | Bob Smith   | QMA Assoc         |       746 |
+|      113212 | Bob Smith   | Chen Associates   |       150 |
+|      113212 | Bob Smith   | Chen Associates   |        25 |
+|      113232 | Bob Smith   | Ace International |        17 |
+|      113077 | Sam Clark   | Jones Mfg         |        10 |
+|      113077 | Sam Clark   | Jones Mfg         |         8 |
+|      113095 | Sam Clark   | Jones Mfg         |        15 |
+|      113103 | Sam Clark   | Pfizer-Biontech   |       144 |
+|      113103 | Sam Clark   | Pfizer-Biontech   |        24 |
+|      113103 | Sam Clark   | Pfizer-Biontech   |       247 |
+|      113103 | Sam Clark   | Pfizer-Biontech   |         7 |
+|      113103 | Sam Clark   | Pfizer-Biontech   |        11 |
+|      113111 | Sam Clark   | Jones Mfg         |        39 |
+|      113111 | Sam Clark   | Jones Mfg         |        86 |
+|      113113 | Sam Clark   | First Corp        |       436 |
+|      113113 | Sam Clark   | First Corp        |        49 |
+|      113113 | Sam Clark   | First Corp        |       704 |
+|      113113 | Sam Clark   | First Corp        |        27 |
+|      113113 | Sam Clark   | First Corp        |        14 |
+|      113114 | Sam Clark   | Carter & Sons     |        31 |
+|      113118 | Sam Clark   | Rico Enterprises  |        21 |
+|      113118 | Sam Clark   | Rico Enterprises  |        38 |
+|      113118 | Sam Clark   | Rico Enterprises  |        22 |
+|      113118 | Sam Clark   | Rico Enterprises  |        27 |
+|      113122 | Sam Clark   | Zetacorp          |       424 |
+|      113122 | Sam Clark   | Zetacorp          |       146 |
+|      113128 | Sam Clark   | Orion Corp        |       135 |
+|      113128 | Sam Clark   | Orion Corp        |       149 |
+|      113128 | Sam Clark   | Orion Corp        |       195 |
+|      113128 | Sam Clark   | Orion Corp        |       366 |
+|      113128 | Sam Clark   | Orion Corp        |         9 |
+|      113129 | Sam Clark   | Rico Enterprises  |       209 |
+|      113129 | Sam Clark   | Rico Enterprises  |        12 |
+|      113129 | Sam Clark   | Rico Enterprises  |        34 |
+|      113142 | Sam Clark   | JCP Inc           |        21 |
+|      113159 | Sam Clark   | Peter Brothers    |       112 |
+|      113161 | Sam Clark   | QMA Assoc         |        24 |
+|      113161 | Sam Clark   | QMA Assoc         |       165 |
+|      113161 | Sam Clark   | QMA Assoc         |        11 |
+|      113161 | Sam Clark   | QMA Assoc         |         8 |
+|      113181 | Sam Clark   | Fred Lewis Corp.  |        45 |
+|      113181 | Sam Clark   | Fred Lewis Corp.  |       481 |
+|      113181 | Sam Clark   | Fred Lewis Corp.  |        25 |
+|      113182 | Sam Clark   | Pfizer-Biontech   |        73 |
+|      113182 | Sam Clark   | Pfizer-Biontech   |        14 |
+|      113182 | Sam Clark   | Pfizer-Biontech   |         9 |
+|      113182 | Sam Clark   | Pfizer-Biontech   |        35 |
+|      113196 | Sam Clark   | QMA Assoc         |        23 |
+|      113196 | Sam Clark   | QMA Assoc         |      1579 |
+|      113196 | Sam Clark   | QMA Assoc         |       315 |
+|      113223 | Sam Clark   | JCP Inc           |        47 |
+|      113223 | Sam Clark   | JCP Inc           |       231 |
+|      113223 | Sam Clark   | JCP Inc           |        10 |
+|      113229 | Sam Clark   | Carter & Sons     |        27 |
+|      112992 | Larry Fitch | Midwest Systems   |        10 |
+|      113024 | Larry Fitch | Orion Corp        |        20 |
+|      113045 | Larry Fitch | Zetacorp          |        10 |
+|      113045 | Larry Fitch | Zetacorp          |        30 |
+|      113078 | Larry Fitch | Midwest Systems   |        18 |
+|      113082 | Larry Fitch | Zetacorp          |        80 |
+|      113084 | Larry Fitch | Midwest Systems   |        14 |
+|      113085 | Larry Fitch | Orion Corp        |         9 |
+|      113089 | Larry Fitch | Zetacorp          |        21 |
+|      113089 | Larry Fitch | Zetacorp          |        30 |
+|      113091 | Larry Fitch | Midwest Systems   |        32 |
+|      113092 | Larry Fitch | Midwest Systems   |        12 |
+|      113101 | Larry Fitch | Midwest Systems   |        66 |
+|      113101 | Larry Fitch | Midwest Systems   |        78 |
+|      113101 | Larry Fitch | Midwest Systems   |      1497 |
+|      113101 | Larry Fitch | Midwest Systems   |       313 |
+|      113101 | Larry Fitch | Midwest Systems   |        19 |
+|      113123 | Larry Fitch | Carter & Sons     |        13 |
+|      113134 | Larry Fitch | Rico Enterprises  |       322 |
+|      113134 | Larry Fitch | Rico Enterprises  |       122 |
+|      113134 | Larry Fitch | Rico Enterprises  |      1811 |
+|      113134 | Larry Fitch | Rico Enterprises  |        24 |
+|      113134 | Larry Fitch | Rico Enterprises  |         9 |
+|      113134 | Larry Fitch | Rico Enterprises  |        18 |
+|      113138 | Larry Fitch | QMA Assoc         |       394 |
+|      113138 | Larry Fitch | QMA Assoc         |       104 |
+|      113138 | Larry Fitch | QMA Assoc         |         7 |
+|      113139 | Larry Fitch | QMA Assoc         |       369 |
+|      113139 | Larry Fitch | QMA Assoc         |       126 |
+|      113139 | Larry Fitch | QMA Assoc         |       102 |
+|      113139 | Larry Fitch | QMA Assoc         |        44 |
+|      113152 | Larry Fitch | AAA Investments   |        74 |
+|      113152 | Larry Fitch | AAA Investments   |         8 |
+|      113153 | Larry Fitch | Pfizer-Biontech   |        38 |
+|      113153 | Larry Fitch | Pfizer-Biontech   |        64 |
+|      113153 | Larry Fitch | Pfizer-Biontech   |        65 |
+|      113153 | Larry Fitch | Pfizer-Biontech   |       253 |
+|      113153 | Larry Fitch | Pfizer-Biontech   |        60 |
+|      113154 | Larry Fitch | JCP Inc           |        29 |
+|      113154 | Larry Fitch | JCP Inc           |        21 |
+|      113154 | Larry Fitch | JCP Inc           |        60 |
+|      113154 | Larry Fitch | JCP Inc           |        19 |
+|      113179 | Larry Fitch | Solomon Inc       |       254 |
+|      113184 | Larry Fitch | First Corp        |       578 |
+|      113184 | Larry Fitch | First Corp        |       497 |
+|      113184 | Larry Fitch | First Corp        |       151 |
+|      113184 | Larry Fitch | First Corp        |        10 |
+|      113184 | Larry Fitch | First Corp        |       446 |
+|      113184 | Larry Fitch | First Corp        |         7 |
+|      113197 | Larry Fitch | Chen Associates   |       172 |
+|      113200 | Larry Fitch | Peter Brothers    |        47 |
+|      113200 | Larry Fitch | Peter Brothers    |       425 |
+|      113203 | Larry Fitch | Chen Associates   |        38 |
+|      113203 | Larry Fitch | Chen Associates   |       439 |
+|      113203 | Larry Fitch | Chen Associates   |        78 |
+|      113203 | Larry Fitch | Chen Associates   |        29 |
+|      113207 | Larry Fitch | QMA Assoc         |        47 |
+|      113207 | Larry Fitch | QMA Assoc         |       575 |
+|      113207 | Larry Fitch | QMA Assoc         |        18 |
+|      113207 | Larry Fitch | QMA Assoc         |       241 |
+|      113211 | Larry Fitch | Carter & Sons     |        69 |
+|      113211 | Larry Fitch | Carter & Sons     |       362 |
+|      113211 | Larry Fitch | Carter & Sons     |       193 |
+|      113211 | Larry Fitch | Carter & Sons     |        16 |
+|      113215 | Larry Fitch | Peter Brothers    |        64 |
+|      113217 | Larry Fitch | Jones Mfg         |       578 |
+|      113058 | Mary Jones  | Holm & Landis     |        10 |
+|      113081 | Mary Jones  | Holm & Landis     |        10 |
+|      113081 | Mary Jones  | Holm & Landis     |         8 |
+|      113121 | Mary Jones  | AAA Investments   |       120 |
+|      113121 | Mary Jones  | AAA Investments   |         9 |
+|      113121 | Mary Jones  | AAA Investments   |        21 |
+|      113132 | Mary Jones  | Chen Associates   |       206 |
+|      113148 | Mary Jones  | Midwest Systems   |       607 |
+|      113148 | Mary Jones  | Midwest Systems   |      1350 |
+|      113148 | Mary Jones  | Midwest Systems   |       316 |
+|      113148 | Mary Jones  | Midwest Systems   |        10 |
+|      113171 | Mary Jones  | First Corp        |        64 |
+|      113171 | Mary Jones  | First Corp        |       950 |
+|      113171 | Mary Jones  | First Corp        |        16 |
+|      113186 | Mary Jones  | Chen Associates   |        34 |
+|      113186 | Mary Jones  | Chen Associates   |        29 |
+|      113187 | Mary Jones  | Jones Mfg         |       318 |
+|      113187 | Mary Jones  | Jones Mfg         |       126 |
+|      113187 | Mary Jones  | Jones Mfg         |       154 |
+|      113187 | Mary Jones  | Jones Mfg         |       506 |
+|      113187 | Mary Jones  | Jones Mfg         |         8 |
+|      113187 | Mary Jones  | Jones Mfg         |        23 |
+|      113187 | Mary Jones  | Jones Mfg         |        19 |
+|      113195 | Mary Jones  | Zetacorp          |        22 |
+|      113195 | Mary Jones  | Zetacorp          |        38 |
+|      113195 | Mary Jones  | Zetacorp          |       258 |
+|      113195 | Mary Jones  | Zetacorp          |       623 |
+|      113195 | Mary Jones  | Zetacorp          |        69 |
+|      113210 | Mary Jones  | Peter Brothers    |        24 |
+|      113210 | Mary Jones  | Peter Brothers    |        42 |
+|      113210 | Mary Jones  | Peter Brothers    |        16 |
+|      113210 | Mary Jones  | Peter Brothers    |        30 |
+|      113216 | Mary Jones  | Ian & Schmidt     |        16 |
+|      113216 | Mary Jones  | Ian & Schmidt     |        41 |
+|      113216 | Mary Jones  | Ian & Schmidt     |        35 |
+|      113216 | Mary Jones  | Ian & Schmidt     |      1299 |
+|      113239 | Mary Jones  | Rico Enterprises  |       120 |
+|      113239 | Mary Jones  | Rico Enterprises  |      1226 |
+|      113239 | Mary Jones  | Rico Enterprises  |        15 |
+|      113239 | Mary Jones  | Rico Enterprises  |        22 |
+|      113034 | Tom Snyder  | Ace International |         8 |
+|      113087 | Tom Snyder  | Ace International |         9 |
+|      113087 | Tom Snyder  | Ace International |        15 |
+|      113117 | Tom Snyder  | Midwest Systems   |       189 |
+|      113117 | Tom Snyder  | Midwest Systems   |        29 |
+|      113117 | Tom Snyder  | Midwest Systems   |      1299 |
+|      113117 | Tom Snyder  | Midwest Systems   |        87 |
+|      113120 | Tom Snyder  | J.P. Sinclair     |        57 |
+|      113120 | Tom Snyder  | J.P. Sinclair     |        31 |
+|      113120 | Tom Snyder  | J.P. Sinclair     |        75 |
+|      113120 | Tom Snyder  | J.P. Sinclair     |       753 |
+|      113120 | Tom Snyder  | J.P. Sinclair     |       408 |
+|      113120 | Tom Snyder  | J.P. Sinclair     |        24 |
+|      113120 | Tom Snyder  | J.P. Sinclair     |        35 |
+|      113141 | Tom Snyder  | Ian & Schmidt     |       763 |
+|      113141 | Tom Snyder  | Ian & Schmidt     |        38 |
+|      113141 | Tom Snyder  | Ian & Schmidt     |        43 |
+|      113150 | Tom Snyder  | Holm & Landis     |        11 |
+|      113150 | Tom Snyder  | Holm & Landis     |       325 |
+|      113150 | Tom Snyder  | Holm & Landis     |      1015 |
+|      113156 | Tom Snyder  | Zetacorp          |       278 |
+|      113156 | Tom Snyder  | Zetacorp          |       138 |
+|      113194 | Tom Snyder  | Rico Enterprises  |       119 |
+|      113194 | Tom Snyder  | Rico Enterprises  |       180 |
+|      113194 | Tom Snyder  | Rico Enterprises  |       453 |
+|      113220 | Tom Snyder  | Smithson Corp     |       215 |
+|      113237 | Tom Snyder  | JCP Inc           |       142 |
+|      113237 | Tom Snyder  | JCP Inc           |        50 |
+|      113237 | Tom Snyder  | JCP Inc           |      1077 |
+|      113237 | Tom Snyder  | JCP Inc           |        24 |
+|      113237 | Tom Snyder  | JCP Inc           |        10 |
++-------------+-------------+-------------------+-----------+
+302 rows in set (0,10 sec)
+
+
+6.- Quins son les dades dels productes i les línies de detall, de les comandes on la quantitat venuda de cop d'un producte és 50 uds.
+
+
+mysql> SELECT p.*, d.* from detall d JOIN productes p ON(d.fab=p.id_fab) WHERE d.quantitat=50;
++--------+-------------+-------------------+--------+-------+------------+----------------+-------------+-----+----------+-----------+--------+
+| id_fab | id_producte | descripcio        | preu   | stock | datamod    | imatge         | num_comanda | fab | producte | quantitat | preu   |
++--------+-------------+-------------------+--------+-------+------------+----------------+-------------+-----+----------+-----------+--------+
+| bio    | 110         | Pipeta serologica |  82.50 |  2295 | 2021-01-25 | pipsero.png    |      113075 | bio | 111      |        50 |  95.00 |
+| bio    | 111         | Pipeta de Shali   | 142.50 |   419 | 2021-01-25 | pipShali.png   |      113075 | bio | 111      |        50 |  95.00 |
+| bio    | 112         | Pipeta 3 vias     | 127.50 |   729 | 2021-01-25 | pip3vias.png   |      113075 | bio | 111      |        50 |  95.00 |
+| bio    | 113         | Pipeta de Thomas  |  96.00 |  2661 | 2021-01-25 | pipThomas.png  |      113075 | bio | 111      |        50 |  95.00 |
+| bio    | 114         | Mechero Bunsen    |  54.00 |   360 | 2021-01-25 | bunKemper.png  |      113075 | bio | 111      |        50 |  95.00 |
+| bio    | 41001       | Tubo ensayo c/250 |  30.00 |  1173 | 2021-01-25 | tubensc250.png |      113075 | bio | 111      |        50 |  95.00 |
+| bio    | 41002       | Tubo ensayo c/150 |  22.50 |   852 | 2021-01-25 | tubensc150.png |      113075 | bio | 111      |        50 |  95.00 |
+| bio    | 41003       | Pipeta Pasteur    |  60.00 |  1714 | 2021-01-25 | pippast.png    |      113075 | bio | 111      |        50 |  95.00 |
+| qsa    | xk47        | Reductor          | 532.50 |    24 | 2021-01-08 | noimatge.png   |      113105 | qsa | xk48a    |        50 | 175.50 |
+| qsa    | xk48        | Reductor          | 201.00 |   351 | 2021-01-08 | noimatge.png   |      113105 | qsa | xk48a    |        50 | 175.50 |
+| qsa    | xk48a       | Reductor          | 175.50 |    75 | 2021-01-08 | noimatge.png   |      113105 | qsa | xk48a    |        50 | 175.50 |
+| bio    | 110         | Pipeta serologica |  82.50 |  2295 | 2021-01-25 | pipsero.png    |      113237 | bio | 111      |        50 | 142.50 |
+| bio    | 111         | Pipeta de Shali   | 142.50 |   419 | 2021-01-25 | pipShali.png   |      113237 | bio | 111      |        50 | 142.50 |
+| bio    | 112         | Pipeta 3 vias     | 127.50 |   729 | 2021-01-25 | pip3vias.png   |      113237 | bio | 111      |        50 | 142.50 |
+| bio    | 113         | Pipeta de Thomas  |  96.00 |  2661 | 2021-01-25 | pipThomas.png  |      113237 | bio | 111      |        50 | 142.50 |
+| bio    | 114         | Mechero Bunsen    |  54.00 |   360 | 2021-01-25 | bunKemper.png  |      113237 | bio | 111      |        50 | 142.50 |
+| bio    | 41001       | Tubo ensayo c/250 |  30.00 |  1173 | 2021-01-25 | tubensc250.png |      113237 | bio | 111      |        50 | 142.50 |
+| bio    | 41002       | Tubo ensayo c/150 |  22.50 |   852 | 2021-01-25 | tubensc150.png |      113237 | bio | 111      |        50 | 142.50 |
+| bio    | 41003       | Pipeta Pasteur    |  60.00 |  1714 | 2021-01-25 | pippast.png    |      113237 | bio | 111      |        50 | 142.50 |
++--------+-------------+-------------------+--------+-------+------------+----------------+-------------+-----+----------+-----------+--------+
+19 rows in set (0,00 sec)
+
+
+7.- Projecta el nom de cada venedor i el total de les vendes, ordenades de més a menys import total de vendes.
+
+
+mysql> SELECT v.nom, SUM(v.vendes) AS total_vendes FROM venedors v JOIN comandes c ON(v.num_ven=c.ven) JOIN detall d ON(c.num_comanda=d.num_comanda) GROUP BY v.nom ORDER BY SUM(d.quantitat*d.preu) DESC;
++---------------+--------------+
+| nom           | total_vendes |
++---------------+--------------+
+| Dan Roberts   |     29789508 |
+| Larry Fitch   |     36230921 |
+| Bill Adams    |     32547358 |
+| Sue Smith     |     37245952 |
+| Nancy Angelli |     15279785 |
+| Sam Clark     |     21507093 |
+| Mary Jones    |     20108025 |
+| Bob Smith     |      7129700 |
+| Tom Snyder    |      3470502 |
+| Paul Cruz     |     13031730 |
++---------------+--------------+
+10 rows in set (0,19 sec)
+
+
+8.- Quines són les dades dels venedors dels que desconeixem les quotes assignades.
+
+
+mysql> SELECT * FROM venedors WHERE quota IS NULL;
++---------+------------+----------+-------------+---------+------------+----------+-------+--------+
+| num_ven | nom        | any_naix | oficina_ven | titol   | contracte  | director | quota | vendes |
++---------+------------+----------+-------------+---------+------------+----------+-------+--------+
+|     110 | Tom Snyder |     1970 |        NULL | Venedor | 1990-01-13 |      101 |  NULL |  91329 |
++---------+------------+----------+-------------+---------+------------+----------+-------+--------+
+1 row in set (0,00 sec)
+
+
+9.- Quins han estat els cinc productes dels que s'han venut, més número d'unitats de producte en el total de les comandes i que cap no pertany al fabricant 'bio'. Projecta el fabricant, producte i número d'unitats totals venudes de més a menys.
+
+
+mysql> SELECT fab, producte, SUM(quantitat) AS total_unitat_venudes FROM detall WHERE fab !='bio'
+GROUP BY fab, producte ORDER BY total_unitat_venudes DESC limit 5;
++-----+----------+----------------------+
+| fab | producte | total_unitat_venudes |
++-----+----------+----------------------+
+| imm | 887h     |                 4884 |
+| aci | 41001    |                 4276 |
+| qsa | xk48     |                 3644 |
+| rei | 2a45c    |                 3425 |
+| aci | 41002    |                 3354 |
++-----+----------+----------------------+
+5 rows in set (0,00 sec)
+
+
+10.- Quines són les dades dels clients que han fet més de 10 comandes i quantes ha fet cadascú?
+
+
+mysql> SELECT c.*, v.nom, COUNT(co.num_comanda) AS numero_comandes FROM clients c JOIN comandes co ON(c.num_clie=co.clie) JOIN venedors v ON(co.ven=v.num_ven) JOIN detall d ON(co.num_comanda=d.num_comanda) GROUP BY c.num_clie, v.nom HAVING numero_comandes>10;
++----------+------------------+----------+--------+------+----------+---------------+-----------------+
+| num_clie | societat         | ven_clie | credit | pais | idioma   | nom           | numero_comandes |
++----------+------------------+----------+--------+------+----------+---------------+-----------------+
+|     2102 | First Corp       |      101 |  65000 |    3 | Angles   | Dan Roberts   |              16 |
+|     2106 | Fred Lewis Corp. |      102 |  65000 |    5 | Frances  | Sue Smith     |              26 |
+|     2124 | Peter Brothers   |      107 |  40000 |    4 | Angles   | Paul Cruz     |              13 |
+|     2120 | Rico Enterprises |      102 |  50000 |    6 | Angles   | Bob Smith     |              13 |
+|     2105 | AAA Investments  |      101 |  45000 |    2 | Catala   | Bill Adams    |              11 |
+|     2110 | Pfizer-Biontech  |      105 | 150400 |    8 | Angles   | Sam Clark     |              11 |
+|     2120 | Rico Enterprises |      102 |  50000 |    6 | Angles   | Nancy Angelli |              11 |
+|     2108 | Holm & Landis    |      109 |  55000 |    6 | Catala   | Nancy Angelli |              17 |
+|     2118 | Midwest Systems  |      108 |  60000 |    2 | Castella | Larry Fitch   |              16 |
+|     2121 | QMA Assoc        |      103 |  45000 |    3 | Angles   | Larry Fitch   |              11 |
++----------+------------------+----------+--------+------+----------+---------------+-----------------+
+10 rows in set (0,39 sec)
+
+

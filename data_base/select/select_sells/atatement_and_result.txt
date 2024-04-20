@@ -1,0 +1,171 @@
+Bixiang Zhu
+1r ASIX
+InstitutMVM
+
+Subconsultes BBDD vk21
+
+1) Llista el nom dels venedors amb quotes iguals o superiors a l'objectiu de l'oficina d'Atlanta
+
+
+mysql> SELECT nom FROM venedors WHERE quota >=(SELECT objectiu FROM oficines WHERE ciutat="Atlanta");
++-------------+
+| nom         |
++-------------+
+| Sue Smith   |
+| Bill Adams  |
+| Larry Fitch |
++-------------+
+3 rows in set (0,00 sec)
+
+
+2) Llista el nom de totes els clients atesos per Bill Adams
+(es podria fer sense subconsulta? com?)
+
+
+SUBCONSULTA
+mysql> SELECT num_clie FROM clients WHERE ven_clie IN(SELECT num_ven FROM venedo
+rs WHERE nom="Bill Adams");
++----------+
+| num_clie |
++----------+
+|     2103 |
+|     2110 |
+|     2122 |
++----------+
+3 rows in set (0,00 sec)
+
+RESPOSTA:Si, utilitzant JOIN
+JOIN
+mysql> SELECT num_clie FROM clients cl JOIN venedors v ON(cl.ven_clie=v.num_ven) WHERE v.nom="Bill Adams";
++----------+
+| num_clie |
++----------+
+|     2103 |
+|     2110 |
+|     2122 |
++----------+
+3 rows in set (0,00 sec)
+
+
+3) Llista tots els productes del fabricant ACI pels quals les existències (stock) d'aquest producte, superen les del producte ACI 41004.
+
+
+mysql> SELECT id_producte FROM productes WHERE stock > (SELECT stock
+FROM productes WHERE id_producte = "41004") AND id_fab="aci";
++-------------+
+| id_producte |
++-------------+
+| 41001       |
+| 41002       |
+| 41003       |
++-------------+
+3 rows in set (0,00 sec)
+
+
+4) Llista els venedors que treballen en oficines amb vendes superiors al seu objectiu.
+
+
+mysql> SELECT * FROM venedors WHERE oficina_ven IN(SELECT oficina FROM oficines WHERE vendes>objectiu);
++---------+-------------+----------+-------------+----------+------------+----------+--------+--------+
+| num_ven | nom         | any_naix | oficina_ven | titol    | contracte  | director | quota  | vendes |
++---------+-------------+----------+-------------+----------+------------+----------+--------+--------+
+|     106 | Sam Clark   |     1952 |          11 | Gerent   | 1988-06-14 |     NULL | 275000 | 311697 |
+|     109 | Mary Jones  |     1980 |          11 | Venedor  | 2000-10-12 |      106 | 300000 | 394275 |
+|     105 | Bill Adams  |     1965 |          13 | Venedor  | 1995-02-12 |      104 | 350000 | 396919 |
+|     102 | Sue Smith   |     1948 |          21 | Venedor  | 1986-12-10 |      108 | 350000 | 581968 |
+|     108 | Larry Fitch |     1962 |          21 | Director | 1989-12-10 |      106 | 350000 | 407089 |
++---------+-------------+----------+-------------+----------+------------+----------+--------+--------+
+5 rows in set (0,00 sec)
+
+
+5) Llista els venedors que no treballen en oficines dirigides per l'empleat 108
+
+
+mysql> SELECT * FROM venedors WHERE oficina_ven IN(SELECT oficina FROM oficines WHERE dir != 108);
++---------+-------------+----------+-------------+----------+------------+----------+--------+--------+
+| num_ven | nom         | any_naix | oficina_ven | titol    | contracte  | director | quota  | vendes |
++---------+-------------+----------+-------------+----------+------------+----------+--------+--------+
+|     106 | Sam Clark   |     1952 |          11 | Gerent   | 1988-06-14 |     NULL | 275000 | 311697 |
+|     109 | Mary Jones  |     1980 |          11 | Venedor  | 2000-10-12 |      106 | 300000 | 394275 |
+|     101 | Dan Roberts |     1945 |          12 | Venedor  | 1986-10-20 |      104 | 300000 | 354637 |
+|     103 | Paul Cruz   |     1968 |          12 | Venedor  | 1987-03-01 |      104 | 275000 | 289594 |
+|     104 | Bob Smith   |     1960 |          12 | Director | 1987-05-19 |      106 | 200000 | 142594 |
+|     105 | Bill Adams  |     1965 |          13 | Venedor  | 1995-02-12 |      104 | 350000 | 396919 |
++---------+-------------+----------+-------------+----------+------------+----------+--------+--------+
+6 rows in set (0,00 sec)
+
+
+6) Llista tots els clients, sense repetició, que han fet comandes de productes que comencin per 4100 del fabricant ACI, entre gener i juny de 1990
+
+
+mysql> SELECT DISTINCT * FROM clients WHERE num_clie IN(SELECT clie FROM comandes WHERE data_comanda BETWEEN "1990-01-01" AND "1990-06-30" AND num_comanda IN(SELECT num_comanda FROM detall WHERE producte IN(SELECT id_producte FROM productes WHERE id_fab="aci" AND id_producte LIKE"4100%")));
++----------+-----------------+----------+--------+------+----------+
+| num_clie | societat        | ven_clie | credit | pais | idioma   |
++----------+-----------------+----------+--------+------+----------+
+|     2108 | Holm & Landis   |      109 |  55000 |    6 | Catala   |
+|     2111 | JCP Inc         |      103 |  50000 |    6 | Alemany  |
+|     2113 | Ian & Schmidt   |      104 |  20000 |    3 | Angles   |
+|     2118 | Midwest Systems |      108 |  60000 |    2 | Castella |
++----------+-----------------+----------+--------+------+----------+
+4 rows in set (0,00 sec)
+
+
+7) Llista els clients assignats a Sue Smith
+
+
+mysql> SELECT * FROM clients WHERE ven_clie IN(SELECT num_ven FROm venedors WHERE nom="Sue Smith");
++----------+------------------+----------+--------+------+---------+
+| num_clie | societat         | ven_clie | credit | pais | idioma  |
++----------+------------------+----------+--------+------+---------+
+|     2106 | Fred Lewis Corp. |      102 |  65000 |    5 | Frances |
+|     2114 | Orion Corp       |      102 |  20000 |    4 | Italia  |
+|     2120 | Rico Enterprises |      102 |  50000 |    6 | Angles  |
+|     2123 | Carter & Sons    |      102 |  40000 |    7 | Rus     |
++----------+------------------+----------+--------+------+---------+
+4 rows in set (0,00 sec)
+
+
+8) Llista les oficines on hi hagi algun venedor la quota del qual representi més del 50% de l'objectiu de la oficina.
+
+
+mysql> SELECT * FROM oficines WHERE dir IN(SELECT director FROM venedors WHERE quota>(objectiu/2));
++---------+----------+-------+------+----------+--------+
+| oficina | ciutat   | regio | dir  | objectiu | vendes |
++---------+----------+-------+------+----------+--------+
+|      11 | New York | Est   |  106 |   575000 | 692637 |
+|      22 | Denver   | Oest  |  108 |   300000 | 186042 |
++---------+----------+-------+------+----------+--------+
+2 rows in set (0,00 sec)
+
+
+9) Llista els noms i les edats que tindrien els venedors que tenien quotes per sobre del promig.
+
+
+mysql> SELECT nom, (2023-any_naix) AS edat FROM venedors WHERE quota > (SELECT AVG(quota) FROM venedors);
++-------------+------+
+| nom         | edat |
++-------------+------+
+| Sue Smith   |   75 |
+| Bill Adams  |   58 |
+| Larry Fitch |   61 |
++-------------+------+
+3 rows in set (0,00 sec)
+
+
+10) Llista els clients que tenen assignats venedors de les oficines de qualsevol regió diferent a la regió 'Est'.
+
+mysql> SELECT * FROM clients WHERE ven_clie IN(SELECT num_ven FROM venedors WHERE oficina_ven IN(SELECT oficina FROM oficines WHERE regio !="Est"));
++----------+------------------+----------+--------+------+----------+
+| num_clie | societat         | ven_clie | credit | pais | idioma   |
++----------+------------------+----------+--------+------+----------+
+|     2106 | Fred Lewis Corp. |      102 |  65000 |    5 | Frances  |
+|     2114 | Orion Corp       |      102 |  20000 |    4 | Italia   |
+|     2120 | Rico Enterprises |      102 |  50000 |    6 | Angles   |
+|     2123 | Carter & Sons    |      102 |  40000 |    7 | Rus      |
+|     2112 | Zetacorp         |      108 |  50000 |    4 | Italia   |
+|     2118 | Midwest Systems  |      108 |  60000 |    2 | Castella |
+|     2109 | Chen Associates  |      107 |  25000 |    1 | Alemany  |
+|     2124 | Peter Brothers   |      107 |  40000 |    4 | Angles   |
++----------+------------------+----------+--------+------+----------+
+8 rows in set (0,00 sec)
+

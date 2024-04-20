@@ -1,0 +1,215 @@
+UNITAULA
+1. Dona’m les dades de les talles nens que tingui 4 anys
+
+mysql:[root:SARA]> select * from talla_nen where anys=4;
++------------+------+------+------+
+| id_article | anys | uds  | sexe |
++------------+------+------+------+
+|          5 |    4 |    3 | D    |
+|          6 |    4 |    4 | H    |
++------------+------+------+------+
+2 rows in set (0,00 sec)
+
+2.Dona’m les dades de talles d'adult superior que la mida sigui ‘M’
+
+mysql:[root:SARA]> select * from talla_adult_superior where mida='M';
++------------+------+------+------+
+| id_article | mida | uds  | sexe |
++------------+------+------+------+
+|          3 | M    |    6 | H    |
+|         11 | M    |   12 | D    |
+|         12 | M    |   34 | U    |
++------------+------+------+------+
+3 rows in set (0,00 sec)
+
+3. Dona’m les dades de talles d'adult inferior que el sexe sigui tant unisex o home
+
+mysql:[root:SARA]> select * from talla_adult_inferior where sexe='U' or sexe='H';
++------------+------+------+------+
+| id_article | mida | uds  | sexe |
++------------+------+------+------+
+|          1 |   24 |    5 | H    |
+|          7 |   36 |    5 | H    |
+|          9 |   40 |    9 | U    |
+|         11 |   16 |    2 | U    |
+|         13 |   42 |    3 | H    |
+|         15 |   46 |    8 | U    |
++------------+------+------+------+
+6 rows in set (0,00 sec)
+
+4. Dona’m les dades de qualsevol article on el preu ha de ser superior a 30 euros i sen preu de venda superior a 47 euros
+
+mysql:[root:SARA]> select * from article where preu > 30 and preuvenda > 47;
++------------+------------+-----------+-----------------+-------+-----------+---------------+
+| id_article | id_compost | id_classe | nom             | preu  | preuvenda | anyfabricacio |
++------------+------------+-----------+-----------------+-------+-----------+---------------+
+|          1 |          1 |         2 | BAGGY FIT       | 30.05 |     49.95 | 2023-04-23    |
+|          5 |          5 |         4 | LAUZY HAST      | 30.05 |     49.95 | 2021-05-22    |
+|          8 |          3 |         1 | GANSTOT KILIAH  | 42.35 |     67.21 | 2018-02-03    |
+|         12 |          4 |         3 | KAFHER NAGGOR   | 34.00 |     54.50 | 2020-05-17    |
+|         17 |          8 |         1 | YELLOW PULLOVER | 42.35 |     67.21 | 2018-02-03    |
+|         21 |         12 |         3 | BLACK APRON     | 34.00 |     54.50 | 2020-05-17    |
+|         24 |         15 |         1 | WHITE NIGHTGOWN | 30.05 |     49.95 | 2023-04-23    |
+|         25 |          2 |         2 | BAGGY FIT       | 30.05 |     49.95 | 2023-04-23    |
++------------+------------+-----------+-----------------+-------+-----------+---------------+
+8 rows in set (0,00 sec)
+
+MULTITAULA
+
+1.Mostra’m totes les articles amb el color, material, model, el nom amb el seu preu de venda i l’any de fabricació 
+
+mysql:[root:SARA]> select c.nom as color, m.nom as material, mo.nom as model, a.nom, a.preuvenda, a.anyfabricacio from article a join compost co ON(a.id_compost=co.id_compost) join color c ON(co.id_color=c.id_color) join material m on(co.id_material=m.id_material) join model mo on(co.id_model=mo.id_model) order by a.nom;
++---------+------------+-------------------+--------------------+-----------+---------------+
+| color   | material   | model             | nom                | preuvenda | anyfabricacio |
++---------+------------+-------------------+--------------------+-----------+---------------+
+| Negre   | Poliéster  | Camisetta         | BAGGY FIT          |     46.67 | 2023-04-07    |
+| Blau    | Cotó       | Pantallons llargs | BAGGY FIT          |     49.95 | 2023-04-23    |
+| Negre   | Poliéster  | Pantallons llargs | BAGGY FIT          |     49.95 | 2023-04-23    |
+| Vermell | Cotó       | Llançols          | BAGGY FIT          |     45.00 | 2023-04-03    |
+| Blau    | llana      | Capa Sofa         | BLACK APRON        |     54.50 | 2020-05-17    |
+| Negre   | Poliéster  | Gorra             | BOB DENIM ETIQUETA |      9.95 | 2022-09-27    |
+| Negre   | llana      | Vaquers o jeans   | DENIM PENCIL       |     46.87 | 2020-02-09    |
+| Negre   | Poliéster  | Gorra             | GANSTOT KILIAH     |     67.21 | 2018-02-03    |
+| Blanc   | Poliéster  | Gorra             | GREEN APRON        |     46.76 | 2020-07-17    |
+| Blanc   | llana      | Llançols          | HOSTER DUMP        |     50.47 | 2022-05-31    |
+| Blanc   | llana      | Llançols          | KAFHER NAGGOR      |     54.50 | 2020-05-17    |
+| Vermell | Cotó       | Capa Sofa         | KAFHER NANNORR     |     46.76 | 2020-07-17    |
+| Negre   | Poliéster  | Gorra             | KING OF KINDOMS    |     46.76 | 2020-07-17    |
+| Vermell | Cotó       | Capa Sofa         | LAUZY HAST         |     49.95 | 2021-05-22    |
+| Negre   | Poliéster  | Gorra             | LAUZY HAST         |     45.00 | 2023-04-03    |
+| Negre   | Poliéster  | Pantallons llargs | MANSTE LAK         |     46.87 | 2020-02-09    |
+| Blau    | Cotó       | Pantallons llargs | MANSTE LAK         |     23.00 | 2024-02-02    |
+| Vermell | Poliéster  | Vestit            | MANTEAU TURQUOISE  |     23.00 | 2024-02-02    |
+| Vermell | Cotó       | Capa Sofa         | NAMESTER SWITCH    |     46.67 | 2023-04-07    |
+| Blanc   | llana      | Llançols          | PALOW GOD          |     12.00 | 2019-04-23    |
+| Negre   | Cotó       | Camisetta         | PALOW GOD          |     46.76 | 2020-07-17    |
+| Blau    | Cotó       | Pantallons llargs | TUBO MIDI          |     35.95 | 2023-07-19    |
+| Vermell | llana      | Llançols          | WHITE NIGHTGOWN    |     49.95 | 2023-04-23    |
+| Blanc   | llana      | Pantallons llargs | YELLOW PULLOVER    |     12.00 | 2019-04-23    |
+| Blau    | Cotó       | Gorra             | YELLOW PULLOVER    |     67.21 | 2018-02-03    |
++---------+------------+-------------------+--------------------+-----------+---------------+
+25 rows in set (0,00 sec)
+
+2.Mostra la classe, categoria i l'article de robes
+
+mysql:[root:SARA]> SELECT c.nom AS classe, cat.categoria AS categoria, a.nom AS articul FROM article a JOIN classe c ON (a.id_classe = c.id_classe) JOIN categoria cat ON (c.id_categoria = cat.id_categoria);
++-----------------+----------------+--------------------+
+| classe          | categoria      | articul            |
++-----------------+----------------+--------------------+
+| Accessoris      | Complements    | BOB DENIM ETIQUETA |
+| Accessoris      | Complements    | GANSTOT KILIAH     |
+| Accessoris      | Complements    | YELLOW PULLOVER    |
+| Accessoris      | Complements    | WHITE NIGHTGOWN    |
+| Roba Salo       | Complements    | HOSTER DUMP        |
+| Roba Dormitori  | Roba de casa   | LAUZY HAST         |
+| Roba Dormitori  | Roba de casa   | PALOW GOD          |
+| Roba Dormitori  | Roba de casa   | YELLOW PULLOVER    |
+| Roba de Festa   | Roba de vestir | BAGGY FIT          |
+| Roba de Festa   | Roba de vestir | MANSTE LAK         |
+| Roba de Festa   | Roba de vestir | NAMESTER SWITCH    |
+| Roba de Festa   | Roba de vestir | LAUZY HAST         |
+| Roba de Festa   | Roba de vestir | KING OF KINDOMS    |
+| Roba de Festa   | Roba de vestir | DENIM PENCIL       |
+| Roba de Festa   | Roba de vestir | BAGGY FIT          |
+| Roba de Festa   | Roba de vestir | BAGGY FIT          |
+| Roba de Festa   | Roba de vestir | PALOW GOD          |
+| Roba de Festa   | Roba de vestir | BAGGY FIT          |
+| Roba de treball | Roba de vestir | TUBO MIDI          |
+| Roba de treball | Roba de vestir | MANSTE LAK         |
+| Roba de treball | Roba de vestir | KAFHER NAGGOR      |
+| Roba de treball | Roba de vestir | KAFHER NANNORR     |
+| Roba de treball | Roba de vestir | MANTEAU TURQUOISE  |
+| Roba de treball | Roba de vestir | BLACK APRON        |
+| Roba de treball | Roba de vestir | GREEN APRON        |
++-----------------+----------------+--------------------+
+25 rows in set (0,00 sec)
+
+
+3.Mostra l’article i les talles del article si n’hi ha
+
+mysql:[root:SARA]> SELECT a.nom AS article,  ta.mida AS talla_adult_inferior, tas.mida AS talla_adult_superior, tn.anys AS talles_nen, tna.mesos AS talla_bebe FROM article a LEFT JOIN talla_adult_inferior ta ON (a.id_article = ta.id_article) LEFT JOIN talla_adult_superior tas ON (a.id_article = tas.id_article) LEFT JOIN  talla_nen tn ON (a.id_article = tn.id_article) LEFT JOIN talla_nado tna ON( a.id_article = tna.id_article) WHERE ta.mida!='NULL' OR tas.mida!='NULL' OR tn.anys!='NULL' or tna.mesos!='NULL';
++--------------------+----------------------+----------------------+------------+------------+
+| article            | talla_adult_inferior | talla_adult_superior | talles_nen | talla_bebe |
++--------------------+----------------------+----------------------+------------+------------+
+| BAGGY FIT          |                   24 | NULL                 |       NULL |          3 |
+| TUBO MIDI          |                   34 | NULL                 |       NULL |          6 |
+| BOB DENIM ETIQUETA |                 NULL | M                    |       NULL |          9 |
+| HOSTER DUMP        |                 NULL | L                    |          2 |       NULL |
+| LAUZY HAST         |                 NULL | NULL                 |          4 |       NULL |
+| MANSTE LAK         |                 NULL | NULL                 |          4 |       NULL |
+| MANSTE LAK         |                 NULL | NULL                 |          6 |       NULL |
+| MANSTE LAK         |                   36 | NULL                 |          6 |         12 |
+| GANSTOT KILIAH     |                   38 | NULL                 |       NULL |          1 |
+| GANSTOT KILIAH     |                   38 | NULL                 |       NULL |         15 |
+| PALOW GOD          |                   40 | NULL                 |          8 |         18 |
+| NAMESTER SWITCH    |                 NULL | S                    |         10 |          3 |
+| LAUZY HAST         |                   16 | M                    |         12 |       NULL |
+| KAFHER NAGGOR      |                 NULL | L                    |       NULL |       NULL |
+| KAFHER NAGGOR      |                 NULL | M                    |       NULL |       NULL |
+| KAFHER NANNORR     |                   42 | XL                   |       NULL |          4 |
+| KING OF KINDOMS    |                   44 | XXL                  |          8 |       NULL |
+| DENIM PENCIL       |                   46 | XXXL                 |       NULL |       NULL |
++--------------------+----------------------+----------------------+------------+------------+
+18 rows in set, 3 warnings (0,00 sec)
+
+SUBCONSULTES
+
+1. Mostra'm les classes amb les seves preus mitjanes
+
+mysql:[root:SARA]> SELECT cl.nom AS classe, (SELECT AVG(preu) FROM article a  WHERE a.id_classe = cl.id_classe) AS preu_mitjana FROM classe cl;
++-----------------+--------------+
+| classe          | preu_mitjana |
++-----------------+--------------+
+| Accessoris      |    30.437500 |
+| Roba de Festa   |    32.302000 |
+| Roba de treball |    25.838571 |
+| Roba Dormitori  |    14.016667 |
+| Roba Salo       |    28.650000 |
++-----------------+--------------+
+5 rows in set (0,00 sec)
+
+2. Mostra la classe, categoria i l'article de robes
+
+mysql:[root:SARA]> SELECT (SELECT nom FROM classe WHERE id_classe = a.id_classe) AS classe, (SELECT categoria FROM categoria WHERE id_categoria = (SELECT id_categoria FROM classe WHERE id_classe = a.id_classe)) AS categoria, a.nom AS articul FROM article a;
++-----------------+----------------+--------------------+
+| classe          | categoria      | articul            |
++-----------------+----------------+--------------------+
+| Roba de Festa   | Roba de vestir | BAGGY FIT          |
+| Roba de treball | Roba de vestir | TUBO MIDI          |
+| Accessoris      | Complements    | BOB DENIM ETIQUETA |
+| Roba Salo       | Complements    | HOSTER DUMP        |
+| Roba Dormitori  | Roba de casa   | LAUZY HAST         |
+| Roba de Festa   | Roba de vestir | MANSTE LAK         |
+| Roba de treball | Roba de vestir | MANSTE LAK         |
+| Accessoris      | Complements    | GANSTOT KILIAH     |
+| Roba Dormitori  | Roba de casa   | PALOW GOD          |
+| Roba de Festa   | Roba de vestir | NAMESTER SWITCH    |
+| Roba de Festa   | Roba de vestir | LAUZY HAST         |
+| Roba de treball | Roba de vestir | KAFHER NAGGOR      |
+| Roba de treball | Roba de vestir | KAFHER NANNORR     |
+| Roba de Festa   | Roba de vestir | KING OF KINDOMS    |
+| Roba de Festa   | Roba de vestir | DENIM PENCIL       |
+| Roba de treball | Roba de vestir | MANTEAU TURQUOISE  |
+| Accessoris      | Complements    | YELLOW PULLOVER    |
+| Roba Dormitori  | Roba de casa   | YELLOW PULLOVER    |
+| Roba de Festa   | Roba de vestir | BAGGY FIT          |
+| Roba de Festa   | Roba de vestir | BAGGY FIT          |
+| Roba de treball | Roba de vestir | BLACK APRON        |
+| Roba de treball | Roba de vestir | GREEN APRON        |
+| Roba de Festa   | Roba de vestir | PALOW GOD          |
+| Accessoris      | Complements    | WHITE NIGHTGOWN    |
+| Roba de Festa   | Roba de vestir | BAGGY FIT          |
++-----------------+----------------+--------------------+
+25 rows in set (0,00 sec)
+
+3. Mostra'm les categories i el seu total preu de vendes
+
+mysql:[root:SARA]> SELECT (SELECT categoria FROM categoria WHERE id_categoria = (SELECT id_categoria FROM classe WHERE id_classe = article.id_classe)) AS categories, SUM(preuvenda) AS total_preu_de_venda FROM article GROUP BY (SELECT categoria FROM categoria WHERE id_categoria = (SELECT id_categoria FROM classe WHERE id_classe = article.id_classe));
++----------------+---------------------+
+| categories     | total_preu_de_venda |
++----------------+---------------------+
+| Roba de vestir |              754.97 |
+| Complements    |              244.79 |
+| Roba de casa   |               73.95 |
++----------------+---------------------+
+

@@ -1,0 +1,1 @@
+/bin/sh: 1: /home/usuari/copia_inc.sh: Permission denied
