@@ -1,0 +1,193 @@
+Bixiang Zhu
+Pol Cruz Fisica
+1r ASIX
+InstitutMVM
+
+MULTITAULA
+
+1. Mostra informació sobre els coches que estan disponibles detalladament incluint la seva marca, model, tipus, motor, color i preu de venda ja sigui nou o segona ma (els preus i etiqueta enviental estan randomitzats)
+
+
+mysql:[root:concessionari]> SELECT c.numero_serie, m.nom AS marca, mo.nom AS model, t.tipus, col.nom AS color, mot.tipus AS motor,c.potencia_CV, c.any_fabricació, c.Etiqueta_enviental, IFNULL(n.preuventa, sm.preuventa) AS preu_venta FROM cotxe c
+    -> JOIN marca m ON (c.id_marca = m.id_marca)
+    -> JOIN modeltipuscotxe mtc ON (c.numero_serie = mtc.numero_serie)
+    -> JOIN model mo ON (mtc.id_model = mo.id_model)
+    -> JOIN tipus t ON (mtc.id_tipus = t.id_tipus)
+    -> JOIN color col ON (c.id_color = col.id_color)
+    -> JOIN motor mot ON (c.id_motor = mot.id_motor)
+    -> LEFT JOIN nou n ON (c.numero_serie = n.numero_serie)
+    -> LEFT JOIN segona_ma sm ON (c.numero_serie = sm.numero_serie)
+    -> WHERE c.disponible = 'si';
++-------------------+---------------+-----------+-----------+---------+----------+-------------+-----------------+--------------------+------------+
+| numero_serie      | marca         | model     | tipus     | color   | motor    | potencia_CV | any_fabricació  | Etiqueta_enviental | preu_venta |
++-------------------+---------------+-----------+-----------+---------+----------+-------------+-----------------+--------------------+------------+
+| 0A1JBECF12Z348290 | Ford          | Fiesta    | Turisme   | Blau    | gasolina |          95 |            2005 | altres             |  113431.05 |
+| 0U1KLMNO56I013276 | Ford          | Modelo T  | Turisme   | Blau    | gasolina |         130 |            2005 | B                  |  111406.05 |
+| 3H4ABCDE12V346509 | Mercedes-Benz | Clase A   | Sedan     | Groc    | gasolina |         140 |            2007 | B                  |   91981.20 |
+| 3L4ABCDE12C346509 | Honda         | ZR-V      | Sedan     | Groc    | gasolina |         160 |            2010 | altres             |  190022.40 |
+| 4W6FDGTV87M937612 | Audi          | TT        | Deportiu  | Groc    | gasolina |         150 |            2024 | altres             |   99090.00 |
+| 5H6KLMNO56G568721 | Toyota        | Prius     | Sedan     | Taronja | gasolina |         140 |            2015 | B                  |   42492.00 |
+| 5R6KLMNO56W568721 | Audi          | A8        | Sedan     | Taronja | gasolina |         200 |            2012 | altres             |  149019.60 |
+| 5X6KLMNO56Q568721 | Audi          | R8        | Deportiu  | Taronja | gasolina |         160 |            2012 | B                  |  208942.80 |
+| 6I7PQRST78F679832 | Mitsubishi    | Colt      | Petit     | Negre   | gasolina |         150 |            2020 | CERO               |  202446.00 |
+| 6K7PQRST78S679832 | Porsche       | Panamera  | Deportiu  | Negre   | gasolina |         170 |            2017 | altres             |   51692.85 |
+| 6Q7PQRST78M679832 | Porsche       | 911       | Deportiu  | Negre   | gasolina |          95 |            2017 | B                  |  109366.20 |
+| 6U7PQRST78T679832 | Mitsubishi    | Montero   | 4x4       | Negre   | gasolina |         150 |            2020 | altres             |  219510.00 |
+| 9V0FGHIJ34S902165 | Nissan        | PRIMASTAR | Furgoneta | Cromat  | gasolina |         125 |            2008 | ECO                |   10650.00 |
+| 9X0FGHIJ34Q902165 | Volkswagen    | Passat    | Sedan     | Cromat  | gasolina |         180 |            2021 | A                  |  131365.20 |
+| 0C1KLMNO56L013276 | Ford          | Mustang   | Muscle    | Blau    | diesel   |          95 |            2005 | CERO               |  242048.25 |
+| 2E3VWXYZ90J235498 | Honda         | NSX       | Deportiu  | Blanc   | diesel   |         110 |            2010 | ECO                |   80109.00 |
+| 2G3VWXYZ90W235498 | Mercedes-Benz | Clase E   | Sedan     | Blanc   | diesel   |         130 |            2007 | A                  |   54086.40 |
+| 3D4UVWXY78T349589 | Honda         | ZR-V      | Sedan     | Groc    | diesel   |         125 |            2010 | altres             |  213144.00 |
+| 3F4ABCDE12I346509 | Honda         | HONDA E   | Turisme   | Groc    | diesel   |         125 |            2010 | C                  |    9962.40 |
+| 3P4ABCDE12Y346509 | Mercedes-Benz | Clase A   | Sedan     | Groc    | diesel   |         180 |            2007 | C                  |  208746.00 |
+| 3V4ABCDE12S346509 | Mercedes-Benz | Clase A   | Sedan     | Groc    | diesel   |         140 |            2007 | CERO               |   95964.00 |
+| 5T6KLMNO56U568721 | Toyota        | Aygo      | Petit     | Taronja | diesel   |         140 |            2015 | altres             |  179200.80 |
+| 6E7PQRST78J679832 | Porsche       | 844       | Deportiu  | Negre   | diesel   |          95 |            2017 | ECO                |  254950.20 |
+| 8C9ABCDE12A891054 | Volkswagen    | Polo      | Turisme   | Gris    | diesel   |          95 |            2021 | ECO                |   12708.90 |
+| 9B0FGHIJ34M902165 | Nissan        | Juke      | SUV       | Cromat  | diesel   |         200 |            2008 | CERO               |  131736.00 |
+| 9T0FGHIJ34J902165 | Nissan        | GTR       | Deportiu  | Cromat  | diesel   |         125 |            2008 | altres             |   47560.80 |
+| 0E1KLMNO56Y013276 | BMW           | x3        | SUV       | Blau    | gas      |         110 |            2022 | C                  |   81546.75 |
+| 0Y1KLMNO56P013276 | BMW           | M4        | Deportiu  | Gris    | gas      |         150 |            2023 | CERO               |  230003.55 |
+| 6G7HIJKL76W679832 | Mitsubishi    | Colt      | Petit     | Negre   | gas      |         150 |            2020 | A                  |  143779.05 |
+| 8G9ABCDE12H891054 | Nissan        | PRIMASTAR | Furgoneta | Gris    | gas      |         110 |            2008 | altres             |  116359.20 |
+| 8K9ABCDE12D891054 | Volkswagen    | Touareg   | SUV       | Gris    | gas      |         170 |            2021 | CERO               |  230845.95 |
+| 9L0FGHIJ34C902165 | Volkswagen    | Buzz      | Furgoneta | Cromat  | gas      |         180 |            2021 | CERO               |   74046.00 |
+| 0K1LMNOP56S013276 | BMW           | M3        | Sedan     | Blau    | hibrid   |         150 |            2022 | B                  |  172108.80 |
+| 1B4DSDSE23F123955 | BMW           | x3        | SUV       | Taronja | hibrid   |         190 |            2022 | A                  |   27396.90 |
+| 2A3VWXYZ90N235498 | Mercedes-Benz | Clase E   | Sedan     | Blanc   | hibrid   |         170 |            2007 | altres             |  213776.55 |
+| 3N4ABCDE12P346509 | Mercedes-Benz | Clase S   | Berlina   | Groc    | hibrid   |         180 |            2007 | C                  |  203762.40 |
+| 3R4ABCDE12W346509 | Honda         | NSX       | Deportiu  | Groc    | hibrid   |         125 |            2010 | C                  |  192440.40 |
+| 9N0FGHIJ34P902165 | Nissan        | Qashqai   | SUV       | Cromat  | hibrid   |         200 |            2008 | altres             |   76212.00 |
+| 0M1KLMNO56B013276 | BMW           | Z4        | Deportiu  | Blau    | electric |         150 |            2022 | C                  |   22974.30 |
+| 0O1KLMNO56Z013276 | Ford          | Mustang   | Muscle    | Blau    | electric |          95 |            2005 | altres             |  106146.45 |
+| 0S1KLMNO56V013276 | BMW           | x3        | SUV       | Blau    | electric |         110 |            2022 | altres             |  191809.35 |
+| 2K3VWXYZ90D235498 | Honda         | Civic     | Deportiu  | Blanc   | electric |         150 |            2010 | altres             |   19303.65 |
+| 2Q3VWXYZ90X235498 | Honda         | HR-V      | SUV       | Blanc   | electric |         110 |            2010 | C                  |   35343.00 |
+| 2W3VWXYZ90G235498 | Honda         | HONDA E   | Turisme   | Blanc   | electric |         150 |            2010 | A                  |  226404.45 |
+| 3X4ABCDE12F346509 | Honda         | Jazz      | Turisme   | Groc    | electric |         160 |            2010 | ECO                |  123302.40 |
+| 5N6KLMNO56A568721 | Toyota        | Aygo      | Petit     | Taronja | electric |         180 |            2015 | CERO               |  153782.40 |
+| 6O7PQRST78Z679832 | Mitsubishi    | ASX       | Turisme   | Negre   | electric |         190 |            2020 | altres             |  158728.95 |
+| 6S7PQRST78V679832 | Porsche       | Panamera  | Deportiu  | Negre   | electric |          95 |            2017 | ECO                |   59841.45 |
+| 6Y7PQRST78P679832 | Porsche       | Panamera  | Deportiu  | Negre   | electric |         170 |            2017 | CERO               |  129625.65 |
+| 9H0FGHIJ34G902165 | Nissan        | Juke      | SUV       | Cromat  | electric |         125 |            2008 | C                  |  155730.00 |
+| 9J0WXYZA34T902165 | Volkswagen    | Touareg   | SUV       | Cromat  | electric |         180 |            2021 | B                  |   18007.20 |
+| 3B4ABCDE12M346509 | Mercedes-Benz | Clase A   | Sedan     | Groc    | gasoil   |         180 |            2007 | B                  |  195118.80 |
+| 0I1KLMNO56F013276 | Ford          | Fiesta    | Turisme   | Blau    | altres   |         130 |            2005 | altres             |  189190.35 |
+| 5Z6KLMNO56D568721 | Toyota        | Prius     | Turisme   | Taronja | altres   |         180 |            2015 | C                  |   36711.60 |
+| 6A7PQRST78C679832 | Mitsubishi    | Star      | Sedan     | Negre   | altres   |         190 |            2020 | ECO                |  114188.40 |
+| 8Q9ABCDE12X891054 | Volkswagen    | Touareg   | SUV       | Gris    | altres   |          95 |            2021 | altres             |  131238.90 |
+| 9R0FGHIJ34W902165 | Volkswagen    | Polo      | Turisme   | Cromat  | altres   |         105 |            2021 | ECO                |  149319.60 |
++-------------------+---------------+-----------+-----------+---------+----------+-------------+-----------------+--------------------+------------+
+57 rows in set (0,00 sec)
+
+
+
+
+
+2. Mostrem el listat de clients que han reservat el cotxe juntament amb les seves dades, la data de reserva i les dades del cotxe reservat com el numero de serie, marca, model, tipus i el color.
+
+
+mysql:[root:concessionari]> SELECT cr.DNI,cr.nom AS nom_client,cr.cognom,cr.telefon,cr.adreça,cr.data_reserva,c.numero_serie,m.nom AS marca,mo.nom AS model,t.tipus,col.nom AS color FROM client_reserva cr
+    -> JOIN cotxe c ON cr.numero_serie = c.numero_serie
+    -> JOIN marca m ON c.id_marca = m.id_marca
+    -> JOIN modeltipuscotxe mtc ON c.numero_serie = mtc.numero_serie
+    -> JOIN model mo ON mtc.id_model = mo.id_model
+    -> JOIN tipus t ON mtc.id_tipus = t.id_tipus
+    -> JOIN color col ON c.id_color = col.id_color;
++-----------+------------+--------------------+-----------+-------------------+--------------+-------------------+---------------+-----------+-----------+---------+
+| DNI       | nom_client | cognom             | telefon   | adreça            | data_reserva | numero_serie      | marca         | model     | tipus     | color   |
++-----------+------------+--------------------+-----------+-------------------+--------------+-------------------+---------------+-----------+-----------+---------+
+| 93857493B | Joana      | Rebelde            | 688142948 | C/ Sant francisco | 2024-05-21   | 2C3POQST45R236578 | Honda         | Civic     | Turisme   | Blanc   |
+| 38202392O | Joel       | Miller Morgan      | 958437598 | C/Berlin          | 2024-02-12   | 2U3VWXYZ90T235498 | Mercedes-Benz | Clase S   | Berlina   | Blanc   |
+| 03932923B | Antonio    | Gamiz Ferrin       | 432424234 | C/Sant Lois       | 2025-01-01   | 5D6KLMNO56K568721 | Audi          | A1        | Turisme   | Taronja |
+| 32324234F | Pol        | Cruz Fisica        | 321321321 | C/Ficticio        | 2024-05-22   | 5J6KLMNO56T568721 | Audi          | A8        | Sedan     | Taronja |
+| 10202102U | Arthur     | Garcia Sanchez     | 884325432 | C/West            | 2027-01-21   | 8A9ABCDE12N891054 | Nissan        | GTR       | Deportiu  | Gris    |
+| 43242342E | Juan       | Escobar Lopez      | 983324432 | C/Sant Jaume      | 2024-06-27   | 8M9ABCDE12Q891054 | Nissan        | PRIMASTAR | Furgoneta | Gris    |
+| 87675654L | Pepe       | Gim�nez Garc�a     | 934832543 | C/Francisc        | 2024-12-03   | 8W9ABCDE12R891054 | Volkswagen    | Golf      | Turisme   | Gris    |
++-----------+------------+--------------------+-----------+-------------------+--------------+-------------------+---------------+-----------+-----------+---------+
+7 rows in set (0,00 sec)
+
+
+
+
+SUBCONSULTA
+
+
+
+1. Fes-me una subconsulta on vull mostrar per cada marca, el numero de cotxes, el numero de models i els seus tipus
+
+
+mysql:[root:concessionari]> SELECT m.nom AS nom_marca,(SELECT COUNT(*) FROM cotxe c 
+    -> WHERE c.id_marca = m.id_marca) AS numero_cotxes, (SELECT COUNT(DISTINCT mo.id_model) FROM model mo WHERE mo.id_marca = m.id_marca) AS numero_models,GROUP_CONCAT(DISTINCT t.tipus ORDER BY t.tipus SEPARATOR ', ') AS tipus_models FROM marca m
+    -> LEFT JOIN model mo ON (m.id_marca = mo.id_marca)
+    -> LEFT JOIN modeltipuscotxe mtc ON (mo.id_model = mtc.id_model)
+    -> LEFT JOIN tipus t ON (mtc.id_tipus = t.id_tipus) GROUP BY m.nom;
++---------------+---------------+---------------+-------------------------------------------+
+| nom_marca     | numero_cotxes | numero_models | tipus_models                              |
++---------------+---------------+---------------+-------------------------------------------+
+|               |             0 |             0 | NULL                                      |
+| Audi          |            10 |             4 | Deportiu, Sedan, Turisme                  |
+| BMW           |            10 |             4 | Deportiu, Sedan, SUV                      |
+| Ford          |            10 |             6 | Muscle, SUV, Turisme                      |
+| Honda         |            10 |             6 | Deportiu, Sedan, SUV, Turisme             |
+| Mercedes-Benz |            10 |             4 | 4x4, Berlina, Sedan                       |
+| Mitsubishi    |            10 |             6 | 4x4, Deportiu, Petit, Sedan, SUV, Turisme |
+| Nissan        |            10 |             4 | Deportiu, Furgoneta, SUV                  |
+| Porsche       |            10 |             4 | Deportiu                                  |
+| Toyota        |            10 |             6 | Deportiu, Petit, Sedan, Turisme           |
+| Volkswagen    |            10 |             6 | Furgoneta, Sedan, SUV, Turisme            |
++---------------+---------------+---------------+-------------------------------------------+
+11 rows in set (0,00 sec)
+
+
+
+
+2. Fes-me una subconsulta on mostri dels cotxes reservats el numero de cotxe de cada marca
+
+
+mysql:[root:concessionari]> SELECT marca, total_reservats FROM (
+    -> SELECT m.nom AS marca,COUNT(*) AS total_reservats FROM marca m
+    -> JOIN cotxe c ON m.id_marca = c.id_marca
+    -> JOIN client_reserva cr ON c.numero_serie = cr.numero_serie
+    -> GROUP BY m.nom)AS marques
+    -> ORDER BY total_reservats;
++---------------+-----------------+
+| marca         | total_reservats |
++---------------+-----------------+
+| Mercedes-Benz |               1 |
+| Volkswagen    |               1 |
+| Honda         |               1 |
+| Audi          |               2 |
+| Nissan        |               2 |
++---------------+-----------------+
+5 rows in set (0,00 sec)
+
+
+
+
+
+3. Fes-me una subconsulta on els cotxes reservat mostrar els seus tipus i el nombre
+
+
+mysql:[root:concessionari]> SELECT tipus ,(SELECT COUNT(cr.numero_serie) FROM client_reserva cr 
+    -> WHERE cr.numero_serie IN (SELECT numero_serie FROM modeltipuscotxe WHERE id_tipus = t.id_tipus)) AS total_reservats
+    -> FROM tipus t ORDER BY total_reservats DESC;
++-----------+-----------------+
+| tipus     | total_reservats |
++-----------+-----------------+
+| Turisme   |               3 |
+| Berlina   |               1 |
+| Deportiu  |               1 |
+| Furgoneta |               1 |
+| Sedan     |               1 |
+| 4x4       |               0 |
+| Muscle    |               0 |
+| Petit     |               0 |
+| SUV       |               0 |
++-----------+-----------------+
+9 rows in set (0,00 sec)
+
+
+
+

@@ -1,0 +1,627 @@
+Bixiang Zhu
+Pol Cruz Fisica
+1r ASIX
+InstitutMVM
+
+TAULES
+
+mysql:[root:concessionari]> show tables;
++-------------------------+
+| Tables_in_concessionari |
++-------------------------+
+| client_reserva          |
+| color                   |
+| cotxe                   |
+| marca                   |
+| model                   |
+| modeltipuscotxe         |
+| modificacio             |
+| motor                   |
+| nou                     |
+| segona_ma               |
+| tipus                   |
+| tipus_model             |
++-------------------------+
+12 rows in set (0,00 sec)
+
+
+SELECT DE CADA TAULA
+Dins del insert.sql hem posat alguns valors randomitzats per defecte, es normal que no apareigi igual alguns valors
+
+
+mysql:[root:concessionari]> select * from client_reserva;
++-------------------+-----------+---------+--------------------+-----------+-------------------+--------------+
+| numero_serie      | DNI       | nom     | cognom             | telefon   | adreça            | data_reserva |
++-------------------+-----------+---------+--------------------+-----------+-------------------+--------------+
+| 2C3POQST45R236578 | 93857493B | Joana   | Rebelde            | 688142948 | C/ Sant francisco | 2024-05-21   |
+| 2U3VWXYZ90T235498 | 38202392O | Joel    | Miller Morgan      | 958437598 | C/Berlin          | 2024-02-12   |
+| 5D6KLMNO56K568721 | 03932923B | Antonio | Gamiz Ferrin       | 432424234 | C/Sant Lois       | 2025-01-01   |
+| 5J6KLMNO56T568721 | 32324234F | Pol     | Cruz Fisica        | 321321321 | C/Ficticio        | 2024-05-22   |
+| 8A9ABCDE12N891054 | 10202102U | Arthur  | Garcia Sanchez     | 884325432 | C/West            | 2027-01-21   |
+| 8M9ABCDE12Q891054 | 43242342E | Juan    | Escobar Lopez      | 983324432 | C/Sant Jaume      | 2024-06-27   |
+| 8W9ABCDE12R891054 | 87675654L | Pepe    | Gim�nez Garc�a     | 934832543 | C/Francisc        | 2024-12-03   |
++-------------------+-----------+---------+--------------------+-----------+-------------------+--------------+
+7 rows in set (0,00 sec)
+
+
+mysql:[root:concessionari]> select * from color;
++----------+---------+
+| id_color | nom     |
++----------+---------+
+|        2 | Blanc   |
+|        3 | Blau    |
+|       10 | Cromat  |
+|        9 | Gris    |
+|        6 | Groc    |
+|        7 | Lila    |
+|        1 | Negre   |
+|        8 | Taronja |
+|        5 | Verd    |
+|        4 | Vermell |
++----------+---------+
+10 rows in set (0,00 sec)
+
+
+mysql:[root:concessionari]> select * from cotxe;
++-------------------+----------+----------+--------------------+-------------+---------------+-----------+------------+-----------------+----------+--------------------------------------------+
+| numero_serie      | id_marca | id_motor | Etiqueta_enviental | potencia_CV | personalitzat | estat     | disponible | any_fabricació  | id_color | imatge                                     |
++-------------------+----------+----------+--------------------+-------------+---------------+-----------+------------+-----------------+----------+--------------------------------------------+
+| 0A1JBECF12Z348290 |        1 |        1 | altres             |          95 | si            | nou       | si         |            2005 |        3 | NULL                                       |
+| 0C1KLMNO56L013276 |        1 |        2 | CERO               |          95 | no            | nou       | si         |            2005 |        3 | 0xFFD8FFE1001845786966000049492A0008000000 |
+| 0E1KLMNO56Y013276 |        6 |        3 | altres             |         110 | no            | nou       | si         |            2022 |        3 | NULL                                       |
+| 0I1KLMNO56F013276 |        1 |        7 | C                  |         130 | no            | nou       | si         |            2005 |        3 | NULL                                       |
+| 0K1LMNOP56S013276 |        6 |        4 | altres             |         150 | no            | nou       | si         |            2022 |        3 | NULL                                       |
+| 0M1KLMNO56B013276 |        6 |        5 | altres             |         150 | no            | nou       | si         |            2022 |        3 | NULL                                       |
+| 0O1KLMNO56Z013276 |        1 |        5 | altres             |          95 | no            | nou       | si         |            2005 |        3 | 0xFFD8FFE000104A46494600010100000100010000 |
+| 0S1KLMNO56V013276 |        6 |        5 | altres             |         110 | no            | nou       | si         |            2022 |        3 | NULL                                       |
+| 0U1KLMNO56I013276 |        1 |        1 | altres             |         130 | no            | nou       | si         |            2005 |        3 | NULL                                       |
+| 0Y1KLMNO56P013276 |        6 |        3 | altres             |         150 | no            | nou       | si         |            2023 |        9 | NULL                                       |
+| 1B2KLMNR87Q123567 |        1 |        2 | altres             |         105 | no            | segona ma | no         |            2005 |        7 | 0xFFD8FFE000104A46494600010101006000600000 |
+| 1B4DSDSE23F123955 |        6 |        4 | B                  |         190 | no            | nou       | si         |            2022 |        8 | NULL                                       |
+| 1D2QRSTU78K124387 |        1 |        2 | ECO                |         105 | no            | segona ma | no         |            2005 |        7 | NULL                                       |
+| 1F2QRSTU78X124387 |        6 |        3 | altres             |         125 | no            | segona ma | no         |            2022 |        7 | NULL                                       |
+| 1J2QRSTU78E124387 |        1 |        7 | altres             |         140 | no            | segona ma | no         |            2005 |        7 | NULL                                       |
+| 1L2QRSTU78R124387 |        6 |        7 | CERO               |         160 | no            | segona ma | no         |            2022 |        7 | NULL                                       |
+| 1N2QRSTU78A124387 |        6 |        4 | C                  |         160 | no            | segona ma | no         |            2022 |        7 | NULL                                       |
+| 1P2QRSTU78Y124387 |        1 |        7 | altres             |         105 | no            | segona ma | no         |            2005 |        7 | NULL                                       |
+| 1T2QRSTU78U124387 |        6 |        5 | CERO               |         125 | no            | segona ma | no         |            2022 |        7 | NULL                                       |
+| 1V2QRSTU78H124387 |        1 |        2 | altres             |         140 | no            | segona ma | no         |            2005 |        7 | NULL                                       |
+| 2A3VWXYZ90N235498 |        7 |        4 | C                  |         170 | no            | nou       | si         |            2007 |        2 | NULL                                       |
+| 2C3POQST45R236578 |        2 |        1 | altres             |         110 | no            | nou       | pendent    |            2010 |        2 | NULL                                       |
+| 2E3VWXYZ90J235498 |        2 |        2 | CERO               |         110 | no            | nou       | si         |            2010 |        2 | NULL                                       |
+| 2G3VWXYZ90W235498 |        7 |        2 | altres             |         130 | no            | nou       | si         |            2007 |        2 | NULL                                       |
+| 2K3VWXYZ90D235498 |        2 |        5 | ECO                |         150 | no            | nou       | si         |            2010 |        2 | NULL                                       |
+| 2M3VWXYZ90Q235498 |        7 |        7 | ECO                |         170 | no            | nou       | no         |            2007 |        2 | NULL                                       |
+| 2O3VWXYZ90Z235498 |        7 |        4 | altres             |         170 | no            | nou       | no         |            2007 |        2 | NULL                                       |
+| 2Q3VWXYZ90X235498 |        2 |        5 | CERO               |         110 | no            | nou       | si         |            2010 |        2 | NULL                                       |
+| 2U3VWXYZ90T235498 |        7 |        2 | CERO               |         130 | si            | nou       | pendent    |            2007 |        2 | 0xFFD8FFE000104A46494600010100000100010000 |
+| 2W3VWXYZ90G235498 |        2 |        5 | altres             |         150 | no            | nou       | si         |            2010 |        2 | NULL                                       |
+| 3B4ABCDE12M346509 |        7 |        6 | ECO                |         180 | no            | segona ma | si         |            2007 |        6 | NULL                                       |
+| 3D4UVWXY78T349589 |        2 |        2 | B                  |         125 | no            | segona ma | si         |            2010 |        6 | 0xFFD8FFE000104A4649460001010100B400B40000 |
+| 3F4ABCDE12I346509 |        2 |        2 | altres             |         125 | no            | segona ma | si         |            2010 |        6 | NULL                                       |
+| 3H4ABCDE12V346509 |        7 |        1 | altres             |         140 | no            | segona ma | si         |            2007 |        6 | NULL                                       |
+| 3L4ABCDE12C346509 |        2 |        1 | altres             |         160 | no            | segona ma | si         |            2010 |        6 | 0xFFD8FFE000104A46494600010102004800480000 |
+| 3N4ABCDE12P346509 |        7 |        4 | A                  |         180 | no            | segona ma | si         |            2007 |        6 | NULL                                       |
+| 3P4ABCDE12Y346509 |        7 |        2 | altres             |         180 | no            | segona ma | si         |            2007 |        6 | NULL                                       |
+| 3R4ABCDE12W346509 |        2 |        4 | altres             |         125 | no            | segona ma | si         |            2010 |        6 | NULL                                       |
+| 3V4ABCDE12S346509 |        7 |        2 | altres             |         140 | no            | segona ma | si         |            2007 |        6 | NULL                                       |
+| 3X4ABCDE12F346509 |        2 |        5 | altres             |         160 | no            | segona ma | si         |            2010 |        6 | NULL                                       |
+| 4C5FGHIJ34L457610 |        8 |        1 | ECO                |         190 | no            | nou       | no         |            2012 |        4 | 0xFFD8FFE100724578696600004D4D002A00000008 |
+| 4E5ABCJK98Y457610 |        3 |        4 | CERO               |         130 | no            | nou       | no         |            2015 |        4 | 0xFFD8FFE000104A46494600010200006400640000 |
+| 4G5FGHIJ34H457610 |        3 |        1 | altres             |         130 | no            | nou       | no         |            2015 |        4 | NULL                                       |
+| 4I5FGHIJ34U457610 |        8 |        1 | CERO               |         150 | no            | nou       | no         |            2012 |        4 | NULL                                       |
+| 4M5FGHIJ34B457610 |        3 |        4 | ECO                |         170 | no            | nou       | no         |            2015 |        4 | NULL                                       |
+| 4O5FGHIJ34O457610 |        8 |        5 | altres             |         190 | si            | nou       | no         |            2012 |        4 | NULL                                       |
+| 4Q5FGHIJ34X457610 |        8 |        1 | altres             |         190 | si            | nou       | no         |            2012 |        4 | NULL                                       |
+| 4S5FGHIJ34V457610 |        3 |        2 | CERO               |         130 | no            | nou       | no         |            2015 |        4 | NULL                                       |
+| 4W6FDGTV87M937612 |        8 |        1 | altres             |         150 | no            | nou       | si         |            2024 |        6 | NULL                                       |
+| 4Y5FGHIJ34E457610 |        3 |        4 | altres             |         170 | no            | nou       | no         |            2015 |        4 | NULL                                       |
+| 5D6KLMNO56K568721 |        8 |        6 | altres             |         200 | no            | segona ma | pendent    |            2012 |        8 | NULL                                       |
+| 5F6DEFGH34X568721 |        3 |        1 | CERO               |         140 | no            | segona ma | no         |            2015 |        8 | 0xFFD8FFE000104A46494600010101006000600000 |
+| 5H6KLMNO56G568721 |        3 |        1 | altres             |         140 | no            | segona ma | si         |            2015 |        8 | NULL                                       |
+| 5J6KLMNO56T568721 |        8 |        1 | C                  |         160 | no            | segona ma | pendent    |            2012 |        8 | NULL                                       |
+| 5N6KLMNO56A568721 |        3 |        5 | CERO               |         180 | no            | segona ma | si         |            2015 |        8 | NULL                                       |
+| 5P6KLMNO56N568721 |        8 |        3 | CERO               |         200 | no            | segona ma | no         |            2012 |        8 | NULL                                       |
+| 5R6KLMNO56W568721 |        8 |        1 | altres             |         200 | no            | segona ma | si         |            2012 |        8 | NULL                                       |
+| 5T6KLMNO56U568721 |        3 |        2 | C                  |         140 | no            | segona ma | si         |            2015 |        8 | NULL                                       |
+| 5X6KLMNO56Q568721 |        8 |        1 | altres             |         160 | no            | segona ma | si         |            2012 |        8 | NULL                                       |
+| 5Z6KLMNO56D568721 |        3 |        7 | CERO               |         180 | no            | segona ma | si         |            2015 |        8 | NULL                                       |
+| 6A7PQRST78C679832 |        4 |        7 | B                  |         190 | no            | nou       | si         |            2020 |        1 | NULL                                       |
+| 6E7PQRST78J679832 |        9 |        2 | B                  |          95 | no            | nou       | si         |            2017 |        1 | NULL                                       |
+| 6G7HIJKL76W679832 |        4 |        3 | CERO               |         150 | si            | nou       | si         |            2020 |        1 | 0xFFD8FFE000104A46494600010101006000600000 |
+| 6I7PQRST78F679832 |        4 |        1 | altres             |         150 | no            | nou       | si         |            2020 |        1 | 0xFFD8FFE000104A4649460001010106FC06FC0000 |
+| 6K7PQRST78S679832 |        9 |        1 | altres             |         170 | no            | nou       | si         |            2017 |        1 | NULL                                       |
+| 6O7PQRST78Z679832 |        4 |        5 | ECO                |         190 | no            | nou       | si         |            2020 |        1 | 0xFFD8FFE000104A46494600010100000100010000 |
+| 6Q7PQRST78M679832 |        9 |        1 | altres             |          95 | si            | nou       | si         |            2017 |        1 | 0xFFD8FFE000104A46494600010101012C012C0000 |
+| 6S7PQRST78V679832 |        9 |        5 | altres             |          95 | no            | nou       | si         |            2017 |        1 | NULL                                       |
+| 6U7PQRST78T679832 |        4 |        1 | altres             |         150 | si            | nou       | si         |            2020 |        1 | NULL                                       |
+| 6Y7PQRST78P679832 |        9 |        5 | altres             |         170 | si            | nou       | si         |            2017 |        1 | NULL                                       |
+| 7B8UVWXY90B789943 |        4 |        7 | B                  |         200 | no            | segona ma | no         |            2020 |        5 | NULL                                       |
+| 7F8UVWXY90I789943 |        9 |        5 | CERO               |         105 | no            | segona ma | no         |            2017 |        5 | NULL                                       |
+| 7H8MNOPQ54V789943 |        4 |        2 | altres             |         160 | no            | segona ma | no         |            2020 |        5 | NULL                                       |
+| 7J8UVWXY90E789943 |        4 |        1 | CERO               |         160 | no            | segona ma | no         |            2020 |        5 | NULL                                       |
+| 7L8UVWXY90R789943 |        9 |        3 | C                  |         180 | no            | segona ma | no         |            2017 |        5 | NULL                                       |
+| 7P8UVWXY90Y789943 |        4 |        5 | altres             |         200 | no            | segona ma | no         |            2020 |        5 | NULL                                       |
+| 7R8UVWXY90L789943 |        9 |        2 | altres             |         105 | no            | segona ma | no         |            2017 |        5 | NULL                                       |
+| 7T8UVWXY90U789943 |        9 |        7 | altres             |         105 | no            | segona ma | no         |            2017 |        5 | NULL                                       |
+| 7V8UVWXY90S789943 |        4 |        5 | altres             |         160 | no            | segona ma | no         |            2020 |        5 | NULL                                       |
+| 7Z8UVWXY90O789943 |        9 |        2 | C                  |         180 | no            | segona ma | no         |            2017 |        5 | NULL                                       |
+| 8A9ABCDE12N891054 |       10 |        2 | altres             |         190 | no            | nou       | pendent    |            2008 |        9 | NULL                                       |
+| 8C9ABCDE12A891054 |        5 |        2 | altres             |          95 | no            | nou       | si         |            2021 |        9 | NULL                                       |
+| 8G9ABCDE12H891054 |       10 |        3 | altres             |         110 | no            | nou       | si         |            2008 |        9 | NULL                                       |
+| 8I9RSTUV12U891054 |        5 |        5 | ECO                |         170 | no            | nou       | no         |            2021 |        9 | 0xFFD8FFE000104A46494600010101004800480000 |
+| 8K9ABCDE12D891054 |        5 |        3 | altres             |         170 | no            | nou       | si         |            2021 |        9 | 0xFFD8FFE000104A46494600010100000100010000 |
+| 8M9ABCDE12Q891054 |       10 |        4 | altres             |         190 | no            | nou       | pendent    |            2008 |        9 | 0xFFD8FFE000104A46494600010100000100010000 |
+| 8Q9ABCDE12X891054 |        5 |        7 | A                  |          95 | no            | nou       | si         |            2021 |        9 | NULL                                       |
+| 8S9ABCDE12K891054 |       10 |        2 | C                  |         110 | no            | nou       | no         |            2008 |        9 | NULL                                       |
+| 8U9ABCDE12T891054 |       10 |        7 | A                  |         110 | no            | nou       | no         |            2008 |        9 | NULL                                       |
+| 8W9ABCDE12R891054 |        5 |        4 | altres             |         170 | no            | nou       | pendent    |            2021 |        9 | NULL                                       |
+| 9B0FGHIJ34M902165 |       10 |        2 | altres             |         200 | no            | segona ma | si         |            2008 |       10 | NULL                                       |
+| 9D0FGHIJ34Z902165 |        5 |        2 | B                  |         105 | no            | segona ma | no         |            2021 |       10 | NULL                                       |
+| 9H0FGHIJ34G902165 |       10 |        5 | B                  |         125 | no            | segona ma | si         |            2008 |       10 | NULL                                       |
+| 9J0WXYZA34T902165 |        5 |        5 | A                  |         180 | no            | segona ma | si         |            2021 |       10 | NULL                                       |
+| 9L0FGHIJ34C902165 |        5 |        3 | ECO                |         180 | no            | segona ma | si         |            2021 |       10 | NULL                                       |
+| 9N0FGHIJ34P902165 |       10 |        4 | CERO               |         200 | no            | segona ma | si         |            2008 |       10 | NULL                                       |
+| 9R0FGHIJ34W902165 |        5 |        7 | B                  |         105 | no            | segona ma | si         |            2021 |       10 | 0xFFD8FFE000104A46494600010101004800480000 |
+| 9T0FGHIJ34J902165 |       10 |        2 | altres             |         125 | no            | segona ma | si         |            2008 |       10 | 0xFFD8FFE000104A46494600010101004800480000 |
+| 9V0FGHIJ34S902165 |       10 |        1 | CERO               |         125 | no            | segona ma | si         |            2008 |       10 | NULL                                       |
+| 9X0FGHIJ34Q902165 |        5 |        1 | CERO               |         180 | no            | segona ma | si         |            2021 |       10 | 0x89504E470D0A1A0A0000000D494844520000037A |
++-------------------+----------+----------+--------------------+-------------+---------------+-----------+------------+-----------------+----------+--------------------------------------------+
+100 rows in set (0,00 sec)
+
+
+mysql:[root:concessionari]> select * from marca;
++----------+---------------+
+| id_marca | nom           |
++----------+---------------+
+|        0 |               |
+|        8 | Audi          |
+|        6 | BMW           |
+|        1 | Ford          |
+|        2 | Honda         |
+|        7 | Mercedes-Benz |
+|        4 | Mitsubishi    |
+|       10 | Nissan        |
+|        9 | Porsche       |
+|        3 | Toyota        |
+|        5 | Volkswagen    |
++----------+---------------+
+11 rows in set (0,00 sec)
+
+
+mysql:[root:concessionari]> select * from model;
++----------+----------+-----------+
+| id_model | id_marca | nom       |
++----------+----------+-----------+
+|        1 |        1 | Mustang   |
+|        2 |        1 | Focus     |
+|        3 |        2 | Civic     |
+|        4 |        2 | NSX       |
+|        5 |        3 | Prius     |
+|        6 |        3 | Celica    |
+|        7 |        4 | Lancer    |
+|        8 |        4 | Star      |
+|        9 |        5 | Polo      |
+|       10 |        5 | Golf      |
+|       11 |        6 | M3        |
+|       12 |        6 | M4        |
+|       13 |        7 | Clase A   |
+|       14 |        7 | Clase S   |
+|       15 |        8 | R8        |
+|       16 |        8 | TT        |
+|       17 |        9 | 911       |
+|       18 |        9 | 844       |
+|       19 |       10 | GTR       |
+|       20 |       10 | Juke      |
+|       21 |        1 | Fiesta    |
+|       22 |        1 | Puma      |
+|       23 |        2 | Jazz      |
+|       24 |        2 | HR-V      |
+|       25 |        3 | Corolla   |
+|       26 |        3 | Supra     |
+|       27 |        4 | Colt      |
+|       28 |        4 | ASX       |
+|       29 |        5 | Tiguan    |
+|       30 |        5 | Passat    |
+|       31 |        6 | Z4        |
+|       32 |        6 | x3        |
+|       33 |        7 | Clase E   |
+|       34 |        7 | Clase G   |
+|       35 |        8 | A8        |
+|       36 |        8 | A1        |
+|       37 |        9 | 811       |
+|       38 |        9 | Panamera  |
+|       39 |       10 | Qashqai   |
+|       40 |       10 | PRIMASTAR |
+|       41 |        1 | Modelo T  |
+|       42 |        1 | Escort    |
+|       43 |        2 | ZR-V      |
+|       44 |        2 | HONDA E   |
+|       45 |        3 | Aygo      |
+|       46 |        3 | Yaris     |
+|       47 |        4 | Pajero    |
+|       48 |        4 | Montero   |
+|       49 |        5 | Touareg   |
+|       50 |        5 | Buzz      |
++----------+----------+-----------+
+50 rows in set (0,00 sec)
+
+
+mysql:[root:concessionari]> select * from modeltipuscotxe;
++-------------------+----------+----------+
+| numero_serie      | id_model | id_tipus |
++-------------------+----------+----------+
+| 0C1KLMNO56L013276 |        1 |        9 |
+| 0O1KLMNO56Z013276 |        1 |        9 |
+| 1V2QRSTU78H124387 |        2 |        1 |
+| 2C3POQST45R236578 |        3 |        1 |
+| 2K3VWXYZ90D235498 |        3 |        6 |
+| 2E3VWXYZ90J235498 |        4 |        6 |
+| 3R4ABCDE12W346509 |        4 |        6 |
+| 5H6KLMNO56G568721 |        5 |        3 |
+| 5Z6KLMNO56D568721 |        5 |        1 |
+| 4Y5FGHIJ34E457610 |        6 |        6 |
+| 7B8UVWXY90B789943 |        7 |        6 |
+| 7J8UVWXY90E789943 |        7 |        1 |
+| 6A7PQRST78C679832 |        8 |        3 |
+| 8C9ABCDE12A891054 |        9 |        1 |
+| 9R0FGHIJ34W902165 |        9 |        1 |
+| 8W9ABCDE12R891054 |       10 |        1 |
+| 0K1LMNOP56S013276 |       11 |        3 |
+| 0Y1KLMNO56P013276 |       12 |        6 |
+| 1L2QRSTU78R124387 |       12 |        6 |
+| 1N2QRSTU78A124387 |       12 |        6 |
+| 3B4ABCDE12M346509 |       13 |        3 |
+| 3H4ABCDE12V346509 |       13 |        3 |
+| 3P4ABCDE12Y346509 |       13 |        3 |
+| 3V4ABCDE12S346509 |       13 |        3 |
+| 2U3VWXYZ90T235498 |       14 |        7 |
+| 3N4ABCDE12P346509 |       14 |        7 |
+| 4I5FGHIJ34U457610 |       15 |        6 |
+| 5X6KLMNO56Q568721 |       15 |        6 |
+| 4W6FDGTV87M937612 |       16 |        6 |
+| 5P6KLMNO56N568721 |       16 |        6 |
+| 6Q7PQRST78M679832 |       17 |        6 |
+| 7F8UVWXY90I789943 |       17 |        6 |
+| 7T8UVWXY90U789943 |       17 |        6 |
+| 6E7PQRST78J679832 |       18 |        6 |
+| 7R8UVWXY90L789943 |       18 |        6 |
+| 8A9ABCDE12N891054 |       19 |        6 |
+| 9T0FGHIJ34J902165 |       19 |        6 |
+| 8S9ABCDE12K891054 |       20 |        2 |
+| 9B0FGHIJ34M902165 |       20 |        2 |
+| 9H0FGHIJ34G902165 |       20 |        2 |
+| 0A1JBECF12Z348290 |       21 |        1 |
+| 0I1KLMNO56F013276 |       21 |        1 |
+| 1B2KLMNR87Q123567 |       22 |        2 |
+| 1J2QRSTU78E124387 |       22 |        2 |
+| 3X4ABCDE12F346509 |       23 |        1 |
+| 2Q3VWXYZ90X235498 |       24 |        2 |
+| 4E5ABCJK98Y457610 |       25 |        3 |
+| 4G5FGHIJ34H457610 |       26 |        6 |
+| 4S5FGHIJ34V457610 |       26 |        6 |
+| 6G7HIJKL76W679832 |       27 |        4 |
+| 6I7PQRST78F679832 |       27 |        4 |
+| 6O7PQRST78Z679832 |       28 |        1 |
+| 8I9RSTUV12U891054 |       29 |        2 |
+| 9X0FGHIJ34Q902165 |       30 |        3 |
+| 0M1KLMNO56B013276 |       31 |        6 |
+| 1F2QRSTU78X124387 |       31 |        6 |
+| 1T2QRSTU78U124387 |       31 |        6 |
+| 0E1KLMNO56Y013276 |       32 |        2 |
+| 0S1KLMNO56V013276 |       32 |        2 |
+| 1B4DSDSE23F123955 |       32 |        2 |
+| 2A3VWXYZ90N235498 |       33 |        3 |
+| 2G3VWXYZ90W235498 |       33 |        3 |
+| 2M3VWXYZ90Q235498 |       34 |        5 |
+| 2O3VWXYZ90Z235498 |       34 |        5 |
+| 4C5FGHIJ34L457610 |       35 |        3 |
+| 5J6KLMNO56T568721 |       35 |        3 |
+| 5R6KLMNO56W568721 |       35 |        3 |
+| 4O5FGHIJ34O457610 |       36 |        1 |
+| 4Q5FGHIJ34X457610 |       36 |        1 |
+| 5D6KLMNO56K568721 |       36 |        1 |
+| 7L8UVWXY90R789943 |       37 |        6 |
+| 7Z8UVWXY90O789943 |       37 |        6 |
+| 6K7PQRST78S679832 |       38 |        6 |
+| 6S7PQRST78V679832 |       38 |        6 |
+| 6Y7PQRST78P679832 |       38 |        6 |
+| 8U9ABCDE12T891054 |       39 |        2 |
+| 9N0FGHIJ34P902165 |       39 |        2 |
+| 8G9ABCDE12H891054 |       40 |        8 |
+| 8M9ABCDE12Q891054 |       40 |        8 |
+| 9V0FGHIJ34S902165 |       40 |        8 |
+| 0U1KLMNO56I013276 |       41 |        1 |
+| 1D2QRSTU78K124387 |       41 |        1 |
+| 1P2QRSTU78Y124387 |       42 |        1 |
+| 3D4UVWXY78T349589 |       43 |        3 |
+| 3L4ABCDE12C346509 |       43 |        3 |
+| 2W3VWXYZ90G235498 |       44 |        1 |
+| 3F4ABCDE12I346509 |       44 |        1 |
+| 5N6KLMNO56A568721 |       45 |        4 |
+| 5T6KLMNO56U568721 |       45 |        4 |
+| 4M5FGHIJ34B457610 |       46 |        6 |
+| 5F6DEFGH34X568721 |       46 |        1 |
+| 7H8MNOPQ54V789943 |       47 |        5 |
+| 7V8UVWXY90S789943 |       47 |        2 |
+| 6U7PQRST78T679832 |       48 |        5 |
+| 7P8UVWXY90Y789943 |       48 |        5 |
+| 8K9ABCDE12D891054 |       49 |        2 |
+| 8Q9ABCDE12X891054 |       49 |        2 |
+| 9J0WXYZA34T902165 |       49 |        2 |
+| 9D0FGHIJ34Z902165 |       50 |        8 |
+| 9L0FGHIJ34C902165 |       50 |        8 |
++-------------------+----------+----------+
+100 rows in set (0,00 sec)
+
+
+mysql:[root:concessionari]> select * from modificacio;
++-------------------+----------------------------------------------+
+| numero_serie      | descripcio                                   |
++-------------------+----------------------------------------------+
+| 0A1JBECF12Z348290 | Sostre Solar-Kit Muntanya-Llums Antiboira    |
+| 2U3VWXYZ90T235498 | Sostre Solar-Llum Ambiental-Televisio        |
+| 4O5FGHIJ34O457610 | Sostre Solar-Cadires Esportives              |
+| 4Q5FGHIJ34X457610 | Roda de Recanvi-Llums Antiboira-Sostre Solar |
+| 6G7HIJKL76W679832 | Llums Antiboira-Llantas Premium              |
+| 6Q7PQRST78M679832 | Sostre Solar-Kit GT3                         |
+| 6U7PQRST78T679832 | Sostre Solar-Kit Muntanya-Llums Antiboira    |
+| 6Y7PQRST78P679832 | Televisio-Coctelera-Roda de Recanvi          |
++-------------------+----------------------------------------------+
+8 rows in set (0,00 sec)
+
+
+mysql:[root:concessionari]> select * from motor;
++----------+----------+
+| id_motor | tipus    |
++----------+----------+
+|        1 | gasolina |
+|        2 | diesel   |
+|        3 | gas      |
+|        4 | hibrid   |
+|        5 | electric |
+|        6 | gasoil   |
+|        7 | altres   |
++----------+----------+
+7 rows in set (0,00 sec)
+
+
+mysql:[root:concessionari]> select * from nou;
++-------------------+------------+-----------+
+| numero_serie      | preucompra | preuventa |
++-------------------+------------+-----------+
+| 0A1JBECF12Z348290 |   94189.00 | 127155.15 |
+| 0C1KLMNO56L013276 |   51142.00 |  69041.70 |
+| 0E1KLMNO56Y013276 |  157142.00 | 212141.70 |
+| 0I1KLMNO56F013276 |   48282.00 |  65180.70 |
+| 0K1LMNOP56S013276 |  145986.00 | 197081.10 |
+| 0M1KLMNO56B013276 |  193084.00 | 260663.40 |
+| 0O1KLMNO56Z013276 |  135461.00 | 182872.35 |
+| 0S1KLMNO56V013276 |   90051.00 | 121568.85 |
+| 0U1KLMNO56I013276 |   35873.00 |  48428.55 |
+| 0Y1KLMNO56P013276 |   93213.00 | 125837.55 |
+| 1B4DSDSE23F123955 |  158445.00 | 213900.75 |
+| 2A3VWXYZ90N235498 |  120585.00 | 162789.75 |
+| 2C3POQST45R236578 |  119590.00 | 161446.50 |
+| 2E3VWXYZ90J235498 |   36196.00 |  48864.60 |
+| 2G3VWXYZ90W235498 |  198213.00 | 267587.55 |
+| 2K3VWXYZ90D235498 |  106474.00 | 143739.90 |
+| 2M3VWXYZ90Q235498 |  121731.00 | 164336.85 |
+| 2O3VWXYZ90Z235498 |   89235.00 | 120467.25 |
+| 2Q3VWXYZ90X235498 |   72981.00 |  98524.35 |
+| 2U3VWXYZ90T235498 |   89202.00 | 120422.70 |
+| 2W3VWXYZ90G235498 |   27065.00 |  36537.75 |
+| 4C5FGHIJ34L457610 |   51723.00 |  69826.05 |
+| 4E5ABCJK98Y457610 |  169417.00 | 228712.95 |
+| 4G5FGHIJ34H457610 |  107917.00 | 145687.95 |
+| 4I5FGHIJ34U457610 |   23331.00 |  31496.85 |
+| 4M5FGHIJ34B457610 |  168908.00 | 228025.80 |
+| 4O5FGHIJ34O457610 |  190545.00 | 257235.75 |
+| 4Q5FGHIJ34X457610 |   54001.00 |  72901.35 |
+| 4S5FGHIJ34V457610 |   74370.00 | 100399.50 |
+| 4W6FDGTV87M937612 |    9846.00 |  13292.10 |
+| 4Y5FGHIJ34E457610 |   10122.00 |  13664.70 |
+| 6A7PQRST78C679832 |   13074.00 |  17649.90 |
+| 6E7PQRST78J679832 |   27005.00 |  36456.75 |
+| 6G7HIJKL76W679832 |   87802.00 | 118532.70 |
+| 6I7PQRST78F679832 |  157994.00 | 213291.90 |
+| 6K7PQRST78S679832 |  134562.00 | 181658.70 |
+| 6O7PQRST78Z679832 |  190831.00 | 257621.85 |
+| 6Q7PQRST78M679832 |  158468.00 | 213931.80 |
+| 6S7PQRST78V679832 |   19845.00 |  26790.75 |
+| 6U7PQRST78T679832 |  191825.00 | 258963.75 |
+| 6Y7PQRST78P679832 |  123585.00 | 166839.75 |
+| 8A9ABCDE12N891054 |   34450.00 |  46507.50 |
+| 8C9ABCDE12A891054 |  177499.00 | 239623.65 |
+| 8G9ABCDE12H891054 |    8143.00 |  10993.05 |
+| 8I9RSTUV12U891054 |   76221.00 | 102898.35 |
+| 8K9ABCDE12D891054 |  156676.00 | 211512.60 |
+| 8M9ABCDE12Q891054 |  162713.00 | 219662.55 |
+| 8Q9ABCDE12X891054 |  143539.00 | 193777.65 |
+| 8S9ABCDE12K891054 |   29555.00 |  39899.25 |
+| 8U9ABCDE12T891054 |   93160.00 | 125766.00 |
+| 8W9ABCDE12R891054 |  177135.00 | 239132.25 |
++-------------------+------------+-----------+
+51 rows in set (0,00 sec)
+
+
+mysql:[root:concessionari]> select * from segona_ma;
++-------------------+--------+------------+-----------+---------+
+| numero_serie      | km     | preucompra | preuventa | reparat |
++-------------------+--------+------------+-----------+---------+
+| 1B2KLMNR87Q123567 | 881843 |   22191.00 |  26629.20 | no      |
+| 1D2QRSTU78K124387 | 930649 |  147555.00 | 177066.00 | no      |
+| 1F2QRSTU78X124387 |   7720 |   87200.00 | 104640.00 | no      |
+| 1J2QRSTU78E124387 | 246646 |  177337.00 | 212804.40 | si      |
+| 1L2QRSTU78R124387 | 210071 |   41082.00 |  49298.40 | si      |
+| 1N2QRSTU78A124387 | 310417 |   49399.00 |  59278.80 | si      |
+| 1P2QRSTU78Y124387 | 921874 |  115753.00 | 138903.60 | si      |
+| 1T2QRSTU78U124387 | 678121 |   38564.00 |  46276.80 | si      |
+| 1V2QRSTU78H124387 | 624985 |   29564.00 |  35476.80 | si      |
+| 3B4ABCDE12M346509 |  90564 |   24129.00 |  28954.80 | no      |
+| 3D4UVWXY78T349589 | 577862 |   23953.00 |  28743.60 | si      |
+| 3F4ABCDE12I346509 | 617618 |   39378.00 |  47253.60 | si      |
+| 3H4ABCDE12V346509 | 354507 |  117030.00 | 140436.00 | si      |
+| 3L4ABCDE12C346509 | 919678 |   75015.00 |  90018.00 | no      |
+| 3N4ABCDE12P346509 | 534875 |   15986.00 |  19183.20 | si      |
+| 3P4ABCDE12Y346509 | 915340 |   38885.00 |  46662.00 | no      |
+| 3R4ABCDE12W346509 | 972079 |  138467.00 | 166160.40 | si      |
+| 3V4ABCDE12S346509 | 114376 |  183680.00 | 220416.00 | no      |
+| 3X4ABCDE12F346509 | 655636 |  110995.00 | 133194.00 | si      |
+| 5D6KLMNO56K568721 | 935057 |  187938.00 | 225525.60 | no      |
+| 5F6DEFGH34X568721 | 708381 |   22704.00 |  27244.80 | no      |
+| 5H6KLMNO56G568721 | 736735 |  117710.00 | 141252.00 | no      |
+| 5J6KLMNO56T568721 | 558530 |  128433.00 | 154119.60 | si      |
+| 5N6KLMNO56A568721 | 582448 |   89038.00 | 106845.60 | no      |
+| 5P6KLMNO56N568721 | 236650 |   51890.00 |  62268.00 | si      |
+| 5R6KLMNO56W568721 | 435902 |  176337.00 | 211604.40 | no      |
+| 5T6KLMNO56U568721 | 469564 |  142011.00 | 170413.20 | si      |
+| 5X6KLMNO56Q568721 |  40113 |  173046.00 | 207655.20 | si      |
+| 5Z6KLMNO56D568721 | 791868 |   47197.00 |  56636.40 | no      |
+| 7B8UVWXY90B789943 | 839009 |   92846.00 | 111415.20 | si      |
+| 7F8UVWXY90I789943 | 819440 |  122642.00 | 147170.40 | si      |
+| 7H8MNOPQ54V789943 | 580174 |  134669.00 | 161602.80 | no      |
+| 7J8UVWXY90E789943 | 442549 |  105417.00 | 126500.40 | si      |
+| 7L8UVWXY90R789943 | 472225 |  115081.00 | 138097.20 | no      |
+| 7P8UVWXY90Y789943 |  33481 |   59154.00 |  70984.80 | no      |
+| 7R8UVWXY90L789943 | 750723 |  134527.00 | 161432.40 | si      |
+| 7T8UVWXY90U789943 | 653177 |  103171.00 | 123805.20 | no      |
+| 7V8UVWXY90S789943 |  13720 |  104275.00 | 125130.00 | si      |
+| 7Z8UVWXY90O789943 | 109063 |   11862.00 |  14234.40 | no      |
+| 9B0FGHIJ34M902165 | 504153 |  122487.00 | 146984.40 | si      |
+| 9D0FGHIJ34Z902165 | 193580 |  184850.00 | 221820.00 | no      |
+| 9H0FGHIJ34G902165 | 455440 |  164785.00 | 197742.00 | no      |
+| 9J0WXYZA34T902165 | 696460 |   69373.00 |  83247.60 | no      |
+| 9L0FGHIJ34C902165 | 115985 |   36513.00 |  43815.60 | no      |
+| 9N0FGHIJ34P902165 | 490541 |  158448.00 | 190137.60 | no      |
+| 9R0FGHIJ34W902165 | 104752 |   98696.00 | 118435.20 | si      |
+| 9T0FGHIJ34J902165 |  52136 |   10139.00 |  12166.80 | no      |
+| 9V0FGHIJ34S902165 | 946423 |  130610.00 | 156732.00 | si      |
+| 9X0FGHIJ34Q902165 | 575711 |   38628.00 |  46353.60 | no      |
++-------------------+--------+------------+-----------+---------+
+49 rows in set (0,00 sec)
+
+
+mysql:[root:concessionari]> select * from tipus;
++----------+-----------+
+| id_tipus | tipus     |
++----------+-----------+
+|        5 | 4x4       |
+|        7 | Berlina   |
+|        6 | Deportiu  |
+|        8 | Furgoneta |
+|        9 | Muscle    |
+|        4 | Petit     |
+|        3 | Sedan     |
+|        2 | SUV       |
+|        1 | Turisme   |
++----------+-----------+
+9 rows in set (0,00 sec)
+
+
+mysql:[root:concessionari]> select * from tipus_model;
++----------+----------+
+| id_model | id_tipus |
++----------+----------+
+|       21 |        1 |
+|       22 |        2 |
+|        3 |        1 |
+|       43 |        3 |
+|       25 |        3 |
+|       46 |        1 |
+|       27 |        4 |
+|       47 |        5 |
+|       29 |        2 |
+|       49 |        2 |
+|       11 |        3 |
+|       12 |        6 |
+|       34 |        5 |
+|       14 |        7 |
+|       36 |        1 |
+|       16 |        6 |
+|       17 |        6 |
+|       18 |        6 |
+|       20 |        2 |
+|       19 |        6 |
+|       41 |        1 |
+|        2 |        1 |
+|       44 |        1 |
+|       23 |        1 |
+|        6 |        6 |
+|        5 |        1 |
+|        8 |        3 |
+|        7 |        6 |
+|        9 |        1 |
+|       50 |        8 |
+|       32 |        2 |
+|       31 |        6 |
+|       33 |        3 |
+|       13 |        3 |
+|       15 |        6 |
+|       35 |        3 |
+|       38 |        6 |
+|       37 |        6 |
+|       40 |        8 |
+|       39 |        2 |
+|        1 |        9 |
+|       42 |        1 |
+|       24 |        2 |
+|        4 |        6 |
+|       26 |        6 |
+|       45 |        4 |
+|       48 |        5 |
+|       47 |        2 |
+|       10 |        1 |
+|       30 |        3 |
+|       12 |        6 |
+|       32 |        2 |
+|       33 |        3 |
+|       13 |        3 |
+|       35 |        3 |
+|       36 |        1 |
+|       18 |        6 |
+|       17 |        6 |
+|       40 |        8 |
+|       20 |        2 |
+|       21 |        1 |
+|       22 |        2 |
+|        3 |        6 |
+|       43 |        3 |
+|       46 |        6 |
+|       45 |        4 |
+|       28 |        1 |
+|       48 |        5 |
+|       49 |        2 |
+|        9 |        1 |
+|       32 |        2 |
+|       31 |        6 |
+|       14 |        7 |
+|       13 |        3 |
+|       16 |        6 |
+|       15 |        6 |
+|       38 |        6 |
+|       37 |        6 |
+|       19 |        6 |
+|       20 |        2 |
+|        1 |        9 |
+|       41 |        1 |
+|        4 |        6 |
+|       44 |        1 |
+|       26 |        6 |
+|        5 |        3 |
+|       27 |        4 |
+|        7 |        1 |
+|       49 |        2 |
+|       50 |        8 |
+|       31 |        6 |
+|       12 |        6 |
+|       34 |        5 |
+|       13 |        3 |
+|       36 |        1 |
+|       35 |        3 |
+|       38 |        6 |
+|       17 |        6 |
+|       39 |        2 |
+|       40 |        8 |
++----------+----------+
+100 rows in set (0,00 sec)

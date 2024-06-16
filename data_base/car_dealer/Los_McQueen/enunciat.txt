@@ -1,0 +1,25 @@
+Bixiang Zhu
+Pol Cruz Fisica
+1r ASIX
+InstitutMVM
+
+
+
+ENUNCIAT
+
+
+Base de Dades per a la Gestió de Cotxes en un Concessionari
+
+La nostra base de dades està dissenyada per gestionar eficaçment la informació dels cotxes en un concessionari petit. 
+
+Cada cotxe tindra el seu numero de serie que el identifica. La etiqueta enviental indica el nivell de contaminació i eficiència del cotxe, amb opcions com 'CERO', 'ECO', 'C', 'B', 'A', i la possibilitat de 'Altres' per a futures etiquetes. La potencia es mesura en caballs de vapor que defineix la força i rendiment del motor del cotxe. L'any en què es va produir el cotxe, encara que pot estar ausent en alguns casos excepcionals.La imatge que es una representació visual del cotxe, emmagatzemada com a dades binàries. El color i el tipus de motor del cotxe, incloent opcions com 'gasolina', 'diesel', 'gas', 'híbrid', 'elèctric', 'gasoil' i 'altres', que permet la inclusió de motors innovadors com els de fusió nuclear un dels exemples es el cotxe Cadillac WTF o el Ford Nucleon. 
+
+Cada cotxe està associat a una marca, que conté una llista de models. Diferents models poden tenir diversos tipus de cotxes, encara que normalment cada cotxe pertany a un únic tipus i model.
+
+En cas que el cotxe sigui personalitzat l'usuari podra veure les característiques modificades del seu cotxe.
+
+Depenent si el cotxe sigui nou o segona ma contindran diferents dades i preus, per als cotxes nous, es registren els preus de compra i venda, sent el preu de venda un 35% més alt que el preu de compra i si es de segona ma estaran les dades de km recorreguts, el preu de compra, el preu de venta que sera un 20% més car i si el cotxe esta reparat o no.
+
+En cas de que el cotxe estigui reservat tindrem que introduir les dades del client com el DNI que sera el seu referent, el nom i cognom, el telefon per poder estar en contacte, l'adreça i la data en que s'ha reservat en que això permet una gestió eficaç de les reserves i el seguiment dels clients interessats.
+
+

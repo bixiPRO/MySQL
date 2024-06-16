@@ -1,0 +1,10 @@
+Algunes possibles utilitats que podria tenir la nostra base de dades és la de compra venda de cotxes com de nous com de segona mà.
+
+Alguns detalls que podríem afegir seria que si el cotxe tingués un extra o un color especial el preu fos un tant per cent superior cosa que no hem fet però es podria fer.
+Aixo o fariem fent que quant el color fos per exemple "rosa" el preu aumentes un valor determinat com 135€ amb operacions a els inserts.
+
+Un altra cosa que podríem haver fet és que la etiqueta ambiental s'escollés com passa a la realitat que és depenent de l'any de fabricació del cotxe en conjunt amb el combustible del motor.
+Aixo es faria fent calculs a els inserts en comptes de una etiqeuta aleatoria.
+
+També amb algunes modificacions podríem haver afegit la venda de motocicletes o altres tipus de vehicles.
+Es crearia una taula anomenada tipus_vehicle on estaria (Cotxe, Moto, Camio, etc...) i despres ni hauria un altre tipus_carroceria on ni haurian dependenet del tipus_vehicle (berlina(cotxe), naked(moto), america(camio))

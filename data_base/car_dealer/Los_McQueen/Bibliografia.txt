@@ -1,0 +1,28 @@
+Pagines Web Utilitzades:
+
+1. AUTO-DATA: https://www.auto-data.net/es/
+Utilitzat aquesta pagina per veure algunes caracteristiques del cotxe que podem implementar en la taula cotxe
+
+2. XATAKA: https://www.xataka.com/basics/distintivo-ambiental-que-que-categorias-hay-como-saber-tu-coche-matricula
+Utilitzat per saber el tipus de certificat d'un cotxe
+
+3. MIMOWI: https://www.mimowi.com/blog/tipos-de-motores/
+Utilitzat per saber el tipus de motors d'un cotxe
+
+4. MOTORPASION: https://www.motorpasion.com/prototipos/coches-nucleares-8-000-km-autonomia-motores-a-reaccion-asi-veiamos-futuro-transporte-hace-decadas
+Utilitzat per saber que hi han altres motors de cotxe en que no son molt utilitzats
+
+5. CODA.IO: https://coda.io/@joan-mg/asix-mp02
+La pagina del professor que hem utilitzar per visualitzar la majoria de introducció de dades, substring del imatge, els updates, inserts, load data i resoldre dudes de model E/R
+
+6. Database.Guide: https://database.guide/how-the-load_file-function-works-in-mysql/
+Utilitzat per la introducció de imatge en LONGBLOB
+
+7. Operatiu: https://operatiu.es/2023/02/24/diccionari-de-dades-en-mysql/?authuser=0
+Utilitzat per la creació de diccionari.html
+
+8. CODA.IO: https://coda.io/@joan-mg/asix-m02uf2/nf2-llenguatge-de-manipulacio-de-dades-dml-4
+En l'apartat INSERT de la pagina del professor hem segit el pas per inserir la imatge, fer una sortida per guardar les imatges en /tmp/ amb dumpfile i amb workbench veure l'imatge.
+
+Si l'imatge esta cortat amb un substring no es veura pero si inserim les dades sense substring es podra veure l'imatge en workbench.
+Altra cosa es que per introduir la imatge en mysql tindras que posar la carpeta fotos en el directori de la base de dades creada amb permisos de root (sudo su), el introduir no podras fer un create perque no pot eliminar la carpeta fotos, per solucionar hauras de moure la carpeta a un altre lloc i retornar abans de fer insert amb el source.
