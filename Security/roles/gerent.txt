@@ -1,0 +1,102 @@
+*************************** 1. row ***************************
+QUERY 1: SELECT * FROM venedors;
+num_ven	nom	any_naix	oficina_ven	titol	contracte	director	quota	vendes
+101	Dan Roberts	1945	12	Venedor	1986-10-20	104	300000	354637
+102	Sue Smith	1948	21	Venedor	1986-12-10	108	350000	581968
+103	Paul Cruz	1968	12	Venedor	1987-03-01	104	275000	289594
+104	Bob Smith	1960	12	Director	1987-05-19	106	200000	142594
+105	Bill Adams	1965	13	Venedor	1995-02-12	104	350000	396919
+106	Sam Clark	1952	11	Gerent	1988-06-14	NULL	275000	311697
+107	Nancy Angelli	1975	22	Venedor	2000-11-14	108	300000	193415
+108	Larry Fitch	1962	21	Director	1989-12-10	106	350000	407089
+109	Mary Jones	1980	11	Venedor	2000-10-12	106	300000	394275
+110	Tom Snyder	1970	NULL	Venedor	1990-01-13	101	NULL	91329
+*************************** 1. row ***************************
+QUERY 2: DELETE FROM venedors WHERE quota = "300000";
+*************************** 1. row ***************************
+QUERY 3: SELECT * FROM venedors WHERE quota BETWEEN "290000" AND "400000";
+num_ven	nom	any_naix	oficina_ven	titol	contracte	director	quota	vendes
+102	Sue Smith	1948	21	Venedor	1986-12-10	108	350000	581968
+105	Bill Adams	1965	13	Venedor	1995-02-12	104	350000	396919
+108	Larry Fitch	1962	21	Director	1989-12-10	106	350000	407089
+*************************** 1. row ***************************
+QUERY 4: SELECT * FROM comandes;
+num_comanda	descripcio	data_comanda	clie	ven	iva	dte
+112885	Autoservei	1989-06-15	2102	NULL	16	0
+112950	Autoservei	1995-11-21	2107	110	16	0
+112963	Comanda client VIP	1995-12-17	2103	105	21	0
+112968	Comanda client VIP	1989-12-10	2102	NULL	21	0
+112975	Comanda client VIP	1989-10-12	2111	103	21	0
+112979	Comanda client VIP	1989-12-10	2114	102	21	0
+112983	Comanda client VIP	1995-12-27	2103	105	21	0
+112987	Comanda articles diversos...	1995-12-31	2103	105	21	5
+112989	Comanda articles diversos...	1990-01-03	2101	106	21	5
+112992	Comanda articles diversos...	1995-11-04	2118	108	21	10
+112993	Comanda articles diversos...	1989-01-04	2106	102	21	10
+112997	Comanda articles diversos...	2001-08-01	2124	NULL	21	0
+113003	Comanda articles diversos...	2001-01-25	2108	NULL	21	0
+113007	Comanda articles diversos...	1990-08-01	2112	108	21	0
+113012	Comanda articles diversos...	1996-11-01	2111	105	21	0
+113013	Comanda articles diversos...	1990-01-14	2118	108	21	0
+113024	Comanda articles diversos...	1990-01-20	2114	108	21	0
+113027	Comanda articles diversos...	1996-01-22	2103	105	21	0
+113034	Comanda web	1990-01-29	2107	110	21	0
+113042	Comanda web	1990-02-02	2113	NULL	21	0
+113045	Comanda web	1990-02-02	2112	108	21	0
+113048	Comanda web	1990-02-10	2120	102	21	0
+113049	Comanda web	1990-10-02	2118	108	21	0
+113051	Comanda web	1990-10-02	2118	108	21	25
+113055	Comanda web	1990-02-15	2108	NULL	21	25
+113057	Comanda articles diversos...	1990-02-18	2111	103	21	15
+113058	Comanda articles diversos...	1990-02-23	2108	NULL	21	15
+113062	Comanda articles diversos...	1990-02-24	2124	NULL	21	5
+113065	Comanda articles diversos...	1990-02-27	2106	102	21	3
+113069	Comanda articles diversos...	2001-02-03	2109	NULL	21	3
+113070	Comanda extra	2020-10-10	2110	105	21	25
+113071	Comanda client VIP	2020-10-27	2111	105	21	5
+113072	Comanda client VIP	2020-10-27	2102	NULL	21	0
+113073	Comanda client VIP	2020-10-27	2111	103	21	0
+113074	Comanda client VIP	2020-10-27	2114	102	21	0
+113075	Comanda client VIP	2020-10-27	2103	105	21	10
+113076	Comanda articles diversos...	2020-10-27	2103	105	21	5
+113077	Comanda articles diversos...	2020-10-27	2101	106	21	5
+113078	Comanda articles diversos...	2020-10-28	2118	108	21	10
+113079	Comanda articles diversos...	2020-10-28	2106	102	21	10
+113080	Comanda articles diversos...	2020-10-29	2124	NULL	21	21
+113081	Comanda articles diversos...	2020-10-29	2108	NULL	21	21
+113082	Comanda articles diversos...	2020-10-29	2112	108	21	21
+113083	Comanda articles diversos...	2020-10-30	2111	105	21	21
+113084	Comanda articles diversos...	2020-11-03	2118	108	21	3
+113085	Comanda articles diversos...	2020-11-05	2114	108	21	3
+113086	Comanda articles diversos...	2020-11-09	2103	105	21	10
+113087	Comanda web	2020-11-25	2107	110	21	10
+113088	Comanda web	2020-11-28	2113	NULL	21	10
+113089	Comanda web	2020-12-04	2112	108	21	0
+113090	Comanda web	2020-12-15	2120	102	21	0
+113091	Comanda web	2020-12-27	2118	108	21	0
+113092	Comanda web	2020-12-31	2118	108	21	25
+113093	Comanda web	2020-12-31	2108	NULL	21	25
+113094	Comanda articles diversos...	2020-12-31	2103	105	21	15
+113095	Comanda articles diversos...	2021-01-05	2101	106	21	15
+113096	Comanda articles diversos...	2021-01-08	2124	NULL	21	5
+113097	Comanda articles diversos...	2021-01-11	2106	102	21	40
+113098	Comanda articles diversos...	2021-01-18	2109	NULL	21	3
+113099	Comanda articles diversos...	2021-01-20	2102	NULL	21	3
+*************************** 1. row ***************************
+QUERY 5: DELETE FROM comandes WHERE descripcio = "Comanda client VIP";
+*************************** 1. row ***************************
+QUERY 6: SELECT DISTINCT(descripcio) FROM comandes;
+descripcio
+Autoservei
+Comanda articles diversos...
+Comanda web
+Comanda extra
+*************************** 1. row ***************************
+QUERY 7: DROP TABLE IF EXISTS gerencia;
+*************************** 1. row ***************************
+QUERY 8: CREATE TABLE gerencia(
+	id_gerencia INT PRIMARY KEY AUTO_INCREMENT,
+	nom VARCHAR(55)
+);
+PAGER set to stdout
+Outfile disabled.

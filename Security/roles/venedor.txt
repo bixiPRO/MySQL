@@ -1,0 +1,205 @@
+*************************** 1. row ***************************
+QUERY 1: SELECT * FROM comandes;
+num_comanda	descripcio	data_comanda	clie	ven	iva	dte
+112885	Autoservei	1989-06-15	2102	101	16	0
+112950	Autoservei	1995-11-21	2107	110	16	0
+112963	Comanda client VIP	1995-12-17	2103	105	21	0
+112968	Comanda client VIP	1989-12-10	2102	101	21	0
+112975	Comanda client VIP	1989-10-12	2111	103	21	0
+112979	Comanda client VIP	1989-12-10	2114	102	21	0
+112983	Comanda client VIP	1995-12-27	2103	105	21	0
+112987	Comanda articles diversos...	1995-12-31	2103	105	21	5
+112989	Comanda articles diversos...	1990-01-03	2101	106	21	5
+112992	Comanda articles diversos...	1995-11-04	2118	108	21	10
+112993	Comanda articles diversos...	1989-01-04	2106	102	21	10
+112997	Comanda articles diversos...	2001-08-01	2124	107	21	0
+113003	Comanda articles diversos...	2001-01-25	2108	109	21	0
+113007	Comanda articles diversos...	1990-08-01	2112	108	21	0
+113012	Comanda articles diversos...	1996-11-01	2111	105	21	0
+113013	Comanda articles diversos...	1990-01-14	2118	108	21	0
+113024	Comanda articles diversos...	1990-01-20	2114	108	21	0
+113027	Comanda articles diversos...	1996-01-22	2103	105	21	0
+113034	Comanda web	1990-01-29	2107	110	21	0
+113042	Comanda web	1990-02-02	2113	101	21	0
+113045	Comanda web	1990-02-02	2112	108	21	0
+113048	Comanda web	1990-02-10	2120	102	21	0
+113049	Comanda web	1990-10-02	2118	108	21	0
+113051	Comanda web	1990-10-02	2118	108	21	25
+113055	Comanda web	1990-02-15	2108	101	21	25
+113057	Comanda articles diversos...	1990-02-18	2111	103	21	15
+113058	Comanda articles diversos...	1990-02-23	2108	109	21	15
+113062	Comanda articles diversos...	1990-02-24	2124	107	21	5
+113065	Comanda articles diversos...	1990-02-27	2106	102	21	3
+113069	Comanda articles diversos...	2001-02-03	2109	107	21	3
+113070	Comanda extra	2020-10-10	2110	105	21	25
+113071	Comanda client VIP	2020-10-27	2111	105	21	5
+113072	Comanda client VIP	2020-10-27	2102	101	21	0
+113073	Comanda client VIP	2020-10-27	2111	103	21	0
+113074	Comanda client VIP	2020-10-27	2114	102	21	0
+113075	Comanda client VIP	2020-10-27	2103	105	21	10
+113076	Comanda articles diversos...	2020-10-27	2103	105	21	5
+113077	Comanda articles diversos...	2020-10-27	2101	106	21	5
+113078	Comanda articles diversos...	2020-10-28	2118	108	21	10
+113079	Comanda articles diversos...	2020-10-28	2106	102	21	10
+113080	Comanda articles diversos...	2020-10-29	2124	107	21	21
+113081	Comanda articles diversos...	2020-10-29	2108	109	21	21
+113082	Comanda articles diversos...	2020-10-29	2112	108	21	21
+113083	Comanda articles diversos...	2020-10-30	2111	105	21	21
+113084	Comanda articles diversos...	2020-11-03	2118	108	21	3
+113085	Comanda articles diversos...	2020-11-05	2114	108	21	3
+113086	Comanda articles diversos...	2020-11-09	2103	105	21	10
+113087	Comanda web	2020-11-25	2107	110	21	10
+113088	Comanda web	2020-11-28	2113	101	21	10
+113089	Comanda web	2020-12-04	2112	108	21	0
+113090	Comanda web	2020-12-15	2120	102	21	0
+113091	Comanda web	2020-12-27	2118	108	21	0
+113092	Comanda web	2020-12-31	2118	108	21	25
+113093	Comanda web	2020-12-31	2108	101	21	25
+113094	Comanda articles diversos...	2020-12-31	2103	105	21	15
+113095	Comanda articles diversos...	2021-01-05	2101	106	21	15
+113096	Comanda articles diversos...	2021-01-08	2124	107	21	5
+113097	Comanda articles diversos...	2021-01-11	2106	102	21	40
+113098	Comanda articles diversos...	2021-01-18	2109	107	21	3
+113099	Comanda articles diversos...	2021-01-20	2102	101	21	3
+*************************** 1. row ***************************
+QUERY 2: INSERT INTO comandes VALUES ("120000" ,"comanda prova", "2022-01-24" ,"2102" ,"101" ,"21" ,"0");
+*************************** 1. row ***************************
+QUERY 3: SELECT * FROM comandes WHERE num_comanda="120000";
+num_comanda	descripcio	data_comanda	clie	ven	iva	dte
+120000	comanda prova	2022-01-24	2102	101	21	0
+*************************** 1. row ***************************
+QUERY 4: UPDATE comandes SET dte = 20 WHERE num_comanda BETWEEN "112000" AND "113000";
+*************************** 1. row ***************************
+QUERY 5: SELECT * FROM comandes WHERE num_comanda BETWEEN "112000" AND "113000";
+num_comanda	descripcio	data_comanda	clie	ven	iva	dte
+112885	Autoservei	1989-06-15	2102	101	16	20
+112950	Autoservei	1995-11-21	2107	110	16	20
+112963	Comanda client VIP	1995-12-17	2103	105	21	20
+112968	Comanda client VIP	1989-12-10	2102	101	21	20
+112975	Comanda client VIP	1989-10-12	2111	103	21	20
+112979	Comanda client VIP	1989-12-10	2114	102	21	20
+112983	Comanda client VIP	1995-12-27	2103	105	21	20
+112987	Comanda articles diversos...	1995-12-31	2103	105	21	20
+112989	Comanda articles diversos...	1990-01-03	2101	106	21	20
+112992	Comanda articles diversos...	1995-11-04	2118	108	21	20
+112993	Comanda articles diversos...	1989-01-04	2106	102	21	20
+112997	Comanda articles diversos...	2001-08-01	2124	107	21	20
+*************************** 1. row ***************************
+QUERY 6: SELECT * FROM detall;
+num_comanda	fab	producte	quantitat	preu
+112885	imm	887p	2	375.00
+112950	foo	112	5	148.00
+112963	aci	41004	28	117.00
+112968	aci	41004	34	117.00
+112975	aci	4100x	5	25.00
+112975	foo	114	10	243.00
+112975	rei	2a44g	6	350.00
+112979	aci	4100z	6	2500.00
+112983	aci	41004	6	117.00
+112987	aci	4100y	11	2750.00
+112989	foo	114	6	243.00
+112992	aci	41002	10	76.00
+112993	rei	2a45c	24	79.00
+112997	bic	41003	1	652.00
+113003	imm	779c	3	1875.00
+113007	imm	773c	3	975.00
+113012	aci	41003	35	107.00
+113013	bic	41003	1	652.00
+113024	qsa	xk47	20	355.00
+113027	aci	41002	54	76.00
+113034	rei	2a45c	8	79.00
+113042	aci	41001	5	55.00
+113042	rei	2a44r	5	4500.00
+113045	rei	2a44r	10	4500.00
+113045	rei	2a45c	30	79.00
+113048	imm	779c	2	1875.00
+113049	qsa	xk47	2	355.00
+113051	qsa	xk47	4	355.00
+113055	aci	4100x	6	25.00
+113055	bic	41003	1	652.00
+113055	rei	2a45c	10	79.00
+113057	aci	4100x	24	25.00
+113058	foo	112	10	148.00
+113062	foo	114	10	243.00
+113065	qsa	xk47	6	355.00
+113069	imm	775c	22	1425.00
+113069	imm	887p	4	375.00
+113070	aci	41001	5	82.50
+113070	bio	110	5	55.00
+113070	bio	41001	15	20.00
+113070	bio	41002	25	15.00
+113071	bio	110	12	55.00
+113072	bio	112	8	85.00
+113073	bio	113	3	64.00
+113073	bio	114	2	36.00
+113074	bio	111	4	95.00
+113074	bio	113	10	64.00
+113075	bio	111	50	95.00
+113075	bio	112	40	85.00
+113076	bio	41003	16	40.00
+113077	bio	111	10	142.50
+113077	bio	41002	8	15.00
+113078	bio	110	18	55.00
+113079	aci	41003	10	107.00
+113079	bio	41003	3	40.00
+113080	foo	112	10	148.00
+113081	aci	41003	10	107.00
+113081	bio	41003	8	60.00
+113082	aci	41004	80	117.00
+113083	aci	4100x	6	25.00
+113084	imm	887p	14	250.00
+113085	imm	887h	9	54.00
+113086	imm	775c	3	1425.00
+113086	imm	887h	5	54.00
+113087	bio	112	9	127.50
+113087	imm	773c	9	975.00
+113087	imm	887h	15	81.00
+113088	imm	773c	7	975.00
+113089	imm	887x	21	475.00
+113089	qsa	xk47	30	355.00
+113090	qsa	xk48	42	134.00
+113090	rei	2a44r	14	6750.00
+113091	qsa	xk48	32	134.00
+113091	rei	2a45c	5	118.50
+113092	qsa	xk48	12	134.00
+113092	qsa	xk48a	12	117.00
+113093	rei	2a44l	8	4500.00
+113093	rei	2a45c	10	118.50
+113094	rei	2a44r	3	4500.00
+113095	rei	2a44l	2	4500.00
+113095	rei	2a45c	15	79.00
+113096	foo	112	18	148.00
+113096	foo	114	3	243.00
+113097	imm	887h	20	54.00
+113097	imm	887p	12	375.00
+113098	imm	887p	4	250.00
+113099	bio	111	3	95.00
+113099	bio	112	6	85.00
+113099	bio	114	2	36.00
+113099	bio	41001	4	20.00
+113099	bio	41002	3	15.00
+113099	bio	41003	7	40.00
+*************************** 1. row ***************************
+QUERY 7: INSERT INTO detall VALUES ("112885" ,"rei", "2a44g", "32" ,"300");
+*************************** 1. row ***************************
+QUERY 8: SELECT * FROM detall WHERE num_comanda="112885";
+num_comanda	fab	producte	quantitat	preu
+112885	imm	887p	2	375.00
+112885	rei	2a44g	32	300.00
+*************************** 1. row ***************************
+QUERY 9: UPDATE detall SET quantitat = 50 WHERE producte="41004";
+*************************** 1. row ***************************
+QUERY 10: SELECT * FROM detall WHERE producte="41004";
+num_comanda	fab	producte	quantitat	preu
+112963	aci	41004	50	117.00
+112968	aci	41004	50	117.00
+112983	aci	41004	50	117.00
+113082	aci	41004	50	117.00
+*************************** 1. row ***************************
+QUERY 11: SELECT * FROM productes;
+*************************** 1. row ***************************
+QUERY 2: INSERT INTO productes VALUES ("pro" ,"d4534x", "mouse", "32" ,"280", "2024-05-19", "mouse.png");
+*************************** 1. row ***************************
+QUERY 3: SELECT * FROM productes WHERE imatge="mouse.png";
+PAGER set to stdout
+Outfile disabled.
